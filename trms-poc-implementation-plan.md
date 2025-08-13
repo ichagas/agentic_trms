@@ -280,12 +280,6 @@ Spring Boot application with Spring AI that connects to the mock legacy system a
         <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
         <version>0.8.0</version>
     </dependency>
-    <!-- For Ollama support -->
-    <dependency>
-        <groupId>org.springframework.ai</groupId>
-        <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
-        <version>0.8.0</version>
-    </dependency>
     <!-- For mocking AI responses during development -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -307,19 +301,12 @@ spring:
         options:
           model: gpt-3.5-turbo
           temperature: 0.7
-    ollama:
-      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
-      chat:
-        options:
-          model: llama3
-          temperature: 0.7
 
 legacy-trms:
   base-url: http://localhost:8090/api/v1
   
 app:
   mock-ai: true  # Enable AI mocking for development
-  ai-provider: mock  # mock, openai, or ollama
 ```
 
 ### 2.2 Legacy TRMS Client (3 hours)
@@ -357,8 +344,8 @@ public class LegacyTrmsClient {
 }
 ```
 
-### 2.3 Spring AI Functions Implementation (4 hours)
-Create Spring AI functions using the @Function annotation:
+### 2.3 AI Functions Implementation (4 hours)
+Create Spring AI functions:
 
 ```java
 @Component
@@ -368,50 +355,47 @@ public class TrmsFunctions {
     @Autowired
     private LegacyTrmsClient trmsClient;
     
-    @Function(name = "getAccountsByCurrency", 
-              description = "Get accounts filtered by currency code")
-    public List<Account> getAccountsByCurrency(String currency) {
+    @Function("Get accounts filtered by currency code")
+    public FunctionResponse getAccountsByCurrency(
+        @Param("3-letter currency code like USD, EUR, GBP") String currency) {
+        
         log.info("Function called: getAccountsByCurrency({})", currency);
         
         try {
-            return trmsClient.getAccountsByCurrency(currency.toUpperCase());
+            List<Account> accounts = trmsClient.getAccountsByCurrency(currency);
+            return FunctionResponse.success(accounts);
         } catch (Exception e) {
-            log.error("Error fetching accounts", e);
-            throw new RuntimeException("Failed to fetch accounts: " + e.getMessage());
+            return FunctionResponse.error("Failed to fetch accounts: " + e.getMessage());
         }
     }
     
-    @Function(name = "checkAccountBalance",
-              description = "Check the balance of a specific account")
-    public AccountBalance checkBalance(String accountId) {
+    @Function("Check account balance")
+    public FunctionResponse checkBalance(
+        @Param("Account ID") String accountId) {
+        
         log.info("Function called: checkBalance({})", accountId);
         
         try {
             AccountBalance balance = trmsClient.getBalance(accountId);
-            if (balance == null) {
-                throw new IllegalArgumentException("Account not found: " + accountId);
-            }
-            return balance;
+            return FunctionResponse.success(balance);
         } catch (Exception e) {
-            log.error("Error fetching balance", e);
-            throw new RuntimeException("Failed to fetch balance: " + e.getMessage());
+            return FunctionResponse.error("Failed to fetch balance: " + e.getMessage());
         }
     }
     
-    @Function(name = "bookTransaction",
-              description = "Book a new transaction between accounts")
-    public Transaction bookTransaction(
-            String fromAccount,
-            String toAccount,
-            BigDecimal amount,
-            String currency,
-            String description) {
+    @Function("Book a new transaction")
+    public FunctionResponse bookTransaction(
+        @Param("Source account ID") String fromAccount,
+        @Param("Target account ID") String toAccount,
+        @Param("Amount") BigDecimal amount,
+        @Param("Currency") String currency,
+        @Param("Description") String description) {
         
         log.info("Function called: bookTransaction({}, {}, {}, {})", 
             fromAccount, toAccount, amount, currency);
         
         try {
-            return trmsClient.createTransaction(
+            Transaction txn = trmsClient.createTransaction(
                 TransactionRequest.builder()
                     .fromAccount(fromAccount)
                     .toAccount(toAccount)
@@ -420,15 +404,14 @@ public class TrmsFunctions {
                     .description(description)
                     .build()
             );
+            return FunctionResponse.success(txn);
         } catch (Exception e) {
-            log.error("Error booking transaction", e);
-            throw new RuntimeException("Failed to book transaction: " + e.getMessage());
+            return FunctionResponse.error("Failed to book transaction: " + e.getMessage());
         }
     }
     
-    @Function(name = "checkEODReadiness",
-              description = "Check if system is ready for End-of-Day processing")
-    public EODCheckResult checkEODReadiness() {
+    @Function("Check if system is ready for End-of-Day processing")
+    public FunctionResponse checkEODReadiness() {
         log.info("Function called: checkEODReadiness()");
         
         try {
@@ -447,40 +430,58 @@ public class TrmsFunctions {
                 && txnStatus.getStatusCounts().getOrDefault("PROPOSAL", 0) == 0
                 && missingResets.isEmpty();
             
-            return EODCheckResult.builder()
+            EODCheckResult result = EODCheckResult.builder()
                 .ready(isReady)
                 .marketDataStatus(marketData)
                 .transactionStatus(txnStatus)
                 .missingResets(missingResets)
                 .requiredActions(buildRequiredActions(marketData, txnStatus, missingResets))
                 .build();
+            
+            return FunctionResponse.success(result);
         } catch (Exception e) {
-            log.error("Error checking EOD readiness", e);
-            throw new RuntimeException("Failed to check EOD readiness: " + e.getMessage());
+            return FunctionResponse.error("Failed to check EOD readiness: " + e.getMessage());
         }
     }
     
-    @Function(name = "proposeRateFixings",
-              description = "Propose fixing rates for instruments with missing resets")
-    public List<RateReset> proposeRateFixings(String instruments) {
+    @Function("Propose fixing rates for instruments with missing resets")
+    public FunctionResponse proposeRateFixings(
+        @Param("List of instrument IDs or 'ALL' for all missing") String instruments) {
+        
         log.info("Function called: proposeRateFixings({})", instruments);
         
         try {
             List<RateReset> missingResets = trmsClient.getMissingResets();
             
             if ("ALL".equalsIgnoreCase(instruments)) {
-                return trmsClient.proposeFixings(
+                List<RateReset> proposed = trmsClient.proposeFixings(
                     missingResets.stream()
                         .map(RateReset::getInstrumentId)
                         .collect(Collectors.toList())
                 );
+                return FunctionResponse.success(proposed);
             } else {
+                // Handle specific instruments
                 List<String> instrumentIds = Arrays.asList(instruments.split(","));
-                return trmsClient.proposeFixings(instrumentIds);
+                List<RateReset> proposed = trmsClient.proposeFixings(instrumentIds);
+                return FunctionResponse.success(proposed);
             }
         } catch (Exception e) {
-            log.error("Error proposing fixings", e);
-            throw new RuntimeException("Failed to propose fixings: " + e.getMessage());
+            return FunctionResponse.error("Failed to propose fixings: " + e.getMessage());
+        }
+    }
+    
+    @Function("Validate pending transactions")
+    public FunctionResponse validateTransactions(
+        @Param("Transaction IDs to validate or 'ALL' for all pending") String transactionIds) {
+        
+        log.info("Function called: validateTransactions({})", transactionIds);
+        
+        try {
+            // Implementation for transaction validation
+            return FunctionResponse.success("Transactions validated successfully");
+        } catch (Exception e) {
+            return FunctionResponse.error("Failed to validate transactions: " + e.getMessage());
         }
     }
     
@@ -768,188 +769,25 @@ class ChatResponse {
 ```
 
 ### 2.6 WebSocket Support (2 hours)
-Add real-time chat support with Spring AI:
+Add real-time chat support:
 
 ```java
 @Configuration
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
-    
-    @Autowired
-    private ChatWebSocketHandler chatWebSocketHandler;
-    
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(chatWebSocketHandler, "/ws/chat")
+        registry.addHandler(new ChatWebSocketHandler(), "/ws/chat")
                 .setAllowedOrigins("*");
-    }
-}
-
-@Component
-@Slf4j
-public class ChatWebSocketHandler extends TextWebSocketHandler {
-    
-    @Autowired
-    private TrmsAiService aiService;
-    
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    
-    @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        try {
-            ChatRequest request = objectMapper.readValue(message.getPayload(), ChatRequest.class);
-            String userId = session.getId();
-            
-            log.info("WebSocket message from {}: {}", userId, request.getMessage());
-            
-            // Process with AI service
-            String response = aiService.processMessage(userId, request.getMessage());
-            
-            ChatResponse chatResponse = ChatResponse.builder()
-                .message(response)
-                .timestamp(LocalDateTime.now())
-                .success(true)
-                .build();
-            
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(chatResponse)));
-            
-        } catch (Exception e) {
-            log.error("WebSocket error", e);
-            
-            ChatResponse errorResponse = ChatResponse.builder()
-                .message("Error processing message")
-                .timestamp(LocalDateTime.now())
-                .success(false)
-                .build();
-            
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(errorResponse)));
-        }
-    }
-    
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        log.info("WebSocket connection established: {}", session.getId());
-        
-        ChatResponse welcome = ChatResponse.builder()
-            .message("Connected to TRMS AI Assistant. How can I help you today?")
-            .timestamp(LocalDateTime.now())
-            .success(true)
-            .build();
-        
-        session.sendMessage(new TextMessage(objectMapper.writeValueAsString(welcome)));
-    }
-    
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        log.info("WebSocket connection closed: {} - {}", session.getId(), status);
     }
 }
 ```
 
 ### 2.7 Testing & Documentation (2 hours)
-- Unit tests for Spring AI functions
+- Unit tests for mock AI service
 - Integration tests for REST endpoints
-- API documentation with Spring AI specifics
+- API documentation
 - Docker configuration
-
-```java
-// Test for Spring AI Functions
-@SpringBootTest
-@AutoConfigureMockMvc
-class TrmsFunctionsTest {
-    
-    @MockBean
-    private LegacyTrmsClient trmsClient;
-    
-    @Autowired
-    private TrmsFunctions functions;
-    
-    @Test
-    void testGetAccountsByCurrency() {
-        // Given
-        List<Account> mockAccounts = Arrays.asList(
-            Account.builder()
-                .accountId("ACC-001-USD")
-                .accountName("Trading Account")
-                .currency("USD")
-                .build()
-        );
-        
-        when(trmsClient.getAccountsByCurrency("USD"))
-            .thenReturn(mockAccounts);
-        
-        // When
-        List<Account> result = functions.getAccountsByCurrency("USD");
-        
-        // Then
-        assertThat(result).hasSize(1);
-        assertThat(result.get(0).getAccountId()).isEqualTo("ACC-001-USD");
-    }
-    
-    @Test
-    void testEODReadiness() {
-        // Given
-        when(trmsClient.getMarketDataStatus()).thenReturn(
-            Arrays.asList(
-                MarketDataStatus.builder()
-                    .feedType("FX_RATES")
-                    .expected(100)
-                    .received(100)
-                    .complete(true)
-                    .build()
-            )
-        );
-        
-        when(trmsClient.getTransactionStatus()).thenReturn(
-            TransactionStatusSummary.builder()
-                .total(100)
-                .statusCounts(Map.of("VALIDATED", 100))
-                .build()
-        );
-        
-        when(trmsClient.getMissingResets()).thenReturn(new ArrayList<>());
-        
-        // When
-        EODCheckResult result = functions.checkEODReadiness();
-        
-        // Then
-        assertThat(result.isReady()).isTrue();
-        assertThat(result.getRequiredActions()).isEmpty();
-    }
-}
-
-// Integration test for Chat Controller
-@SpringBootTest
-@AutoConfigureMockMvc
-class ChatControllerTest {
-    
-    @Autowired
-    private MockMvc mockMvc;
-    
-    @Test
-    void testChatEndpoint() throws Exception {
-        ChatRequest request = ChatRequest.builder()
-            .message("Show me USD accounts")
-            .build();
-        
-        mockMvc.perform(post("/api/chat")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(request))
-                .header("X-User-Id", "test-user"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.success").value(true))
-            .andExpect(jsonPath("$.message").exists());
-    }
-}
-```
-
-**Docker Setup:**
-```dockerfile
-# Dockerfile
-FROM openjdk:17-jdk-slim
-COPY target/trms-ai-backend-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
-```
 
 **Total Time: 19 hours**
 
