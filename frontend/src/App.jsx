@@ -118,32 +118,29 @@ const App = () => {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 font-sans min-h-screen">
-      {/* Connection Status Bar */}
-      <ConnectionStatusBar 
-        status={connectionStatus} 
-        useWebSocket={useWebSocket}
-        onToggleWebSocket={() => setUseWebSocket(!useWebSocket)}
-      />
-      
+    <div className="bg-gray-100 dark:bg-gray-900 font-sans h-screen flex flex-col">
+                  
       {/* Error Display */}
       {error && (
         <ErrorBanner error={error} onDismiss={() => setError(null)} />
       )}
       
-      <AnimatePresence mode="wait">
-        {view === 'search' ? (
-          <SearchView key="search" onSubmit={handleSendMessage} />
-        ) : (
-          <ChatView 
-            key="chat" 
-            messages={messages} 
-            onNewMessage={handleSendMessage} 
-            isLoading={isLoading}
-            connectionStatus={connectionStatus}
-          />
-        )}
-      </AnimatePresence>
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <AnimatePresence mode="wait">
+          {view === 'search' ? (
+            <SearchView key="search" onSubmit={handleSendMessage} />
+          ) : (
+            <ChatView 
+              key="chat" 
+              messages={messages} 
+              onNewMessage={handleSendMessage} 
+              isLoading={isLoading}
+              connectionStatus={connectionStatus}
+            />
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
@@ -175,7 +172,7 @@ const SearchView = ({ onSubmit }) => {
 
   return (
     <motion.div
-      className="flex flex-col items-center justify-center min-h-screen p-4 text-center"
+      className="flex flex-col items-center justify-center flex-1 p-4 text-center"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
@@ -198,8 +195,9 @@ const SearchView = ({ onSubmit }) => {
         >
           Your intelligent Treasury and Risk Management copilot.
         </motion.p>
-        <form onSubmit={handleSubmit} className="relative w-full">
+        <form onSubmit={handleSubmit} className="relative flex justify-center w-full">
           <motion.div
+            className="relative w-full max-w-2xl"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.4}}
@@ -265,12 +263,12 @@ const ChatView = ({ messages, onNewMessage, isLoading, connectionStatus }) => {
 
   return (
     <motion.div
-      className="flex flex-col h-screen max-w-4xl mx-auto bg-white dark:bg-gray-800 shadow-2xl"
+      className="flex flex-col flex-1 w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto bg-white dark:bg-gray-800 shadow-2xl overflow-hidden"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
     >
-      <header className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-white dark:bg-gray-800">
+      <header className="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-white dark:bg-gray-800">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center font-bold text-white text-sm">
             AI
@@ -296,7 +294,7 @@ const ChatView = ({ messages, onNewMessage, isLoading, connectionStatus }) => {
         </div>
       </header>
       
-      <main className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 bg-gray-50 dark:bg-gray-900">
+      <main className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 space-y-6 bg-gray-50 dark:bg-gray-900 scrollbar-thin">
         {messages.length === 0 && (
           <WelcomeMessage />
         )}
@@ -318,7 +316,7 @@ const ChatView = ({ messages, onNewMessage, isLoading, connectionStatus }) => {
         <div ref={messagesEndRef} />
       </main>
       
-      <footer className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+      <footer className="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
         <form onSubmit={handleSubmit} className="relative">
           <input
             type="text"

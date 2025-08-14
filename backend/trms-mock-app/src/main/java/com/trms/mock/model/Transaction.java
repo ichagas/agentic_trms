@@ -48,12 +48,14 @@ public class Transaction {
     private String settlementMethod;
     
     public enum TransactionStatus {
+        NEW,
         PENDING,
         VALIDATED,
         SETTLED,
         FAILED,
         CANCELLED,
-        REJECTED
+        REJECTED,
+        PROPOSAL
     }
     
     public enum TransactionType {

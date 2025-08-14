@@ -240,67 +240,64 @@ public class MockDataService {
     private void createMockTransactions() {
         LocalDateTime now = LocalDateTime.now();
         
-        transactions.put("TXN-001", Transaction.builder()
-                .transactionId("TXN-001")
-                .fromAccount("ACC-001-USD")
-                .toAccount("ACC-002-USD")
-                .amount(new BigDecimal("500000.00"))
-                .currency("USD")
-                .status(Transaction.TransactionStatus.SETTLED)
-                .type(Transaction.TransactionType.TRANSFER)
-                .description("Intraday funding transfer")
-                .reference("REF-001-2024")
-                .createdAt(now.minusHours(2))
-                .valueDate(now.toLocalDate().atStartOfDay())
-                .settledAt(now.minusHours(1))
-                .settlementMethod("RTGS")
-                .build());
-                
-        transactions.put("TXN-002", Transaction.builder()
-                .transactionId("TXN-002")
-                .fromAccount("ACC-004-EUR")
-                .toAccount("ACC-005-EUR")
-                .amount(new BigDecimal("750000.00"))
-                .currency("EUR")
-                .status(Transaction.TransactionStatus.PENDING)
-                .type(Transaction.TransactionType.FX_SETTLEMENT)
-                .description("EUR leg of FX trade settlement")
-                .reference("FX-EUR-001-2024")
-                .createdAt(now.minusMinutes(30))
-                .valueDate(now.toLocalDate().atStartOfDay())
-                .settlementMethod("TARGET2")
-                .build());
-                
-        transactions.put("TXN-003", Transaction.builder()
-                .transactionId("TXN-003")
-                .fromAccount("ACC-006-GBP")
-                .toAccount("ACC-007-GBP")
-                .amount(new BigDecimal("250000.00"))
-                .currency("GBP")
-                .status(Transaction.TransactionStatus.VALIDATED)
-                .type(Transaction.TransactionType.COLLATERAL_MOVEMENT)
-                .description("Collateral posting for derivative trades")
-                .reference("COL-001-2024")
-                .createdAt(now.minusMinutes(15))
-                .valueDate(now.toLocalDate().atStartOfDay())
-                .settlementMethod("CHAPS")
-                .build());
-                
-        transactions.put("TXN-004", Transaction.builder()
-                .transactionId("TXN-004")
-                .fromAccount("ACC-008-JPY")
-                .toAccount("ACC-001-USD")
-                .amount(new BigDecimal("50000000.00"))
-                .currency("JPY")
-                .status(Transaction.TransactionStatus.FAILED)
-                .type(Transaction.TransactionType.FX_SETTLEMENT)
-                .description("JPY leg of USD/JPY FX settlement")
-                .reference("FX-JPY-001-2024")
-                .createdAt(now.minusHours(4))
-                .valueDate(now.toLocalDate().atStartOfDay())
-                .reasonCode("INSUFFICIENT_FUNDS")
-                .settlementMethod("ZENGIN")
-                .build());
+        // Create transactions matching specification: Total=1247, VALIDATED=1189, NEW=23, PROPOSAL=35
+        
+        // 1189 VALIDATED transactions
+        for (int i = 1; i <= 1189; i++) {
+            String txnId = String.format("TXN-%04d", i);
+            transactions.put(txnId, Transaction.builder()
+                    .transactionId(txnId)
+                    .fromAccount("ACC-001-USD")
+                    .toAccount("ACC-002-USD")
+                    .amount(new BigDecimal(String.valueOf(100000 + (i * 1000))))
+                    .currency("USD")
+                    .status(Transaction.TransactionStatus.VALIDATED)
+                    .type(Transaction.TransactionType.TRANSFER)
+                    .description("Validated transaction - " + i)
+                    .reference("REF-VAL-" + i)
+                    .createdAt(now.minusHours(2).minusMinutes(i % 60))
+                    .valueDate(now.toLocalDate().atStartOfDay())
+                    .settlementMethod("RTGS")
+                    .build());
+        }
+        
+        // 23 NEW transactions (need validation)
+        for (int i = 1190; i <= 1212; i++) {
+            String txnId = String.format("TXN-%04d", i);
+            transactions.put(txnId, Transaction.builder()
+                    .transactionId(txnId)
+                    .fromAccount("ACC-004-EUR")
+                    .toAccount("ACC-005-EUR")
+                    .amount(new BigDecimal(String.valueOf(200000 + (i * 500))))
+                    .currency("EUR")
+                    .status(Transaction.TransactionStatus.NEW)
+                    .type(Transaction.TransactionType.FX_SETTLEMENT)
+                    .description("New transaction awaiting validation - " + (i - 1189))
+                    .reference("REF-NEW-" + (i - 1189))
+                    .createdAt(now.minusMinutes(30 + (i % 30)))
+                    .valueDate(now.toLocalDate().atStartOfDay())
+                    .settlementMethod("TARGET2")
+                    .build());
+        }
+        
+        // 35 PROPOSAL transactions (need review)
+        for (int i = 1213; i <= 1247; i++) {
+            String txnId = String.format("TXN-%04d", i);
+            transactions.put(txnId, Transaction.builder()
+                    .transactionId(txnId)
+                    .fromAccount("ACC-006-GBP")
+                    .toAccount("ACC-007-GBP")
+                    .amount(new BigDecimal(String.valueOf(150000 + (i * 750))))
+                    .currency("GBP")
+                    .status(Transaction.TransactionStatus.PROPOSAL)
+                    .type(Transaction.TransactionType.COLLATERAL_MOVEMENT)
+                    .description("Proposal transaction awaiting review - " + (i - 1212))
+                    .reference("REF-PROP-" + (i - 1212))
+                    .createdAt(now.minusMinutes(15 + (i % 15)))
+                    .valueDate(now.toLocalDate().atStartOfDay())
+                    .settlementMethod("CHAPS")
+                    .build());
+        }
     }
     
     private void createMockReports() {
@@ -332,38 +329,52 @@ public class MockDataService {
     
     private void createMockRateResets() {
         LocalDate today = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
         
+        // SWAP-2024-0156 as specified in the spec document
         rateResets.add(RateReset.builder()
-                .instrumentId("SWAP-USD-001")
+                .instrumentId("SWAP-2024-0156")
                 .indexName("USD-LIBOR-3M")
                 .fixingDate(today)
-                .notional(new BigDecimal("10000000.00"))
+                .notional(new BigDecimal("15000000"))
                 .currency("USD")
-                .currentRate(new BigDecimal("5.25"))
                 .status(RateReset.RateStatus.MISSING)
                 .tenor("3M")
-                .createdAt(LocalDateTime.now().minusHours(2))
+                .createdAt(now.minusHours(2))
+                .source("Bloomberg")
+                .description("USD LIBOR 3-month fixing for interest rate swap - Missing from specification")
+                .build());
+                
+        // Additional missing rate resets to simulate real EOD scenario
+        rateResets.add(RateReset.builder()
+                .instrumentId("SWAP-2024-0157")
+                .indexName("USD-LIBOR-3M")
+                .fixingDate(today)
+                .notional(new BigDecimal("8500000"))
+                .currency("USD")
+                .status(RateReset.RateStatus.MISSING)
+                .tenor("3M")
+                .createdAt(now.minusHours(2))
                 .source("Bloomberg")
                 .description("USD LIBOR 3-month fixing for interest rate swap")
                 .build());
                 
         rateResets.add(RateReset.builder()
-                .instrumentId("SWAP-EUR-002")
+                .instrumentId("SWAP-2024-0158")
                 .indexName("EUR-EURIBOR-6M")
                 .fixingDate(today)
-                .notional(new BigDecimal("15000000.00"))
+                .notional(new BigDecimal("12000000"))
                 .currency("EUR")
-                .currentRate(new BigDecimal("3.75"))
-                .proposedRate(new BigDecimal("3.78"))
-                .status(RateReset.RateStatus.PROPOSED)
+                .status(RateReset.RateStatus.MISSING)
                 .tenor("6M")
-                .createdAt(LocalDateTime.now().minusHours(1))
+                .createdAt(now.minusHours(1))
                 .source("Reuters")
                 .description("EUR EURIBOR 6-month fixing for interest rate swap")
                 .build());
                 
+        // Some completed resets for variety
         rateResets.add(RateReset.builder()
-                .instrumentId("SWAP-GBP-003")
+                .instrumentId("SWAP-2024-0159")
                 .indexName("GBP-SONIA")
                 .fixingDate(today.minusDays(1))
                 .notional(new BigDecimal("8000000.00"))
@@ -372,8 +383,8 @@ public class MockDataService {
                 .proposedRate(new BigDecimal("4.98"))
                 .status(RateReset.RateStatus.APPROVED)
                 .tenor("1D")
-                .createdAt(LocalDateTime.now().minusHours(6))
-                .approvedAt(LocalDateTime.now().minusHours(3))
+                .createdAt(now.minusHours(6))
+                .approvedAt(now.minusHours(3))
                 .approvedBy("treasury-manager")
                 .source("Bank of England")
                 .description("GBP SONIA overnight fixing")
@@ -383,30 +394,32 @@ public class MockDataService {
     private void createMockMarketDataFeeds() {
         LocalDateTime now = LocalDateTime.now();
         
+        // FX_RATES: Complete as per specification
         marketDataFeeds.put("FX_RATES", MarketDataStatus.builder()
                 .feedType("FX_RATES")
-                .expected(157)
-                .received(155)
-                .missing(2)
-                .complete(false)
+                .expected(284)
+                .received(284)
+                .missing(0)
+                .complete(true)
                 .lastUpdate(now.minusMinutes(5))
                 .cutoffTime(now.minusHours(1))
                 .provider("Bloomberg")
-                .status(MarketDataStatus.FeedStatus.INCOMPLETE)
-                .missingItems(Arrays.asList("USD/ZAR", "EUR/TRY"))
+                .status(MarketDataStatus.FeedStatus.HEALTHY)
+                .missingItems(Collections.emptyList())
                 .build());
                 
+        // EQUITY_PRICES: Incomplete as per specification
         marketDataFeeds.put("EQUITY_PRICES", MarketDataStatus.builder()
                 .feedType("EQUITY_PRICES")
-                .expected(2500)
-                .received(2500)
-                .missing(0)
-                .complete(true)
+                .expected(205)
+                .received(197)
+                .missing(8)
+                .complete(false)
                 .lastUpdate(now.minusMinutes(2))
                 .cutoffTime(now.minusHours(1))
                 .provider("Reuters")
-                .status(MarketDataStatus.FeedStatus.HEALTHY)
-                .missingItems(Collections.emptyList())
+                .status(MarketDataStatus.FeedStatus.INCOMPLETE)
+                .missingItems(Arrays.asList("AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "NVDA", "META", "BRK.B"))
                 .build());
                 
         marketDataFeeds.put("INTEREST_RATES", MarketDataStatus.builder()

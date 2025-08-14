@@ -164,7 +164,7 @@ public class LegacyTrmsClient {
      */
     public EODStatus checkEODReadiness() {
         try {
-            String url = trmsProperties.baseUrl() + "/api/v1/eod/status";
+            String url = trmsProperties.baseUrl() + "/api/v1/eod/readiness";
             
             logger.debug("Checking EOD readiness from TRMS: {}", url);
 

@@ -12,6 +12,8 @@
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/config/TrmsProperties.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/service/TrmsFunctions.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/controller/HealthController.java
+/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/config/OllamaConfiguration.java
+/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/service/TrmsAiService.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/ChatRequest.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/Transaction.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/TrmsAiApplication.java

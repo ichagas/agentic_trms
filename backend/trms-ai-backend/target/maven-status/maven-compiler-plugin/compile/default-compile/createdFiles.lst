@@ -5,6 +5,7 @@ com/trms/ai/service/TrmsFunctions$CheckAccountBalanceRequest.class
 com/trms/ai/service/TrmsFunctions$BookTransactionRequest.class
 com/trms/ai/service/TrmsFunctions$CheckEODReadinessRequest.class
 com/trms/ai/dto/EODStatus.class
+com/trms/ai/config/OllamaConfiguration$OllamaClient.class
 com/trms/ai/controller/HealthController.class
 com/trms/ai/client/LegacyTrmsClient$1.class
 com/trms/ai/dto/Transaction.class
@@ -12,6 +13,7 @@ com/trms/ai/TrmsAiApplication.class
 com/trms/ai/dto/ChatRequest.class
 com/trms/ai/dto/ChatResponse.class
 com/trms/ai/controller/GlobalExceptionHandler$ErrorResponse.class
+com/trms/ai/config/OllamaConfiguration.class
 com/trms/ai/config/TrmsProperties.class
 com/trms/ai/dto/Account.class
 com/trms/ai/controller/GlobalExceptionHandler.class
@@ -19,6 +21,7 @@ com/trms/ai/dto/CreateTransactionRequest.class
 com/trms/ai/dto/AccountBalance.class
 com/trms/ai/client/LegacyTrmsClient.class
 com/trms/ai/service/TrmsFunctions$GetAccountsByCurrencyRequest.class
+com/trms/ai/service/TrmsAiService.class
 com/trms/ai/dto/RateReset.class
 com/trms/ai/config/WebConfig.class
 com/trms/ai/service/TrmsFunctions.class

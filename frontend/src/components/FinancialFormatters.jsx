@@ -266,15 +266,15 @@ export const FinancialTimestamp = ({
   }
 
   return (
-    <span className="text-sm text-gray-600 dark:text-gray-400 font-mono">
+    <span className="text-sm font-mono">
       {formatted}
       {relative && (
-        <span className="ml-2 text-xs text-gray-500">
+        <span className="ml-2 text-xs text-gray-200">
           ({relative})
         </span>
       )}
       {timezone && (
-        <span className="ml-1 text-xs text-gray-500">
+        <span className="ml-1 text-xs text-gray-200">
           {timezone}
         </span>
       )}

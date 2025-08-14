@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { motion } from 'framer-motion';
+import { ChevronDown, ChevronRight, Brain } from 'lucide-react';
 import clsx from 'clsx';
 import {
   CurrencyDisplay,
@@ -42,7 +43,7 @@ export const EnhancedMessageBubble = ({ message }) => {
       
       <div
         className={clsx(
-          'max-w-2xl px-4 py-3 rounded-2xl shadow-sm',
+          'max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-3xl xl:max-w-4xl px-4 py-3 rounded-2xl shadow-sm',
           isUser
             ? 'bg-blue-600 text-white rounded-br-md'
             : clsx(
@@ -87,14 +88,79 @@ export const EnhancedMessageBubble = ({ message }) => {
 };
 
 /**
+ * Thinking Section Component - Collapsible reasoning display
+ */
+const ThinkingSection = ({ content }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  if (!content) return null;
+  
+  return (
+    <div className="mb-3 border border-blue-200 dark:border-blue-700 rounded-lg overflow-hidden bg-blue-50/50 dark:bg-blue-900/10">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full px-3 py-2 flex items-center gap-2 text-left text-sm md:text-base font-medium text-blue-700 dark:text-blue-300 hover:bg-blue-100/50 dark:hover:bg-blue-900/20 transition-colors touch-manipulation"
+      >
+        {isExpanded ? (
+          <ChevronDown size={16} className="text-blue-500" />
+        ) : (
+          <ChevronRight size={16} className="text-blue-500" />
+        )}
+        <Brain size={16} className="text-blue-500" />
+        <span>AI Reasoning Process</span>
+        <span className="text-xs text-blue-500 dark:text-blue-400 ml-auto">
+          {isExpanded ? 'Hide' : 'Show'}
+        </span>
+      </button>
+      
+      <motion.div
+        initial={false}
+        animate={{
+          height: isExpanded ? 'auto' : 0,
+          opacity: isExpanded ? 1 : 0
+        }}
+        transition={{ duration: 0.2, ease: 'easeInOut' }}
+        className="overflow-hidden"
+      >
+        <div className="px-3 pb-3 border-t border-blue-200 dark:border-blue-700 bg-blue-50/30 dark:bg-blue-900/5">
+          <div className="pt-2 text-sm md:text-base text-blue-800 dark:text-blue-200 leading-relaxed">
+            <ReactMarkdown
+              components={{
+                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+                em: ({ children }) => <em className="italic">{children}</em>,
+                code: ({ children }) => (
+                  <code className="px-1 py-0.5 bg-blue-200/50 dark:bg-blue-800/50 rounded text-xs font-mono">
+                    {children}
+                  </code>
+                ),
+              }}
+            >
+              {content}
+            </ReactMarkdown>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+/**
  * Enhanced markdown renderer with financial components
  */
 const EnhancedMarkdownRenderer = ({ content }) => {
-  // Pre-process content to identify financial data patterns
-  const processedContent = processFinancialContent(content);
+  // Parse thinking content first
+  const { mainContent, thinkingContent } = parseThinkingContent(content);
+  
+  // Pre-process main content to identify financial data patterns
+  const processedContent = processFinancialContent(mainContent);
   
   return (
     <div className="prose prose-sm dark:prose-invert max-w-none">
+      {/* Render thinking section if it exists */}
+      <ThinkingSection content={thinkingContent} />
+      
+      {/* Render main content */}
       <ReactMarkdown
         components={{
           h1: ({ children }) => (
@@ -180,9 +246,32 @@ const EnhancedMarkdownRenderer = ({ content }) => {
       </ReactMarkdown>
       
       {/* Custom financial components */}
-      <FinancialDataRenderer content={content} />
+      <FinancialDataRenderer content={mainContent} />
     </div>
   );
+};
+
+/**
+ * Parse thinking tags from message content
+ */
+const parseThinkingContent = (content) => {
+  if (!content) return { mainContent: '', thinkingContent: null };
+  
+  // Extract thinking content using regex
+  const thinkingRegex = /<think>([\s\S]*?)<\/think>/gi;
+  let thinkingContent = null;
+  let mainContent = content;
+  
+  const matches = [...content.matchAll(thinkingRegex)];
+  if (matches.length > 0) {
+    // Extract thinking content (combine if multiple think tags)
+    thinkingContent = matches.map(match => match[1].trim()).join('\n\n');
+    
+    // Remove thinking tags from main content
+    mainContent = content.replace(thinkingRegex, '').trim();
+  }
+  
+  return { mainContent, thinkingContent };
 };
 
 /**
@@ -345,11 +434,11 @@ export const SuggestedActions = ({ suggestions = [], onSuggestionClick }) => {
   if (!suggestions.length) return null;
   
   return (
-    <div className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
+    <div className="mt-4 p-4 sm:p-6 md:p-8 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
       <h4 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-3">
         💡 Try these queries:
       </h4>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4">
         {suggestions.map((suggestion, index) => (
           <button
             key={index}
@@ -377,7 +466,7 @@ export const QuickActions = ({ onActionClick }) => {
   ];
   
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-2 sm:gap-3 md:gap-4 mt-4">
       {actions.map((action) => (
         <button
           key={action.id}
