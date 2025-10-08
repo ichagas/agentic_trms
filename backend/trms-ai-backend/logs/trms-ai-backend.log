@@ -1,25 +1,57 @@
-2025-08-15 08:27:37 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-15 08:27:43 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-15 08:27:45 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: d3dc0590-d4f0-43dd-bf7b-e1d3e5939c1f, Message: Show me all USD accounts
-2025-08-15 08:27:45 [http-nio-8080-exec-9] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-15 08:27:45 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-15 08:27:45 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-15 08:27:45 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-15 08:27:45 [http-nio-8080-exec-9] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-15 08:27:45 [http-nio-8080-exec-9] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-15 08:27:45 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-15 08:27:57 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-15 08:27:57 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: d3dc0590-d4f0-43dd-bf7b-e1d3e5939c1f
-2025-08-15 08:28:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-15 08:28:20 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 6ce7e523-d0f5-48dc-bb74-f2d129f2ba36, Message: Show me all USD accounts in a table format
-2025-08-15 08:28:20 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-15 08:28:20 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts in a table format
-2025-08-15 08:28:20 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-15 08:28:20 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-15 08:28:20 [http-nio-8080-exec-6] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-15 08:28:20 [http-nio-8080-exec-6] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-15 08:28:20 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-15 08:28:31 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-15 08:28:31 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 6ce7e523-d0f5-48dc-bb74-f2d129f2ba36
-2025-08-15 08:28:43 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-15 08:29:48 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:18:47 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:18:47 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:19:17 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:19:47 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:20:17 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:20:48 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:21:19 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:21:51 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:22:20 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:22:50 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:23:21 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:23:52 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:24:22 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:24:52 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:25:22 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:25:53 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:26:24 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:26:54 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:27:24 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:27:55 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:28:26 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:28:56 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:29:26 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:29:57 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:30:28 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:30:59 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:31:30 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:32:01 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:32:32 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:33:32 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:34:03 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:36:14 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:36:44 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:37:14 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:37:44 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:38:14 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:38:44 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:39:14 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:39:44 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:40:14 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:40:44 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:41:14 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:41:44 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:42:14 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:42:44 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:43:14 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:43:44 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:44:14 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:59:43 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:00:17 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:00:47 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:01:17 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:01:47 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:02:18 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:02:48 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:03:18 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:03:48 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE

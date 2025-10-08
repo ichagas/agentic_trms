@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Findur UI Clone</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .window {
+    background-color: #c8d7e3;
+    border: 2px solid #7f8fa0;
+    border-radius: 6px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    display: inline-block;
+  }
+  .titlebar {
+    background: linear-gradient(#e8f0f8, #c8d7e3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid #a0b0c0;
+    border-radius: 4px 4px 0 0;
+  }
+  .titlebar-left {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .tab {
+    background-color: #ffffff;
+    border: 1px solid #aaa;
+    padding: 2px 8px;
+    border-radius: 3px 3px 0 0;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .titlebar span {
+    margin-right: 15px;
+  }
+  .controls {
+    display: flex;
+    gap: 6px;
+  }
+  .controls div {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .controls .info { background-color: #1976d2; color: white; border-radius: 50%; }
+  .controls .min { background-color: #ffcc00; }
+  .controls .close { background-color: #d32f2f; color: white; }
+
+  .navbar {
+    background-color: #d9e5f3;
+    display: flex;
+    border-bottom: 1px solid #a0b0c0;
+  }
+  .nav-btn {
+    background-color: white;
+    border: 1px solid #aaa;
+    border-left: none;
+    width: 80px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    gap: 5px;
+  }
+  .nav-btn:first-child {
+    border-left: 1px solid #aaa;
+  }
+  .nav-btn i {
+    font-size: 20px;
+  }
+
+  .bottombar {
+    background-color: #c8d7e3;
+    display: flex;
+    gap: 16px;
+    padding: 4px 6px;
+    border-top: 1px solid #a0b0c0;
+    border-radius: 0 0 4px 4px;
+  }
+  .bottombar i {
+    font-size: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="window">
+  <div class="titlebar">
+    <div class="titlebar-left">
+      <div class="tab">OpenLink</div>
+      <span>Findur V24.0: Server</span>
+      <span style="color: #3f6fb5;">Database</span>
+      <span style="color: #3f6fb5;">User</span>
+    </div>
+    <div class="controls">
+      <div class="info">i</div>
+      <div class="min">–</div>
+      <div class="close">X</div>
+    </div>
+  </div>
+
+  <div class="navbar">
+    <div class="nav-btn"><i class="fas fa-pound-sign"></i>Trading</div>
+    <div class="nav-btn"><i class="fas fa-desktop"></i>Desktop</div>
+    <div class="nav-btn"><i class="fas fa-chart-line"></i>Market</div>
+    <div class="nav-btn"><i class="fas fa-home"></i>Operations</div>
+    <div class="nav-btn"><i class="fas fa-sync-alt"></i>Reference</div>
+    <div class="nav-btn"><i class="fas fa-server"></i>Admin</div>
+    <div class="nav-btn"><i class="fas fa-university"></i>Credit</div>
+  </div>
+
+  <div class="bottombar">
+    <i class="fas fa-folder"></i>
+    <i class="fas fa-cogs"></i>
+    <i class="fas fa-lightbulb"></i>
+    <i class="fas fa-tachometer-alt"></i>
+    <i class="fas fa-exclamation-triangle"></i>
+    <i class="fas fa-search"></i>
+  </div>
+</div>
+
+</body>
+</html>

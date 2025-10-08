@@ -12,14 +12,13 @@
 [INFO] Copying 0 resource from src/main/resources to target/classes
 [INFO] 
 [INFO] --- compiler:3.11.0:compile (default-compile) @ trms-ai-backend ---
-[INFO] Changes detected - recompiling the module! :source
-[INFO] Compiling 19 source files with javac [debug release 21] to target/classes
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] --- resources:3.3.1:testResources (default-testResources) @ trms-ai-backend ---
 [INFO] skip non existing resourceDirectory /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/test/resources
 [INFO] 
 [INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ trms-ai-backend ---
-[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] <<< spring-boot:3.2.0:run (default-cli) < test-compile @ trms-ai-backend <<<
 [INFO] 
@@ -35,682 +34,305 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.0)
 
-2025-08-14 08:24:06 [main] INFO  [com.trms.ai.TrmsAiApplication] - Starting TrmsAiApplication using Java 21.0.8 with PID 46979 (/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend)
-2025-08-14 08:24:06 [main] DEBUG [com.trms.ai.TrmsAiApplication] - Running with Spring Boot v3.2.0, Spring v6.1.1
-2025-08-14 08:24:06 [main] INFO  [com.trms.ai.TrmsAiApplication] - The following 1 profile is active: "dev"
-2025-08-14 08:24:06 [main] INFO  [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat initialized with port 8080 (http)
-2025-08-14 08:24:06 [main] INFO  [o.a.catalina.core.StandardService] - Starting service [Tomcat]
-2025-08-14 08:24:06 [main] INFO  [o.a.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/10.1.16]
-2025-08-14 08:24:06 [main] INFO  [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
-2025-08-14 08:24:06 [main] INFO  [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 485 ms
-2025-08-14 08:24:07 [main] INFO  [com.trms.ai.service.TrmsAiService] - TrmsAiService initialized with Ollama ChatModel and hybrid function calling
-2025-08-14 08:24:07 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Configuring Ollama HTTP Client for TRMS operations
-2025-08-14 08:24:07 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Ollama Base URL: http://localhost:11434
-2025-08-14 08:24:07 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Ollama Model: qwen3:1.7b
-2025-08-14 08:24:07 [main] INFO  [o.s.b.a.e.web.EndpointLinksResolver] - Exposing 3 endpoint(s) beneath base path '/actuator'
-2025-08-14 08:24:07 [main] INFO  [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat started on port 8080 (http) with context path ''
-2025-08-14 08:24:07 [main] INFO  [com.trms.ai.TrmsAiApplication] - Started TrmsAiApplication in 1.249 seconds (process running for 1.391)
-2025-08-14 08:24:07 [http-nio-8080-exec-1] INFO  [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-08-14 08:24:07 [http-nio-8080-exec-1] INFO  [o.s.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
-2025-08-14 08:24:07 [http-nio-8080-exec-1] INFO  [o.s.web.servlet.DispatcherServlet] - Completed initialization in 1 ms
-2025-08-14 08:24:08 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:24:13 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:24:27 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 6582e08d-5e1a-447f-b38b-d03aff319205, Message: Prepare the system for end-of-day processing - check everything and fix what needs to be fixed
-2025-08-14 08:24:27 [http-nio-8080-exec-3] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:24:27 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Prepare the system for end-of-day processing - check everything and fix what needs to be fixed
-2025-08-14 08:24:43 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:24:46 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 08:24:46 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 6582e08d-5e1a-447f-b38b-d03aff319205
-2025-08-14 08:25:04 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 27979f04-0b86-459d-a30e-784c6da1995c, Message: Prepare for EOD processing
-2025-08-14 08:25:04 [http-nio-8080-exec-7] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:25:04 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Prepare for EOD processing
-2025-08-14 08:25:04 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Executing Complete EOD Preparation Workflow
-2025-08-14 08:25:04 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
-2025-08-14 08:25:04 [http-nio-8080-exec-7] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
-2025-08-14 08:25:04 [http-nio-8080-exec-7] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
-2025-08-14 08:25:04 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
-2025-08-14 08:25:04 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: proposeRateFixings
-2025-08-14 08:25:04 [http-nio-8080-exec-7] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching proposed rate fixings from TRMS: http://localhost:8090/api/v1/eod/missing-resets
-2025-08-14 08:25:04 [http-nio-8080-exec-7] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 rate fixing proposals
-2025-08-14 08:25:04 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 rate fixing proposals
-2025-08-14 08:25:04 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
-2025-08-14 08:25:04 [http-nio-8080-exec-7] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
-2025-08-14 08:25:04 [http-nio-8080-exec-7] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
-2025-08-14 08:25:04 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
-2025-08-14 08:25:13 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:25:14 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:25:14 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 27979f04-0b86-459d-a30e-784c6da1995c
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 17ccbb30-dd7e-49c2-b4b4-1f38330c9d2d, Message: Give me a complete overview of our cash positions across all currencies
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Give me a complete overview of our cash positions across all currencies
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Executing Cross-Currency Portfolio Analysis
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: EUR
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=EUR
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 2 accounts for currency: EUR
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 2 accounts for currency: EUR
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: GBP
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=GBP
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 2 accounts for currency: GBP
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 2 accounts for currency: GBP
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: JPY
-2025-08-14 08:25:33 [http-nio-8080-exec-1] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=JPY
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 1 accounts for currency: JPY
-2025-08-14 08:25:33 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 1 accounts for currency: JPY
-2025-08-14 08:25:43 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:25:49 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:25:49 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 17ccbb30-dd7e-49c2-b4b4-1f38330c9d2d
-2025-08-14 08:26:13 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:26:13 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b2bed6ea-1c5d-45c9-a074-89d0c9e1f350, Message: What is blocking EOD and can you automatically resolve the issues?
-2025-08-14 08:26:13 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:26:13 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: What is blocking EOD and can you automatically resolve the issues?
-2025-08-14 08:26:13 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Executing EOD Issue Resolution Workflow
-2025-08-14 08:26:13 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
-2025-08-14 08:26:13 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
-2025-08-14 08:26:13 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
-2025-08-14 08:26:13 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
-2025-08-14 08:26:13 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: proposeRateFixings
-2025-08-14 08:26:13 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching proposed rate fixings from TRMS: http://localhost:8090/api/v1/eod/missing-resets
-2025-08-14 08:26:13 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 rate fixing proposals
-2025-08-14 08:26:13 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 rate fixing proposals
-2025-08-14 08:26:13 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
-2025-08-14 08:26:13 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
-2025-08-14 08:26:13 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
-2025-08-14 08:26:13 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
-2025-08-14 08:26:24 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:26:24 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b2bed6ea-1c5d-45c9-a074-89d0c9e1f350
-2025-08-14 08:26:43 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:26:46 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: de05d6c7-4936-4eef-b9c2-8d6d4f270c32, Message: Can we run End-of-Day?
-2025-08-14 08:26:46 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:26:46 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Can we run End-of-Day?
-2025-08-14 08:26:54 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 08:26:54 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: de05d6c7-4936-4eef-b9c2-8d6d4f270c32
-2025-08-14 08:27:13 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:27:43 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:28:05 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 4c54a249-3dea-4724-8df1-b1ce97411307, Message: Prepare for EOD processing
-2025-08-14 08:28:05 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:28:05 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Prepare for EOD processing
-2025-08-14 08:28:05 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Executing Complete EOD Preparation Workflow
-2025-08-14 08:28:05 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
-2025-08-14 08:28:05 [http-nio-8080-exec-6] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
-2025-08-14 08:28:05 [http-nio-8080-exec-6] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
-2025-08-14 08:28:05 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
-2025-08-14 08:28:05 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: proposeRateFixings
-2025-08-14 08:28:05 [http-nio-8080-exec-6] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching proposed rate fixings from TRMS: http://localhost:8090/api/v1/eod/missing-resets
-2025-08-14 08:28:05 [http-nio-8080-exec-6] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 rate fixing proposals
-2025-08-14 08:28:05 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 rate fixing proposals
-2025-08-14 08:28:05 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
-2025-08-14 08:28:05 [http-nio-8080-exec-6] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
-2025-08-14 08:28:05 [http-nio-8080-exec-6] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
-2025-08-14 08:28:05 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
-2025-08-14 08:28:13 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:28:16 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:28:16 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 4c54a249-3dea-4724-8df1-b1ce97411307
-2025-08-14 08:28:43 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:29:13 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 5ffdc4e3-7bf3-47ff-ba34-2f614f0ed444, Message: Give me a complete overview of our cash positions across all currencies
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Give me a complete overview of our cash positions across all currencies
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Executing Cross-Currency Portfolio Analysis
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: EUR
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=EUR
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 2 accounts for currency: EUR
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 2 accounts for currency: EUR
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: GBP
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=GBP
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 2 accounts for currency: GBP
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 2 accounts for currency: GBP
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: JPY
-2025-08-14 08:29:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=JPY
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 1 accounts for currency: JPY
-2025-08-14 08:29:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 1 accounts for currency: JPY
-2025-08-14 08:29:43 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:29:47 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:29:47 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 5ffdc4e3-7bf3-47ff-ba34-2f614f0ed444
-2025-08-14 08:30:13 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:30:14 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 46f6f365-2576-4872-b186-f30b61253a66, Message: What is blocking EOD and can you automatically resolve the issues?
-2025-08-14 08:30:14 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:30:14 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: What is blocking EOD and can you automatically resolve the issues?
-2025-08-14 08:30:14 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Executing EOD Issue Resolution Workflow
-2025-08-14 08:30:14 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
-2025-08-14 08:30:14 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
-2025-08-14 08:30:14 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
-2025-08-14 08:30:14 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
-2025-08-14 08:30:14 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: proposeRateFixings
-2025-08-14 08:30:14 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching proposed rate fixings from TRMS: http://localhost:8090/api/v1/eod/missing-resets
-2025-08-14 08:30:14 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 rate fixing proposals
-2025-08-14 08:30:14 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 rate fixing proposals
-2025-08-14 08:30:14 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
-2025-08-14 08:30:14 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
-2025-08-14 08:30:14 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
-2025-08-14 08:30:14 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
-2025-08-14 08:30:26 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:30:26 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 46f6f365-2576-4872-b186-f30b61253a66
-2025-08-14 08:30:43 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:31:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:31:43 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:32:13 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:32:43 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:33:13 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:33:43 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:34:13 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:34:43 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:35:13 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:35:43 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:36:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:36:43 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:36:49 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:36:56 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: a6b88c37-ed1e-49d4-81c7-a0ecabcd628a, Message: Can we run End-of-Day?
-2025-08-14 08:36:56 [http-nio-8080-exec-5] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:36:56 [http-nio-8080-exec-5] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Can we run End-of-Day?
-2025-08-14 08:37:06 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 08:37:06 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: a6b88c37-ed1e-49d4-81c7-a0ecabcd628a
-2025-08-14 08:37:09 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:37:11 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 9aa6189b-5f44-4448-9627-b8b35c30725f, Message: Can we run End-of-Day?
-2025-08-14 08:37:11 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:37:11 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Can we run End-of-Day?
-2025-08-14 08:37:19 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 08:37:19 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 9aa6189b-5f44-4448-9627-b8b35c30725f
-2025-08-14 08:37:39 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:38:09 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:38:39 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:39:09 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:39:12 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:39:13 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: ae83bf28-45d7-4564-9bd6-8872b47fd776, Message: Can we run End-of-Day?
-2025-08-14 08:39:13 [http-nio-8080-exec-3] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:39:13 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Can we run End-of-Day?
-2025-08-14 08:39:20 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 08:39:20 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: ae83bf28-45d7-4564-9bd6-8872b47fd776
-2025-08-14 08:39:42 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:40:12 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:40:18 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 8aa872e7-acf1-46d5-8a1f-f784b7cfc939, Message: Check market data status
-2025-08-14 08:40:18 [http-nio-8080-exec-7] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:40:18 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Check market data status
-2025-08-14 08:40:27 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 08:40:27 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 8aa872e7-acf1-46d5-8a1f-f784b7cfc939
-2025-08-14 08:40:42 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:41:12 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:41:21 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:41:23 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: a2aaa644-5d57-494c-b6d9-d3551d3a6c02, Message: Show me all USD accounts
-2025-08-14 08:41:23 [http-nio-8080-exec-5] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:41:23 [http-nio-8080-exec-5] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 08:41:23 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 08:41:23 [http-nio-8080-exec-5] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 08:41:23 [http-nio-8080-exec-5] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 08:41:23 [http-nio-8080-exec-5] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 08:41:23 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 08:41:31 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:41:31 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: a2aaa644-5d57-494c-b6d9-d3551d3a6c02
-2025-08-14 08:41:51 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:42:21 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:42:51 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:43:21 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:43:51 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:44:21 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:44:51 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:45:21 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:45:37 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:45:39 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 6410355e-47b7-45c6-b226-046adce24dbe, Message: Show me all USD accounts
-2025-08-14 08:45:39 [http-nio-8080-exec-2] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:45:39 [http-nio-8080-exec-2] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 08:45:39 [http-nio-8080-exec-2] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 08:45:39 [http-nio-8080-exec-2] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 08:45:39 [http-nio-8080-exec-2] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 08:45:39 [http-nio-8080-exec-2] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 08:45:39 [http-nio-8080-exec-2] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 08:45:47 [http-nio-8080-exec-2] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:45:47 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 6410355e-47b7-45c6-b226-046adce24dbe
-2025-08-14 08:46:05 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:46:07 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 31e465a5-d382-4b98-a076-95203d2bf135, Message: Can we run End-of-Day?
-2025-08-14 08:46:07 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:46:07 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Can we run End-of-Day?
-2025-08-14 08:46:10 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:46:12 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 08:46:12 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 31e465a5-d382-4b98-a076-95203d2bf135
-2025-08-14 08:46:40 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:47:10 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:47:21 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:47:51 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:48:21 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:48:51 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:49:21 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:49:51 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:50:21 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:50:51 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:51:21 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:51:50 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 2c0d8d77-ee2f-48e1-a91c-856545b2c23c, Message: Show me all USD accounts
-2025-08-14 08:51:50 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:51:50 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 08:51:50 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 08:51:50 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 08:51:50 [http-nio-8080-exec-6] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 08:51:50 [http-nio-8080-exec-6] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 08:51:50 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 08:51:51 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:52:02 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:52:02 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 2c0d8d77-ee2f-48e1-a91c-856545b2c23c
-2025-08-14 08:52:19 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:52:49 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:53:19 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:53:46 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:53:48 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 69f98650-e028-4514-8568-ec76ead9d045, Message: Show me all USD accounts
-2025-08-14 08:53:48 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 08:53:48 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 08:53:48 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 08:53:48 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 08:53:48 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 08:53:48 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 08:53:48 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 08:54:01 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 08:54:01 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 69f98650-e028-4514-8568-ec76ead9d045
-2025-08-14 08:54:16 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:54:46 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:55:14 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:55:44 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:56:14 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:58:28 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:59:03 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 08:59:33 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:00:04 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:01:26 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:01:53 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:01:56 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: a7765e41-0d18-454f-a739-86842523a417, Message: Show me all USD accounts
-2025-08-14 09:01:56 [http-nio-8080-exec-9] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 09:01:56 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 09:01:56 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 09:01:56 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 09:01:56 [http-nio-8080-exec-9] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 09:01:56 [http-nio-8080-exec-9] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 09:01:56 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 09:02:10 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 09:02:10 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: a7765e41-0d18-454f-a739-86842523a417
-2025-08-14 09:02:23 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:02:53 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:03:05 [http-nio-8080-exec-2] ERROR [c.t.a.c.GlobalExceptionHandler] - Unexpected exception: No static resource socket.io.
-org.springframework.web.servlet.resource.NoResourceFoundException: No static resource socket.io.
-	at org.springframework.web.servlet.resource.ResourceHttpRequestHandler.handleRequest(ResourceHttpRequestHandler.java:585)
-	at org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter.handle(HttpRequestHandlerAdapter.java:52)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
-	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
-	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:205)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:109)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:174)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:149)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:340)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1744)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2025-08-14 09:03:23 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:03:53 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:04:23 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:04:53 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:05:23 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:05:54 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:06:25 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:06:56 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:07:27 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:07:58 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:08:29 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:09:00 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:09:31 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:10:02 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:10:33 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:11:03 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:11:33 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:12:03 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:12:33 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:13:03 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:13:33 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:14:03 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:14:14 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:14:17 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: ceb0ad4c-e279-4efd-b62a-ce772859ebec, Message: Show me all USD accounts
-2025-08-14 09:14:17 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 09:14:17 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 09:14:17 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 09:14:17 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 09:14:17 [http-nio-8080-exec-6] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 09:14:17 [http-nio-8080-exec-6] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 09:14:17 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 09:14:20 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:14:28 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 09:14:28 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: ceb0ad4c-e279-4efd-b62a-ce772859ebec
-2025-08-14 09:15:55 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:15:57 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:16:42 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:17:12 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:17:42 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:18:12 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:18:42 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:19:12 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:19:42 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:20:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:20:44 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:21:15 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:21:45 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:22:15 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:22:45 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:23:16 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:23:47 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:24:18 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:24:49 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:25:20 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:25:51 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:26:22 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:26:53 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:27:52 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:32:22 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:33:14 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:33:31 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: f1f2bd3a-f82d-4deb-8066-6cacd494c339, Message: uol.com
-2025-08-14 09:33:31 [http-nio-8080-exec-1] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 09:33:31 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: uol.com
-2025-08-14 09:33:41 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 09:33:41 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: f1f2bd3a-f82d-4deb-8066-6cacd494c339
-2025-08-14 09:33:44 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:34:07 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:34:13 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 00483f29-0858-4f14-9f8e-63805cf384c7, Message: what are you capable of/
-2025-08-14 09:34:13 [http-nio-8080-exec-3] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 09:34:13 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: what are you capable of/
-2025-08-14 09:34:22 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 09:34:22 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 00483f29-0858-4f14-9f8e-63805cf384c7
-2025-08-14 09:34:37 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:35:07 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:35:37 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:36:07 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:36:37 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:37:07 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:38:54 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:39:24 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 09:41:26 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 11:08:04 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 11:24:51 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 11:55:01 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:10:36 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:11:05 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:11:35 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:12:05 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:12:35 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:13:05 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:13:35 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:14:06 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:14:36 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:15:06 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:15:36 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:16:06 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:16:36 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:17:06 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:17:36 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:18:06 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:18:36 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:19:06 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:19:36 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:20:06 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:20:36 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:21:06 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:21:36 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:22:06 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:22:37 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:23:08 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:23:39 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:24:10 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:24:41 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:26:00 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:26:30 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:27:00 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:27:24 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:27:28 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 6b191536-1ce9-4ffe-b92d-75138995f27d, Message: Show me all USD accounts
-2025-08-14 12:27:28 [http-nio-8080-exec-3] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 12:27:28 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 12:27:28 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 12:27:28 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 12:27:28 [http-nio-8080-exec-3] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 12:27:28 [http-nio-8080-exec-3] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 12:27:28 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 12:27:39 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 12:27:39 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 6b191536-1ce9-4ffe-b92d-75138995f27d
-2025-08-14 12:27:54 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:28:24 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:28:54 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:29:24 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:29:54 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:30:24 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:30:55 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:31:26 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:36:05 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:36:35 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:37:05 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:37:35 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:38:06 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:38:37 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:39:07 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:39:19 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:39:22 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 88d291ec-1e02-4be7-9772-34dfb4f78da6, Message: Show me all USD accounts
-2025-08-14 12:39:22 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 12:39:22 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 12:39:22 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 12:39:22 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 12:39:22 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 12:39:22 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 12:39:22 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 12:39:32 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 12:39:32 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 88d291ec-1e02-4be7-9772-34dfb4f78da6
-2025-08-14 12:39:49 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:40:19 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:40:49 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:41:19 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:41:45 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:41:48 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 40db804d-50c3-4e07-b8b7-91d6da9adf1f, Message: Show me all USD accounts
-2025-08-14 12:41:48 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 12:41:48 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 12:41:48 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 12:41:48 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 12:41:48 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 12:41:48 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 12:41:48 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 12:41:59 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 12:41:59 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 40db804d-50c3-4e07-b8b7-91d6da9adf1f
-2025-08-14 12:42:15 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:42:45 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:43:15 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:43:45 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:50:41 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:51:11 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:51:41 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:52:11 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:52:41 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:53:11 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:53:41 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:54:12 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:54:43 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:55:14 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:55:45 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:56:17 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:56:47 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:57:17 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:57:47 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:58:17 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:58:48 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:59:18 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 12:59:48 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:00:18 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:00:48 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:01:18 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:01:48 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:02:18 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:02:49 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:03:20 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:03:51 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:04:22 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:04:53 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:05:24 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:05:55 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 13:16:37 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:01:09 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:01:38 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:02:08 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:02:38 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:03:09 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:20:59 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:40:05 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:40:35 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:41:05 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:41:35 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:42:06 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 14:52:44 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:01:44 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:02:14 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:02:44 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:03:15 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:03:46 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:04:17 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:04:38 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:05:08 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:05:38 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:05:57 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:06:27 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:06:57 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:07:27 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:07:52 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:07:53 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:08:02 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 0dd1410c-ff08-411f-b3c0-8b197034f1ee, Message: what can you do?
-2025-08-14 15:08:02 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 15:08:02 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: what can you do?
-2025-08-14 15:08:13 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 15:08:13 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 0dd1410c-ff08-411f-b3c0-8b197034f1ee
-2025-08-14 15:08:23 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:08:50 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 26d73ec5-706f-4aa0-a872-a017f923be30, Message: 1+1=. ?
-2025-08-14 15:08:50 [http-nio-8080-exec-2] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 15:08:50 [http-nio-8080-exec-2] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: 1+1=. ?
-2025-08-14 15:08:53 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:08:55 [http-nio-8080-exec-2] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 15:08:55 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 26d73ec5-706f-4aa0-a872-a017f923be30
-2025-08-14 15:09:14 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 10e4b9cd-dbbd-4401-89a4-72908e0e07b5, Message: make a Tetris game in html and javascript
-2025-08-14 15:09:14 [http-nio-8080-exec-5] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 15:09:14 [http-nio-8080-exec-5] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: make a Tetris game in html and javascript
-2025-08-14 15:09:23 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:09:52 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 15:09:52 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 10e4b9cd-dbbd-4401-89a4-72908e0e07b5
-2025-08-14 15:09:53 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:10:23 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:10:32 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: d3bb8f9a-0901-45e0-9436-89258d2264b3, Message: Can we run End-of-Day?
-2025-08-14 15:10:32 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 15:10:32 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Can we run End-of-Day?
-2025-08-14 15:10:41 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
-2025-08-14 15:10:41 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: d3bb8f9a-0901-45e0-9436-89258d2264b3
-2025-08-14 15:10:53 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:11:23 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:11:32 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 019b72c1-307a-4d18-b028-37bb9392c87c, Message: reply with smaller as possible response. Show me all USD accounts
-2025-08-14 15:11:32 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 15:11:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: reply with smaller as possible response. Show me all USD accounts
-2025-08-14 15:11:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 15:11:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 15:11:32 [http-nio-8080-exec-4] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 15:11:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 15:11:32 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 15:11:41 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 15:11:41 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 019b72c1-307a-4d18-b028-37bb9392c87c
-2025-08-14 15:11:53 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:12:23 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:12:53 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:13:23 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:13:53 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:14:24 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 15:32:14 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 16:40:12 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 16:42:22 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 16:42:52 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 16:59:06 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:41:16 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:41:45 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:42:15 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:42:45 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:42:53 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:43:05 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 57d52f42-4745-422a-af33-387b4258eade, Message: Show me all USD accounts
-2025-08-14 17:43:05 [http-nio-8080-exec-3] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-14 17:43:05 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-14 17:43:05 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-14 17:43:05 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-14 17:43:05 [http-nio-8080-exec-3] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-14 17:43:05 [http-nio-8080-exec-3] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-14 17:43:05 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-14 17:43:17 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-14 17:43:17 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 57d52f42-4745-422a-af33-387b4258eade
-2025-08-14 17:43:23 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:43:53 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:44:23 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:44:53 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:45:23 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:45:53 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:46:23 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:46:54 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:47:25 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:47:56 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:48:27 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:48:57 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:49:35 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-14 17:50:18 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-15 08:27:37 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-15 08:27:43 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-15 08:27:45 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: d3dc0590-d4f0-43dd-bf7b-e1d3e5939c1f, Message: Show me all USD accounts
-2025-08-15 08:27:45 [http-nio-8080-exec-9] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-15 08:27:45 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
-2025-08-15 08:27:45 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-15 08:27:45 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-15 08:27:45 [http-nio-8080-exec-9] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-15 08:27:45 [http-nio-8080-exec-9] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-15 08:27:45 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-15 08:27:57 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-15 08:27:57 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: d3dc0590-d4f0-43dd-bf7b-e1d3e5939c1f
-2025-08-15 08:28:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-15 08:28:20 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 6ce7e523-d0f5-48dc-bb74-f2d129f2ba36, Message: Show me all USD accounts in a table format
-2025-08-15 08:28:20 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
-2025-08-15 08:28:20 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts in a table format
-2025-08-15 08:28:20 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
-2025-08-15 08:28:20 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
-2025-08-15 08:28:20 [http-nio-8080-exec-6] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
-2025-08-15 08:28:20 [http-nio-8080-exec-6] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
-2025-08-15 08:28:20 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
-2025-08-15 08:28:31 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
-2025-08-15 08:28:31 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 6ce7e523-d0f5-48dc-bb74-f2d129f2ba36
-2025-08-15 08:28:43 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-08-15 08:29:48 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 14:59:57 [main] INFO  [com.trms.ai.TrmsAiApplication] - Starting TrmsAiApplication using Java 21.0.8 with PID 44260 (/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend)
+2025-08-27 14:59:57 [main] DEBUG [com.trms.ai.TrmsAiApplication] - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-08-27 14:59:57 [main] INFO  [com.trms.ai.TrmsAiApplication] - The following 1 profile is active: "dev"
+2025-08-27 14:59:58 [main] INFO  [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat initialized with port 8080 (http)
+2025-08-27 14:59:58 [main] INFO  [o.a.catalina.core.StandardService] - Starting service [Tomcat]
+2025-08-27 14:59:58 [main] INFO  [o.a.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-08-27 14:59:58 [main] INFO  [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2025-08-27 14:59:58 [main] INFO  [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 470 ms
+2025-08-27 14:59:58 [main] INFO  [com.trms.ai.service.TrmsAiService] - TrmsAiService initialized with Ollama ChatModel and hybrid function calling
+2025-08-27 14:59:58 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Configuring Ollama HTTP Client for TRMS operations
+2025-08-27 14:59:58 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Ollama Base URL: http://localhost:11434
+2025-08-27 14:59:58 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Ollama Model: qwen3:1.7b
+2025-08-27 14:59:58 [main] INFO  [o.s.b.a.e.web.EndpointLinksResolver] - Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-08-27 14:59:58 [main] INFO  [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat started on port 8080 (http) with context path ''
+2025-08-27 14:59:58 [main] INFO  [com.trms.ai.TrmsAiApplication] - Started TrmsAiApplication in 1.179 seconds (process running for 1.31)
+2025-08-27 15:00:00 [http-nio-8080-exec-1] INFO  [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-08-27 15:00:00 [http-nio-8080-exec-1] INFO  [o.s.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
+2025-08-27 15:00:00 [http-nio-8080-exec-1] INFO  [o.s.web.servlet.DispatcherServlet] - Completed initialization in 1 ms
+2025-08-27 15:00:00 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:00:12 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:00:16 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 847bebe4-4d05-4877-9126-0a3c47c97d16, Message: Show me all USD accounts
+2025-08-27 15:00:16 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:00:16 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
+2025-08-27 15:00:16 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
+2025-08-27 15:00:16 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
+2025-08-27 15:00:16 [http-nio-8080-exec-4] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
+2025-08-27 15:00:16 [http-nio-8080-exec-4] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
+2025-08-27 15:00:16 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
+2025-08-27 15:00:25 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
+2025-08-27 15:00:25 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 847bebe4-4d05-4877-9126-0a3c47c97d16
+2025-08-27 15:00:42 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:01:12 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:01:42 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:01:53 [http-nio-8080-exec-10] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 304963e2-68f7-4a68-92b8-7502fe3e0a61, Message: make it in a table
+2025-08-27 15:01:53 [http-nio-8080-exec-10] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:01:53 [http-nio-8080-exec-10] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: make it in a table
+2025-08-27 15:02:09 [http-nio-8080-exec-10] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
+2025-08-27 15:02:09 [http-nio-8080-exec-10] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 304963e2-68f7-4a68-92b8-7502fe3e0a61
+2025-08-27 15:02:12 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:02:42 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:02:44 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 02c8062a-b0f2-4411-a1f4-41fa37c02651, Message: as a table in html format
+2025-08-27 15:02:44 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:02:44 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: as a table in html format
+2025-08-27 15:03:00 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
+2025-08-27 15:03:00 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 02c8062a-b0f2-4411-a1f4-41fa37c02651
+2025-08-27 15:03:12 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:03:42 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:04:04 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 1f6b3979-13ae-409e-86f6-164cb62bf78b, Message: as a html format rendering in the body
+2025-08-27 15:04:04 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:04:04 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: as a html format rendering in the body
+2025-08-27 15:04:12 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:04:29 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
+2025-08-27 15:04:29 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 1f6b3979-13ae-409e-86f6-164cb62bf78b
+2025-08-27 15:04:42 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:05:12 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:05:41 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:06:11 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:06:38 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 25f7de7e-a28f-49e6-a7ec-6760f5d4a652, Message: can I run the EOD ?
+2025-08-27 15:06:38 [http-nio-8080-exec-7] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:06:38 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: can I run the EOD ?
+2025-08-27 15:06:38 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Executing checkEODReadiness
+2025-08-27 15:06:38 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
+2025-08-27 15:06:38 [http-nio-8080-exec-7] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
+2025-08-27 15:06:38 [http-nio-8080-exec-7] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
+2025-08-27 15:06:38 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
+2025-08-27 15:06:41 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:06:48 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
+2025-08-27 15:06:48 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 25f7de7e-a28f-49e6-a7ec-6760f5d4a652
+2025-08-27 15:07:11 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:07:25 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 1df5a1d5-5f42-4879-b1d1-a37d13f1737e, Message: what should I do?
+2025-08-27 15:07:25 [http-nio-8080-exec-1] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:07:25 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: what should I do?
+2025-08-27 15:07:30 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
+2025-08-27 15:07:30 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 1df5a1d5-5f42-4879-b1d1-a37d13f1737e
+2025-08-27 15:07:41 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:07:46 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b6422260-78c9-44d5-8dfb-883509cdc2f6, Message: what I need to do to run the EOD ?
+2025-08-27 15:07:46 [http-nio-8080-exec-3] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:07:46 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: what I need to do to run the EOD ?
+2025-08-27 15:07:46 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Executing checkEODReadiness
+2025-08-27 15:07:46 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
+2025-08-27 15:07:46 [http-nio-8080-exec-3] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
+2025-08-27 15:07:46 [http-nio-8080-exec-3] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
+2025-08-27 15:07:46 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
+2025-08-27 15:07:55 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
+2025-08-27 15:07:55 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b6422260-78c9-44d5-8dfb-883509cdc2f6
+2025-08-27 15:08:11 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:08:41 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: f7eb461f-0e8d-4be5-bf89-ead541cb8dbb, Message: can you fix for me, please ?
+2025-08-27 15:08:41 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:08:41 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: can you fix for me, please ?
+2025-08-27 15:08:41 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:08:45 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
+2025-08-27 15:08:45 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: f7eb461f-0e8d-4be5-bf89-ead541cb8dbb
+2025-08-27 15:09:11 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:09:41 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:10:11 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:10:24 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:10:30 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 30444975-d183-4f08-9eba-d621b5913bfa, Message: Show me all USD accounts
+2025-08-27 15:10:30 [http-nio-8080-exec-9] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:10:30 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
+2025-08-27 15:10:30 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
+2025-08-27 15:10:30 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
+2025-08-27 15:10:30 [http-nio-8080-exec-9] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
+2025-08-27 15:10:30 [http-nio-8080-exec-9] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
+2025-08-27 15:10:30 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
+2025-08-27 15:10:38 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
+2025-08-27 15:10:38 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 30444975-d183-4f08-9eba-d621b5913bfa
+2025-08-27 15:10:54 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:11:09 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 7e82bdeb-8ebb-47c9-a3be-ff66d39f2584, Message: can you transfer 1000 from Goldman Sachs USD Trading Account to Citibank USD Nostro Account
+2025-08-27 15:11:09 [http-nio-8080-exec-7] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:11:09 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: can you transfer 1000 from Goldman Sachs USD Trading Account to Citibank USD Nostro Account
+2025-08-27 15:11:09 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
+2025-08-27 15:11:09 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
+2025-08-27 15:11:09 [http-nio-8080-exec-7] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
+2025-08-27 15:11:09 [http-nio-8080-exec-7] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
+2025-08-27 15:11:09 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
+2025-08-27 15:11:20 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
+2025-08-27 15:11:20 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 7e82bdeb-8ebb-47c9-a3be-ff66d39f2584
+2025-08-27 15:11:24 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:11:54 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:12:24 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:12:54 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:13:24 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:13:54 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:14:24 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:14:37 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:14:42 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 435cf4b9-2f24-4a22-b488-ae6a02770dac, Message: Show me all USD accounts
+2025-08-27 15:14:42 [http-nio-8080-exec-3] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:14:42 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Show me all USD accounts
+2025-08-27 15:14:42 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
+2025-08-27 15:14:42 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
+2025-08-27 15:14:42 [http-nio-8080-exec-3] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
+2025-08-27 15:14:42 [http-nio-8080-exec-3] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
+2025-08-27 15:14:42 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
+2025-08-27 15:14:54 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
+2025-08-27 15:14:54 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 435cf4b9-2f24-4a22-b488-ae6a02770dac
+2025-08-27 15:14:54 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:15:07 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:15:12 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 1cf351d1-fda7-41a7-b947-e3a7bf5cb106, Message: what tolls you have?
+2025-08-27 15:15:12 [http-nio-8080-exec-9] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:15:12 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: what tolls you have?
+2025-08-27 15:15:22 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
+2025-08-27 15:15:22 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 1cf351d1-fda7-41a7-b947-e3a7bf5cb106
+2025-08-27 15:15:24 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:15:37 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:15:54 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:15:55 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:16:24 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:16:25 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:16:29 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: f0207035-64d1-4925-926b-0b35b2ed0ec8, Message: Propose missing rate fixings
+2025-08-27 15:16:29 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:16:29 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Propose missing rate fixings
+2025-08-27 15:16:29 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Executing proposeRateFixings
+2025-08-27 15:16:29 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: proposeRateFixings
+2025-08-27 15:16:29 [http-nio-8080-exec-4] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching proposed rate fixings from TRMS: http://localhost:8090/api/v1/eod/missing-resets
+2025-08-27 15:16:29 [http-nio-8080-exec-4] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 rate fixing proposals
+2025-08-27 15:16:29 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 rate fixing proposals
+2025-08-27 15:16:40 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
+2025-08-27 15:16:40 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: f0207035-64d1-4925-926b-0b35b2ed0ec8
+2025-08-27 15:16:54 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:16:55 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:17:24 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:17:25 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:17:54 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:17:55 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:18:24 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:18:25 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:18:54 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:18:55 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:19:24 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:19:25 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:19:55 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:19:56 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:20:26 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:20:27 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:20:57 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:20:57 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:20:58 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:21:09 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b1d5b9b4-ec96-4ad6-9d97-75db028a426f, Message: Can we run End-of-Day?
+2025-08-27 15:21:09 [http-nio-8080-exec-3] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:21:09 [http-nio-8080-exec-3] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: Can we run End-of-Day?
+2025-08-27 15:21:15 [http-nio-8080-exec-3] INFO  [com.trms.ai.service.TrmsAiService] - Regular AI response generated successfully
+2025-08-27 15:21:15 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b1d5b9b4-ec96-4ad6-9d97-75db028a426f
+2025-08-27 15:21:27 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:21:28 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:21:54 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: af6c28e0-9868-48a5-afe6-f994a00fcefd, Message: call you check if EOD can be run ?
+2025-08-27 15:21:54 [http-nio-8080-exec-9] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-08-27 15:21:54 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message with hybrid function calling: call you check if EOD can be run ?
+2025-08-27 15:21:54 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Executing checkEODReadiness
+2025-08-27 15:21:54 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
+2025-08-27 15:21:54 [http-nio-8080-exec-9] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
+2025-08-27 15:21:54 [http-nio-8080-exec-9] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
+2025-08-27 15:21:54 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
+2025-08-27 15:21:57 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:21:58 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:22:02 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Hybrid function calling response generated successfully
+2025-08-27 15:22:02 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: af6c28e0-9868-48a5-afe6-f994a00fcefd
+2025-08-27 15:22:27 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:22:28 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:22:57 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:22:58 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:23:27 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:23:28 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:23:57 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:23:58 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:24:27 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:24:28 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:24:58 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:24:59 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:25:28 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:25:29 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:25:58 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:25:59 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:26:28 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:26:29 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:26:59 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:27:00 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:27:09 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:27:29 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 15:43:28 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 16:51:09 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:08:01 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:08:22 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:28:30 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:35:20 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:35:42 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:35:50 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:36:20 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:36:52 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:42:20 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 17:42:37 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 19:02:20 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-27 19:16:43 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:18:47 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:18:47 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:19:17 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:19:47 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:20:17 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:20:48 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:21:19 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:21:51 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:22:20 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:22:50 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:23:21 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:23:52 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:24:22 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:24:52 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:25:22 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:25:53 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:26:24 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:26:54 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:27:24 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:27:55 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:28:26 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:28:56 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:29:26 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:29:57 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:30:28 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:30:59 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:31:30 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:32:01 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:32:32 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:33:32 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:34:03 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:36:14 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:36:44 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:37:14 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:37:44 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:38:14 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:38:44 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:39:14 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:39:44 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:40:14 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:40:44 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:41:14 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:41:44 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:42:14 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:42:44 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:43:14 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:43:44 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:44:14 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 10:59:43 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:00:17 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:00:47 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:01:17 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:01:47 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:02:18 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:02:48 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:03:18 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-08-28 11:03:48 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  20:04 h
+[INFO] Finished at: 2025-08-28T11:04:04-04:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.2.0:run (default-cli) on project trms-ai-backend: Process terminated with exit code: 137 -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

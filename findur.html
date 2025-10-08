@@ -1,133 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Findur UI Clone</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #e0e0e0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  .window {
-    background-color: #c8d7e3;
-    border: 2px solid #7f8fa0;
-    border-radius: 6px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-    width: 700px;
-  }
-  .titlebar {
-    background: linear-gradient(#e8f0f8, #c8d7e3);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 4px 10px;
-    font-size: 14px;
-    font-weight: bold;
-    border-bottom: 1px solid #a0b0c0;
-    border-radius: 4px 4px 0 0;
-  }
-  .titlebar span {
-    margin-right: 15px;
-  }
-  .titlebar .controls {
-    display: flex;
-    gap: 6px;
-  }
-  .controls div {
-    width: 16px;
-    height: 16px;
-    border: 1px solid #555;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .controls .info { background-color: #1976d2; color: white; border-radius: 50%; }
-  .controls .min { background-color: #ffcc00; }
-  .controls .close { background-color: #d32f2f; color: white; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Findur V24.0 - Server</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  .navbar {
-    background-color: #d9e5f3;
-    padding: 6px 10px;
-    display: flex;
-    gap: 5px;
-    border-bottom: 1px solid #a0b0c0;
-  }
-  .nav-btn {
-    background-color: white;
-    border: 1px solid #aaa;
-    width: 80px;
-    height: 70px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    cursor: pointer;
-  }
-  .nav-btn img {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 5px;
-  }
+        body {
+            font-family: 'MS Sans Serif', sans-serif;
+            font-size: 11px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-  .bottombar {
-    background-color: #c8d7e3;
-    display: flex;
-    gap: 10px;
-    padding: 4px 6px;
-    border-top: 1px solid #a0b0c0;
-    border-radius: 0 0 4px 4px;
-  }
-  .bottombar img {
-    width: 24px;
-    height: 24px;
-  }
-</style>
+        /* Window Card Container */
+        .window-card {
+            background: #c0c0c0;
+            border: 2px outset #c0c0c0;
+            border-radius: 0;
+            box-shadow: 
+                4px 4px 8px rgba(0,0,0,0.3),
+                8px 8px 16px rgba(0,0,0,0.2);
+            width: 900px;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Window Title Bar - Classic Windows Style */
+        .title-bar {
+            background: linear-gradient(90deg, #0054e3 0%, #0080ff 100%);
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2px 4px;
+            color: white;
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        .title-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .title-section {
+            font-size: 11px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 2px;
+        }
+
+        .control-btn {
+            width: 16px;
+            height: 14px;
+            border: 1px outset #c0c0c0;
+            background: #c0c0c0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            cursor: pointer;
+            color: black;
+        }
+
+        .control-btn:active {
+            border: 1px inset #c0c0c0;
+        }
+
+        /* Main Window Area */
+        .window-body {
+            background: #c0c0c0;
+            height: calc(100% - 20px);
+            border-left: 1px solid #c0c0c0;
+            border-right: 1px solid #808080;
+            border-bottom: 1px solid #808080;
+        }
+
+        /* OpenLink Tab */
+        .tab-container {
+            background: #c0c0c0;
+            padding: 2px 4px 0 4px;
+        }
+
+        .openlink-tab {
+            background: linear-gradient(180deg, #4080ff 0%, #0060e0 100%);
+            color: white;
+            padding: 4px 12px;
+            border: 1px solid #000080;
+            border-bottom: none;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            position: relative;
+        }
+
+        /* Main Content Area */
+        .content-area {
+            background: linear-gradient(135deg, #4080ff 0%, #6090ff 50%, #80a0ff 100%);
+            margin: 0 4px;
+            border: 2px inset #c0c0c0;
+            height: calc(100% - 65px);
+            padding: 8px;
+        }
+
+        /* Modules Container */
+        .modules-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100%;
+            padding: 15px 20px;
+        }
+
+        /* Individual Module */
+        .module {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 8px;
+            width: 80px;
+            text-align: center;
+        }
+
+        .module:hover .module-btn {
+            border: 1px outset #e0e0e0;
+            background: #e0e0e0;
+        }
+
+        .module-btn {
+            width: 48px;
+            height: 48px;
+            border: 1px outset #c0c0c0;
+            background: #c0c0c0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 4px;
+            position: relative;
+        }
+
+        .module-btn:active {
+            border: 1px inset #c0c0c0;
+        }
+
+        .module-label {
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.7);
+            line-height: 11px;
+        }
+
+        /* Module Icons - Using CSS to create the specific icons */
+        .icon-trading {
+            width: 32px;
+            height: 32px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><text y="20" font-size="24" fill="%23008000">£</text></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        .icon-desktop {
+            width: 32px;
+            height: 32px;
+            background: #0080ff;
+            border: 2px solid #004080;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .icon-desktop::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: #004080;
+        }
+
+        .icon-market {
+            width: 32px;
+            height: 32px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M4 24 L8 20 L12 22 L16 16 L20 18 L24 12 L28 14" stroke="%23ff6600" stroke-width="2" fill="none"/><circle cx="8" cy="20" r="1.5" fill="%23ff6600"/><circle cx="12" cy="22" r="1.5" fill="%23ff6600"/><circle cx="16" cy="16" r="1.5" fill="%23ff6600"/><circle cx="20" cy="18" r="1.5" fill="%23ff6600"/></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        .icon-operations {
+            width: 32px;
+            height: 32px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="none" stroke="%23666" stroke-width="2"/><circle cx="16" cy="8" r="2" fill="%23666"/><circle cx="24" cy="16" r="2" fill="%23666"/><circle cx="16" cy="24" r="2" fill="%23666"/><circle cx="8" cy="16" r="2" fill="%23666"/></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        .icon-reference {
+            width: 32px;
+            height: 32px;
+            background: #8B4513;
+            border: 1px solid #654321;
+            border-radius: 1px;
+            position: relative;
+        }
+
+        .icon-reference::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            height: 2px;
+            background: #fff;
+            box-shadow: 0 4px 0 #fff, 0 8px 0 #fff, 0 12px 0 #fff;
+        }
+
+        .icon-admin {
+            width: 32px;
+            height: 32px;
+            background: #404040;
+            border: 1px solid #606060;
+            position: relative;
+        }
+
+        .icon-admin::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px solid #808080;
+        }
+
+        .icon-credit {
+            width: 32px;
+            height: 32px;
+            background: #006400;
+            border: 1px solid #004000;
+            position: relative;
+        }
+
+        .icon-credit::before {
+            content: '$';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Bottom Status Bar */
+        .status-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: #c0c0c0;
+            border-top: 1px solid #808080;
+            display: flex;
+            align-items: center;
+            padding: 1px 4px;
+            gap: 2px;
+        }
+
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            border: 1px outset #c0c0c0;
+            background: #c0c0c0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            cursor: pointer;
+        }
+
+        .status-icon:active {
+            border: 1px inset #c0c0c0;
+        }
+
+        /* Specific status icons using Unicode and simple graphics */
+        .icon-settings::before { content: '⚙'; }
+        .icon-folder::before { content: '📁'; }
+        .icon-info::before { content: 'ℹ'; }
+        .icon-network::before { content: '🌐'; }
+        .icon-warning::before { content: '⚠'; color: red; }
+        .icon-signal::before { content: '📶'; }
+        .icon-time::before { content: '🕐'; }
+        .icon-file::before { content: '📄'; }
+
+        /* Responsive adjustments for card */
+        @media (max-width: 1000px) {
+            .window-card {
+                width: 95vw;
+                height: 350px;
+            }
+            .modules-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 10px;
+            }
+            .module {
+                width: 60px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .window-card {
+                width: 98vw;
+                height: 300px;
+            }
+        }
+
+        /* Add draggable cursor for title bar */
+        .title-bar {
+            cursor: move;
+            user-select: none;
+        }
+    </style>
 </head>
 <body>
-
-<div class="window">
-  <div class="titlebar">
-    <div>
-      <span>Findur V24.0: Server</span>
-      <span style="color: #3f6fb5;">Database</span>
-      <span style="color: #3f6fb5;">User</span>
+    <div class="window-card">
+        <!-- Classic Windows Title Bar -->
+    <div class="title-bar">
+        <div class="title-left">
+            <span class="title-section">Findur V24.0: Server</span>
+            <span class="title-section">Database</span>
+            <span class="title-section">User</span>
+        </div>
+        <div class="window-controls">
+            <div class="control-btn" title="Minimize">_</div>
+            <div class="control-btn" title="Info" style="background: #0080ff; color: white;">i</div>
+            <div class="control-btn" title="Close" style="background: #ff0000; color: white;">×</div>
+        </div>
     </div>
-    <div class="controls">
-      <div class="info">i</div>
-      <div class="min">–</div>
-      <div class="close">X</div>
+
+    <!-- Window Body -->
+    <div class="window-body">
+        <!-- Tab Container -->
+        <div class="tab-container">
+            <div class="openlink-tab">OpenLink</div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content-area">
+            <!-- Modules Container -->
+            <div class="modules-container">
+                <!-- Trading Module -->
+                <div class="module" onclick="alert('Opening Trading module...')">
+                    <div class="module-btn">
+                        <div class="icon-trading"></div>
+                    </div>
+                    <div class="module-label">Trading</div>
+                </div>
+
+                <!-- Desktop Module -->
+                <div class="module" onclick="alert('Opening Desktop module...')">
+                    <div class="module-btn">
+                        <div class="icon-desktop"></div>
+                    </div>
+                    <div class="module-label">Desktop</div>
+                </div>
+
+                <!-- Market Module -->
+                <div class="module" onclick="alert('Opening Market module...')">
+                    <div class="module-btn">
+                        <div class="icon-market"></div>
+                    </div>
+                    <div class="module-label">Market</div>
+                </div>
+
+                <!-- Operations Module -->
+                <div class="module" onclick="alert('Opening Operations module...')">
+                    <div class="module-btn">
+                        <div class="icon-operations"></div>
+                    </div>
+                    <div class="module-label">Operations</div>
+                </div>
+
+                <!-- Reference Module -->
+                <div class="module" onclick="alert('Opening Reference module...')">
+                    <div class="module-btn">
+                        <div class="icon-reference"></div>
+                    </div>
+                    <div class="module-label">Reference</div>
+                </div>
+
+                <!-- Admin Module -->
+                <div class="module" onclick="alert('Opening Admin module...')">
+                    <div class="module-btn">
+                        <div class="icon-admin"></div>
+                    </div>
+                    <div class="module-label">Admin</div>
+                </div>
+
+                <!-- Credit Module -->
+                <div class="module" onclick="alert('Opening Credit module...')">
+                    <div class="module-btn">
+                        <div class="icon-credit"></div>
+                    </div>
+                    <div class="module-label">Credit</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Status Bar -->
+        <div class="status-bar">
+            <div class="status-icon icon-settings" title="Settings"></div>
+            <div class="status-icon icon-folder" title="Folder"></div>
+            <div class="status-icon icon-info" title="Information"></div>
+            <div class="status-icon icon-network" title="Network"></div>
+            <div class="status-icon icon-warning" title="Warning"></div>
+            <div class="status-icon icon-signal" title="Signal"></div>
+            <div class="status-icon icon-time" title="Time"></div>
+            <div class="status-icon icon-file" title="File"></div>
+        </div>
     </div>
-  </div>
+    </div>
 
-  <div class="navbar">
-    <div class="nav-btn"><img src="https://via.placeholder.com/24" alt="Trading">Trading</div>
-    <div class="nav-btn"><img src="https://via.placeholder.com/24" alt="Desktop">Desktop</div>
-    <div class="nav-btn"><img src="https://via.placeholder.com/24" alt="Market">Market</div>
-    <div class="nav-btn"><img src="https://via.placeholder.com/24" alt="Operations">Operations</div>
-    <div class="nav-btn"><img src="https://via.placeholder.com/24" alt="Reference">Reference</div>
-    <div class="nav-btn"><img src="https://via.placeholder.com/24" alt="Admin">Admin</div>
-    <div class="nav-btn"><img src="https://via.placeholder.com/24" alt="Credit">Credit</div>
-  </div>
+    <script>
+        // Add classic Windows button behavior
+        document.querySelectorAll('.module-btn, .status-icon, .control-btn').forEach(btn => {
+            btn.addEventListener('mousedown', function() {
+                this.style.border = '1px inset #c0c0c0';
+            });
+            
+            btn.addEventListener('mouseup', function() {
+                this.style.border = '1px outset #c0c0c0';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.border = '1px outset #c0c0c0';
+            });
+        });
 
-  <div class="bottombar">
-    <img src="https://via.placeholder.com/24" alt="icon1">
-    <img src="https://via.placeholder.com/24" alt="icon2">
-    <img src="https://via.placeholder.com/24" alt="icon3">
-    <img src="https://via.placeholder.com/24" alt="icon4">
-    <img src="https://via.placeholder.com/24" alt="icon5">
-    <img src="https://via.placeholder.com/24" alt="icon6">
-  </div>
-</div>
+        // Window control functionality
+        document.querySelector('.control-btn[title="Close"]').addEventListener('click', () => {
+            if (confirm('Close Findur application?')) {
+                window.close();
+            }
+        });
 
+        document.querySelector('.control-btn[title="Minimize"]').addEventListener('click', () => {
+            alert('Window would be minimized');
+        });
+
+        document.querySelector('.control-btn[title="Info"]').addEventListener('click', () => {
+            alert('Findur V24.0\\nOpenLink Financial Trading System\\nDatabase: Connected\\nUser: Admin');
+        });
+
+        // Make window draggable
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+        
+        const windowCard = document.querySelector('.window-card');
+        const titleBar = document.querySelector('.title-bar');
+
+        titleBar.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+
+        function dragStart(e) {
+            if (e.target.classList.contains('control-btn')) return; // Don't drag when clicking controls
+            
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+
+            if (e.target === titleBar || titleBar.contains(e.target)) {
+                isDragging = true;
+                titleBar.style.cursor = 'grabbing';
+            }
+        }
+
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+
+                xOffset = currentX;
+                yOffset = currentY;
+
+                windowCard.style.transform = `translate(${currentX}px, ${currentY}px)`;
+            }
+        }
+
+        function dragEnd(e) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+            titleBar.style.cursor = 'move';
+        }
+
+        // Add window focus effect
+        windowCard.addEventListener('mousedown', () => {
+            windowCard.style.zIndex = '1000';
+            windowCard.style.boxShadow = '6px 6px 12px rgba(0,0,0,0.4), 12px 12px 24px rgba(0,0,0,0.3)';
+        });
+
+        document.addEventListener('mousedown', (e) => {
+            if (!windowCard.contains(e.target)) {
+                windowCard.style.zIndex = '999';
+                windowCard.style.boxShadow = '4px 4px 8px rgba(0,0,0,0.3), 8px 8px 16px rgba(0,0,0,0.2)';
+            }
+        });
+    </script>
 </body>
 </html>
