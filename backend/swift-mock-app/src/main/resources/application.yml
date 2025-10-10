@@ -1,0 +1,38 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: swift-mock-app
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: true
+
+# SWIFT Mock Configuration
+swift:
+  mock:
+    # Local directories for file-based operations (relative to project root)
+    redemption-reports-dir: ${SWIFT_REDEMPTION_DIR:./data/redemption-reports}
+    eod-reports-dir: ${SWIFT_EOD_DIR:./data/eod-reports}
+    # Mock BIC codes
+    our-bic: MOCKUS33XXX
+    default-receiver-bic: TESTGB2LXXX
+
+# Actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# Logging
+logging:
+  level:
+    root: INFO
+    com.swift.mock: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"

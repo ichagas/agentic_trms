@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # TRMS AI Services Control Script
-# Manages Frontend, Spring AI Backend, and TRMS Mock Backend services
+# Manages Frontend, Spring AI Backend, TRMS Mock Backend, and SWIFT Mock services
 # Usage: ./trms-services.sh [start|stop|restart|status|logs]
 
 set -e
@@ -11,11 +11,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FRONTEND_DIR="$SCRIPT_DIR/frontend"
 AI_BACKEND_DIR="$SCRIPT_DIR/backend/trms-ai-backend"
 MOCK_BACKEND_DIR="$SCRIPT_DIR/backend/trms-mock-app"
+SWIFT_MOCK_DIR="$SCRIPT_DIR/backend/swift-mock-app"
 
 # Port Configuration
 FRONTEND_PORT=5174
 AI_BACKEND_PORT=8080
 MOCK_BACKEND_PORT=8090
+SWIFT_MOCK_PORT=8091
 
 # PID Files for tracking processes
 PID_DIR="$SCRIPT_DIR/.pids"
@@ -23,6 +25,7 @@ mkdir -p "$PID_DIR"
 FRONTEND_PID_FILE="$PID_DIR/frontend.pid"
 AI_BACKEND_PID_FILE="$PID_DIR/ai-backend.pid"
 MOCK_BACKEND_PID_FILE="$PID_DIR/mock-backend.pid"
+SWIFT_MOCK_PID_FILE="$PID_DIR/swift-mock.pid"
 
 # Colors for output
 RED='\033[0;31m'
@@ -182,26 +185,59 @@ start_ai_backend() {
     return 1
 }
 
+# Start SWIFT Mock
+start_swift_mock() {
+    log_info "Starting SWIFT Mock System..."
+
+    if [ ! -d "$SWIFT_MOCK_DIR" ]; then
+        log_error "SWIFT mock directory not found: $SWIFT_MOCK_DIR"
+        return 1
+    fi
+
+    cd "$SWIFT_MOCK_DIR"
+
+    # Start SWIFT mock in background
+    nohup mvn spring-boot:run > "$SCRIPT_DIR/logs/swift-mock.log" 2>&1 &
+    echo $! > "$SWIFT_MOCK_PID_FILE"
+
+    # Wait for backend to start
+    log_info "Waiting for SWIFT Mock to start..."
+    for i in {1..30}; do
+        if curl -s http://localhost:$SWIFT_MOCK_PORT/actuator/health > /dev/null 2>&1; then
+            log_success "SWIFT Mock started on http://localhost:$SWIFT_MOCK_PORT"
+            return 0
+        fi
+        sleep 2
+        echo -n "."
+    done
+    echo ""
+    log_error "SWIFT Mock failed to start within 60 seconds"
+    return 1
+}
+
 # Start all services
 start_services() {
     log_info "🚀 Starting TRMS AI Services..."
-    
+
     # Create logs directory
     mkdir -p "$SCRIPT_DIR/logs"
-    
+
     # Start services in order
     start_mock_backend
+    sleep 5
+    start_swift_mock
     sleep 5
     start_ai_backend
     sleep 5
     start_frontend
-    
+
     echo ""
     log_success "🎉 All TRMS services started successfully!"
     echo ""
-    echo "📱 Frontend:      http://localhost:$FRONTEND_PORT"
-    echo "🤖 AI Backend:    http://localhost:$AI_BACKEND_PORT"
-    echo "🏦 Mock Backend:  http://localhost:$MOCK_BACKEND_PORT"
+    echo "📱 Frontend:         http://localhost:$FRONTEND_PORT"
+    echo "🤖 AI Backend:       http://localhost:$AI_BACKEND_PORT"
+    echo "🏦 TRMS Mock:        http://localhost:$MOCK_BACKEND_PORT"
+    echo "💳 SWIFT Mock:       http://localhost:$SWIFT_MOCK_PORT"
     echo ""
     echo "📋 Use './trms-services.sh status' to check service health"
     echo "📋 Use './trms-services.sh logs' to view service logs"
@@ -210,14 +246,15 @@ start_services() {
 # Stop all services
 stop_services() {
     log_info "🛑 Stopping TRMS AI Services..."
-    
+
     kill_by_port $FRONTEND_PORT "Frontend"
     kill_by_port $AI_BACKEND_PORT "Spring AI Backend"
+    kill_by_port $SWIFT_MOCK_PORT "SWIFT Mock"
     kill_by_port $MOCK_BACKEND_PORT "TRMS Mock Backend"
-    
+
     # Clean up PID files
-    rm -f "$FRONTEND_PID_FILE" "$AI_BACKEND_PID_FILE" "$MOCK_BACKEND_PID_FILE"
-    
+    rm -f "$FRONTEND_PID_FILE" "$AI_BACKEND_PID_FILE" "$SWIFT_MOCK_PID_FILE" "$MOCK_BACKEND_PID_FILE"
+
     log_success "🎉 All TRMS services stopped successfully!"
 }
 
@@ -247,14 +284,25 @@ check_status() {
     # Mock Backend status
     if is_port_in_use $MOCK_BACKEND_PORT; then
         if curl -s http://localhost:$MOCK_BACKEND_PORT/actuator/health > /dev/null 2>&1; then
-            echo -e "🏦 Mock Backend:  ${GREEN}RUNNING${NC} (http://localhost:$MOCK_BACKEND_PORT)"
+            echo -e "🏦 TRMS Mock:     ${GREEN}RUNNING${NC} (http://localhost:$MOCK_BACKEND_PORT)"
         else
-            echo -e "🏦 Mock Backend:  ${YELLOW}STARTING${NC} (port open but not ready)"
+            echo -e "🏦 TRMS Mock:     ${YELLOW}STARTING${NC} (port open but not ready)"
         fi
     else
-        echo -e "🏦 Mock Backend:  ${RED}STOPPED${NC}"
+        echo -e "🏦 TRMS Mock:     ${RED}STOPPED${NC}"
     fi
-    
+
+    # SWIFT Mock status
+    if is_port_in_use $SWIFT_MOCK_PORT; then
+        if curl -s http://localhost:$SWIFT_MOCK_PORT/actuator/health > /dev/null 2>&1; then
+            echo -e "💳 SWIFT Mock:    ${GREEN}RUNNING${NC} (http://localhost:$SWIFT_MOCK_PORT)"
+        else
+            echo -e "💳 SWIFT Mock:    ${YELLOW}STARTING${NC} (port open but not ready)"
+        fi
+    else
+        echo -e "💳 SWIFT Mock:    ${RED}STOPPED${NC}"
+    fi
+
     echo ""
     
     # System resource usage
@@ -293,12 +341,20 @@ show_logs() {
                 log_warning "AI Backend log file not found"
             fi
             ;;
-        mock|mock-backend)
+        mock|mock-backend|trms)
             if [ -f "$SCRIPT_DIR/logs/mock-backend.log" ]; then
-                log_info "🏦 Mock Backend Logs (last 50 lines):"
+                log_info "🏦 TRMS Mock Logs (last 50 lines):"
                 tail -50 "$SCRIPT_DIR/logs/mock-backend.log"
             else
-                log_warning "Mock Backend log file not found"
+                log_warning "TRMS Mock log file not found"
+            fi
+            ;;
+        swift|swift-mock)
+            if [ -f "$SCRIPT_DIR/logs/swift-mock.log" ]; then
+                log_info "💳 SWIFT Mock Logs (last 50 lines):"
+                tail -50 "$SCRIPT_DIR/logs/swift-mock.log"
+            else
+                log_warning "SWIFT Mock log file not found"
             fi
             ;;
         all|*)
@@ -307,6 +363,8 @@ show_logs() {
             show_logs ai-backend
             echo ""
             show_logs mock-backend
+            echo ""
+            show_logs swift-mock
             ;;
     esac
 }
@@ -339,12 +397,20 @@ health_check() {
         echo -e "🤖 AI Backend:    ${RED}UNHEALTHY${NC} ($ai_health)"
     fi
     
-    # Mock Backend health
+    # TRMS Mock health
     mock_health=$(curl -s http://localhost:$MOCK_BACKEND_PORT/actuator/health 2>/dev/null | grep -o '"status":"UP"' || echo "ERROR")
     if [ "$mock_health" = '"status":"UP"' ]; then
-        echo -e "🏦 Mock Backend:  ${GREEN}HEALTHY${NC}"
+        echo -e "🏦 TRMS Mock:     ${GREEN}HEALTHY${NC}"
     else
-        echo -e "🏦 Mock Backend:  ${RED}UNHEALTHY${NC}"
+        echo -e "🏦 TRMS Mock:     ${RED}UNHEALTHY${NC}"
+    fi
+
+    # SWIFT Mock health
+    swift_health=$(curl -s http://localhost:$SWIFT_MOCK_PORT/actuator/health 2>/dev/null | grep -o '"status":"UP"' || echo "ERROR")
+    if [ "$swift_health" = '"status":"UP"' ]; then
+        echo -e "💳 SWIFT Mock:    ${GREEN}HEALTHY${NC}"
+    else
+        echo -e "💳 SWIFT Mock:    ${RED}UNHEALTHY${NC}"
     fi
 }
 
@@ -361,7 +427,7 @@ show_usage() {
     echo "  restart        Restart all TRMS services"
     echo "  status         Show service status"
     echo "  health         Run health checks"
-    echo "  logs [service] Show logs (all/frontend/ai-backend/mock-backend)"
+    echo "  logs [service] Show logs (all/frontend/ai-backend/trms/swift)"
     echo "  help           Show this help message"
     echo ""
     echo "Examples:"
@@ -369,12 +435,14 @@ show_usage() {
     echo "  $0 stop                 # Stop all services"
     echo "  $0 status               # Check status"
     echo "  $0 logs frontend        # Show frontend logs"
+    echo "  $0 logs swift           # Show SWIFT mock logs"
     echo "  $0 health               # Run health checks"
     echo ""
     echo "Services:"
     echo "  📱 Frontend (React):     http://localhost:$FRONTEND_PORT"
     echo "  🤖 AI Backend (Spring):  http://localhost:$AI_BACKEND_PORT"
-    echo "  🏦 Mock Backend (TRMS):  http://localhost:$MOCK_BACKEND_PORT"
+    echo "  🏦 TRMS Mock:            http://localhost:$MOCK_BACKEND_PORT"
+    echo "  💳 SWIFT Mock:           http://localhost:$SWIFT_MOCK_PORT"
 }
 
 # Main script logic

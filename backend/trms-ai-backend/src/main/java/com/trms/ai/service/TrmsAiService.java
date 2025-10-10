@@ -24,36 +24,53 @@ public class TrmsAiService {
 
     private final ChatClient chatClient;
     private final TrmsFunctions trmsFunctions;
+    private final SwiftFunctions swiftFunctions;
 
     private final String SYSTEM_PROMPT = """
-        You are a helpful Treasury and Risk Management System (TRMS) AI assistant.
-        
-        You have access to the following functions to interact with the TRMS system:
+        You are a helpful Treasury and Risk Management System (TRMS) AI assistant with integrated SWIFT messaging capabilities.
+
+        You have access to the following TRMS functions:
         - getAccountsByCurrency: Get accounts filtered by currency (USD, EUR, GBP, JPY)
         - checkAccountBalance: Check balance for a specific account by account ID
         - bookTransaction: Book transactions between accounts
         - checkEODReadiness: Check End of Day processing readiness
         - proposeRateFixings: Get proposed rate fixings for missing resets
-        
-        Always use the appropriate function to get real data from the TRMS system when users ask about:
+
+        You also have access to SWIFT messaging functions:
+        - sendSwiftPayment: Send payment via SWIFT network (MT103 message)
+        - checkSwiftMessageStatus: Check status of a SWIFT message
+        - getSwiftMessagesByAccount: Get all SWIFT messages for an account
+        - getSwiftMessagesByTransaction: Get SWIFT messages for a transaction
+        - reconcileSwiftMessages: Reconcile SWIFT messages with TRMS transactions
+        - getUnreconciledMessages: Get unreconciled SWIFT messages
+        - processRedemptionReport: Process redemption report file (automates manual data entry)
+        - verifyEODReports: Verify EOD reports in shared drive
+
+        Always use the appropriate function to get real data from the systems when users ask about:
         - Account information or balances
         - Transactions or transfers
-        - End of day processing
+        - SWIFT payments and message status
+        - Reconciliation between TRMS and SWIFT
+        - End of day processing and reports
+        - Redemption reports processing
         - Rate fixings or market data
-        
+
         Provide clear, professional responses about financial operations.
         When you retrieve data, format it clearly and explain what the information means.
         If a function call fails, explain the error and suggest alternatives.
         """;
 
     @Autowired
-    public TrmsAiService(@Qualifier("ollamaChatModel") ChatModel chatModel, TrmsFunctions trmsFunctions) {
+    public TrmsAiService(@Qualifier("ollamaChatModel") ChatModel chatModel,
+                        TrmsFunctions trmsFunctions,
+                        SwiftFunctions swiftFunctions) {
         this.trmsFunctions = trmsFunctions;
+        this.swiftFunctions = swiftFunctions;
         this.chatClient = ChatClient.builder(chatModel)
             .defaultSystem(SYSTEM_PROMPT)
             .build();
-        
-        logger.info("TrmsAiService initialized with Ollama ChatModel and hybrid function calling");
+
+        logger.info("TrmsAiService initialized with Ollama ChatModel, TRMS and SWIFT function calling");
     }
 
     /**
@@ -168,12 +185,58 @@ public class TrmsAiService {
                 logger.info("Executing proposeRateFixings");
                 return executeProposeRateFixings();
             }
-            
+
+            // SWIFT FUNCTION CALLS
+
+            // Check for SWIFT message status queries
+            if ((message.contains("swift") || message.contains("message")) &&
+                (message.contains("status") || message.contains("check")) &&
+                message.contains("swift-msg-")) {
+                String messageId = extractSwiftMessageId(message);
+                if (messageId != null) {
+                    logger.info("Executing checkSwiftMessageStatus with message: {}", messageId);
+                    return executeCheckSwiftMessageStatus(messageId);
+                }
+            }
+
+            // Check for SWIFT messages by account
+            if ((message.contains("swift") && message.contains("account")) ||
+                (message.contains("messages") && message.contains("acc-"))) {
+                String accountId = extractAccountId(message);
+                if (accountId != null) {
+                    logger.info("Executing getSwiftMessagesByAccount with account: {}", accountId);
+                    return executeGetSwiftMessagesByAccount(accountId);
+                }
+            }
+
+            // Check for unreconciled messages
+            if (message.contains("unreconciled") ||
+                (message.contains("reconcil") && message.contains("swift"))) {
+                logger.info("Executing getUnreconciledMessages");
+                return executeGetUnreconciledMessages();
+            }
+
+            // Check for redemption report processing
+            if (message.contains("redemption") && message.contains("report")) {
+                logger.info("Executing processRedemptionReport");
+                return executeProcessRedemptionReport("redemption_report_latest.csv");
+            }
+
+            // Check for EOD report verification
+            if (message.contains("verify") && message.contains("eod") && message.contains("report")) {
+                logger.info("Executing verifyEODReports");
+                String reportDate = extractDate(message);
+                if (reportDate == null) {
+                    reportDate = java.time.LocalDate.now().toString();
+                }
+                return executeVerifyEODReports(reportDate);
+            }
+
         } catch (Exception e) {
             logger.error("Error executing function: {}", e.getMessage());
             return "Error executing function: " + e.getMessage();
         }
-        
+
         return null; // No function execution needed
     }
     
@@ -187,10 +250,25 @@ public class TrmsAiService {
     
     private String extractAccountId(String message) {
         // Simple regex to find account IDs like ACC-001-USD
-        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("acc-\\d+-\\w+", 
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("acc-\\d+-\\w+",
             java.util.regex.Pattern.CASE_INSENSITIVE);
         java.util.regex.Matcher matcher = pattern.matcher(message);
         return matcher.find() ? matcher.group().toUpperCase() : null;
+    }
+
+    private String extractSwiftMessageId(String message) {
+        // Extract SWIFT message IDs like SWIFT-MSG-00001
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("swift-msg-\\d+",
+            java.util.regex.Pattern.CASE_INSENSITIVE);
+        java.util.regex.Matcher matcher = pattern.matcher(message);
+        return matcher.find() ? matcher.group().toUpperCase() : null;
+    }
+
+    private String extractDate(String message) {
+        // Extract dates in YYYY-MM-DD format
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
+        java.util.regex.Matcher matcher = pattern.matcher(message);
+        return matcher.find() ? matcher.group() : null;
     }
     
     private String executeGetAccountsByCurrency(String currency) {
@@ -248,7 +326,75 @@ public class TrmsAiService {
     private String formatRateFixingsData(java.util.List<?> rateResets) {
         return "RATE FIXINGS:\n" + rateResets.toString();
     }
-    
+
+    // ========== SWIFT EXECUTION FUNCTIONS ==========
+
+    private String executeCheckSwiftMessageStatus(String messageId) {
+        try {
+            var request = new com.trms.ai.service.SwiftFunctions.CheckSwiftStatusRequest(messageId);
+            var status = swiftFunctions.checkSwiftMessageStatus().apply(request);
+            return formatSwiftStatusData(status);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to check SWIFT message status: " + e.getMessage());
+        }
+    }
+
+    private String executeGetSwiftMessagesByAccount(String accountId) {
+        try {
+            var request = new com.trms.ai.service.SwiftFunctions.GetSwiftMessagesByAccountRequest(accountId);
+            var messages = swiftFunctions.getSwiftMessagesByAccount().apply(request);
+            return formatSwiftMessagesData(messages);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get SWIFT messages: " + e.getMessage());
+        }
+    }
+
+    private String executeGetUnreconciledMessages() {
+        try {
+            var request = new com.trms.ai.service.SwiftFunctions.GetUnreconciledMessagesRequest();
+            var messages = swiftFunctions.getUnreconciledMessages().apply(request);
+            return formatSwiftMessagesData(messages);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get unreconciled messages: " + e.getMessage());
+        }
+    }
+
+    private String executeProcessRedemptionReport(String fileName) {
+        try {
+            var request = new com.trms.ai.service.SwiftFunctions.ProcessRedemptionReportRequest(fileName);
+            var result = swiftFunctions.processRedemptionReport().apply(request);
+            return formatRedemptionReportData(result);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to process redemption report: " + e.getMessage());
+        }
+    }
+
+    private String executeVerifyEODReports(String reportDate) {
+        try {
+            var request = new com.trms.ai.service.SwiftFunctions.VerifyEODReportsRequest(reportDate);
+            var result = swiftFunctions.verifyEODReports().apply(request);
+            return formatEODVerificationData(result);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to verify EOD reports: " + e.getMessage());
+        }
+    }
+
+    private String formatSwiftStatusData(Object status) {
+        return "SWIFT MESSAGE STATUS:\n" + status.toString();
+    }
+
+    private String formatSwiftMessagesData(java.util.List<?> messages) {
+        return "SWIFT MESSAGES:\n" + messages.toString();
+    }
+
+    private String formatRedemptionReportData(Object result) {
+        return "REDEMPTION REPORT RESULT:\n" + result.toString();
+    }
+
+    private String formatEODVerificationData(Object result) {
+        return "EOD REPORT VERIFICATION:\n" + result.toString();
+    }
+
     // ========== MULTI-FUNCTION WORKFLOWS ==========
     
     /**
