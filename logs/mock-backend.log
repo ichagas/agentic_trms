@@ -34,48 +34,42 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.5)
 
-2025-08-27 14:59:48 - Starting TrmsMockApplication using Java 21.0.8 with PID 44233 (/Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app)
-2025-08-27 14:59:48 - No active profile set, falling back to 1 default profile: "default"
-2025-08-27 14:59:49 - Tomcat initialized with port(s): 8090 (http)
-2025-08-27 14:59:49 - Starting service [Tomcat]
-2025-08-27 14:59:49 - Starting Servlet engine: [Apache Tomcat/10.1.15]
-2025-08-27 14:59:49 - Initializing Spring embedded WebApplicationContext
-2025-08-27 14:59:49 - Root WebApplicationContext: initialization completed in 484 ms
-2025-08-27 14:59:49 - Exposing 1 endpoint(s) beneath base path '/actuator'
-2025-08-27 14:59:49 - Tomcat started on port(s): 8090 (http) with context path ''
-2025-08-27 14:59:49 - Started TrmsMockApplication in 0.93 seconds (process running for 1.058)
-2025-08-27 14:59:51 - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-08-27 14:59:51 - Initializing Servlet 'dispatcherServlet'
-2025-08-27 14:59:51 - Completed initialization in 1 ms
-2025-08-27 15:00:16 - Fetching accounts with currency filter: USD
-2025-08-27 15:00:16 - Found 3 accounts for currency: USD
-2025-08-27 15:06:38 - Performing EOD readiness check
-2025-08-27 15:06:38 - Performing comprehensive EOD readiness check
-2025-08-27 15:06:38 - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
-2025-08-27 15:07:46 - Performing EOD readiness check
-2025-08-27 15:07:46 - Performing comprehensive EOD readiness check
-2025-08-27 15:07:46 - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
-2025-08-27 15:10:30 - Fetching accounts with currency filter: USD
-2025-08-27 15:10:30 - Found 3 accounts for currency: USD
-2025-08-27 15:11:09 - Fetching accounts with currency filter: USD
-2025-08-27 15:11:09 - Found 3 accounts for currency: USD
-2025-08-27 15:14:42 - Fetching accounts with currency filter: USD
-2025-08-27 15:14:42 - Found 3 accounts for currency: USD
-2025-08-27 15:16:29 - Fetching missing rate resets
-2025-08-27 15:16:29 - Found 3 missing rate resets
-2025-08-27 15:21:54 - Performing EOD readiness check
-2025-08-27 15:21:54 - Performing comprehensive EOD readiness check
-2025-08-27 15:21:54 - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  20:04 h
-[INFO] Finished at: 2025-08-28T11:04:06-04:00
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.springframework.boot:spring-boot-maven-plugin:3.1.5:run (default-cli) on project trms-mock-app: Process terminated with exit code: 137 -> [Help 1]
-[ERROR] 
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR] 
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+2025-10-10 16:29:17 - Starting TrmsMockApplication using Java 21.0.8 with PID 81143 (/Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app)
+2025-10-10 16:29:17 - No active profile set, falling back to 1 default profile: "default"
+2025-10-10 16:29:18 - Tomcat initialized with port(s): 8090 (http)
+2025-10-10 16:29:18 - Starting service [Tomcat]
+2025-10-10 16:29:18 - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-10-10 16:29:18 - Initializing Spring embedded WebApplicationContext
+2025-10-10 16:29:18 - Root WebApplicationContext: initialization completed in 501 ms
+2025-10-10 16:29:18 - Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-10-10 16:29:18 - Tomcat started on port(s): 8090 (http) with context path ''
+2025-10-10 16:29:18 - Started TrmsMockApplication in 0.969 seconds (process running for 1.105)
+2025-10-10 16:29:20 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-10 16:29:20 - Initializing Servlet 'dispatcherServlet'
+2025-10-10 16:29:20 - Completed initialization in 1 ms
+2025-10-10 16:29:58 - Fetching accounts with currency filter: USD
+2025-10-10 16:29:58 - Found 3 accounts for currency: USD
+2025-10-10 16:30:24 - Fetching balance for account: ACC-001-USD
+2025-10-10 16:30:24 - Balance found for account ACC-001-USD: 15750000.00 USD
+2025-10-10 16:32:13 - Fetching accounts with currency filter: USD
+2025-10-10 16:32:13 - Found 3 accounts for currency: USD
+2025-10-10 16:33:43 - Fetching accounts with currency filter: USD
+2025-10-10 16:33:43 - Found 3 accounts for currency: USD
+2025-10-10 16:34:19 - Fetching accounts with currency filter: USD
+2025-10-10 16:34:19 - Found 3 accounts for currency: USD
+2025-10-10 16:35:09 - Fetching accounts with currency filter: USD
+2025-10-10 16:35:09 - Found 3 accounts for currency: USD
+2025-10-10 16:39:46 - Fetching accounts with currency filter: USD
+2025-10-10 16:39:46 - Found 3 accounts for currency: USD
+2025-10-10 16:51:25 - Fetching accounts with currency filter: USD
+2025-10-10 16:51:25 - Found 3 accounts for currency: USD
+2025-10-10 16:57:49 - Fetching accounts with currency filter: USD
+2025-10-10 16:57:49 - Found 3 accounts for currency: USD
+2025-10-10 16:59:37 - Performing EOD readiness check
+2025-10-10 16:59:37 - Performing comprehensive EOD readiness check
+2025-10-10 16:59:37 - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
+2025-10-10 17:01:05 - Performing EOD readiness check
+2025-10-10 17:01:05 - Performing comprehensive EOD readiness check
+2025-10-10 17:01:05 - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
+2025-10-10 17:06:22 - Fetching accounts with currency filter: USD
+2025-10-10 17:06:22 - Found 3 accounts for currency: USD

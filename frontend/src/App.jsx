@@ -56,25 +56,25 @@ const App = () => {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 font-sans h-screen flex flex-col">
+    <div className="bg-gray-100 dark:bg-gray-900 font-sans h-screen w-screen flex flex-col overflow-hidden">
       {/* Error Display */}
       {error && (
         <ErrorBanner error={error} onDismiss={() => setError(null)} />
       )}
-      
+
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex w-full overflow-hidden">
         <AnimatePresence mode="wait">
           {view === 'search' ? (
-            <SearchView 
-              key="search" 
-              onSubmit={handleSendMessage} 
+            <SearchView
+              key="search"
+              onSubmit={handleSendMessage}
             />
           ) : (
-            <ChatView 
-              key="chat" 
-              messages={messages} 
-              onNewMessage={handleSendMessage} 
+            <ChatView
+              key="chat"
+              messages={messages}
+              onNewMessage={handleSendMessage}
               isLoading={isLoading}
               connectionStatus={connectionStatus}
             />

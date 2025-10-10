@@ -3,10 +3,10 @@
 > vite
 
 Port 5173 is in use, trying another one...
+Port 5174 is in use, trying another one...
+Port 5175 is in use, trying another one...
 
-  VITE v7.1.2  ready in 160 ms
+  VITE v7.1.2  ready in 5160 ms
 
-  ➜  Local:   http://localhost:5174/
+  ➜  Local:   http://localhost:5176/
   ➜  Network: use --host to expose
-3:05:01 p.m. [vite] (client) hmr update /src/components/ui/MarkdownRenderer.jsx, /src/index.css
-3:05:02 p.m. [vite] (client) hmr update /src/components/ui/MarkdownRenderer.jsx, /src/index.css

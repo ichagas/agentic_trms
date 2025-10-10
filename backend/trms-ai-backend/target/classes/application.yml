@@ -44,6 +44,10 @@ trms:
     retry-attempts: 3
     retry-delay: 1000
 
+# SWIFT Mock System Configuration
+swift-mock:
+  base-url: ${SWIFT_MOCK_BASE_URL:http://localhost:8091}
+
 # Logging Configuration
 logging:
   level:
