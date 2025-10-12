@@ -18,6 +18,8 @@ swift:
     # Mock BIC codes
     our-bic: MOCKUS33XXX
     default-receiver-bic: TESTGB2LXXX
+    # TRMS integration for reconciliation
+    trms-base-url: ${TRMS_BASE_URL:http://localhost:8090/api/v1}
 
 # Actuator endpoints
 management:

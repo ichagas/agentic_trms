@@ -32,6 +32,11 @@ public class EODCheckResult {
     private List<BlockerIssue> blockers;
     private List<WarningIssue> warnings;
     private Double readinessPercentage;
+
+    // SWIFT reconciliation status
+    private SwiftReconciliationStatus swiftReconciliation;
+    private Integer unreconciledSwiftMessages;
+    private List<String> swiftIssues;
     
     public enum EODStatus {
         READY,
@@ -69,5 +74,18 @@ public class EODCheckResult {
         MEDIUM,
         LOW,
         INFO
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SwiftReconciliationStatus {
+        private Integer totalMessages;
+        private Integer reconciledCount;
+        private Integer unreconciledCount;
+        private Boolean isComplete;
+        private String summary;
+        private Boolean swiftServiceAvailable;
     }
 }

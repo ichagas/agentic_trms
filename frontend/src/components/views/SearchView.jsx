@@ -28,11 +28,11 @@ const SearchView = ({ onSubmit }) => {
   };
 
   const suggestions = [
-    "Show me all USD accounts",
-    "Check balance for ACC-001-USD", 
-    "Can we run End-of-Day?",
-    "Transfer $50,000 from ACC-001-USD to ACC-002-USD",
-    "Propose missing rate fixings"
+    "Transfer $100,000 from ACC-001-USD to ACC-002-USD and send via SWIFT",
+    "Can we run End-of-Day? Check SWIFT reconciliation status",
+    "Show me all unreconciled SWIFT messages and reconcile them",
+    "Check balance for ACC-001-USD, then transfer $50,000 to ACC-010-USD",
+    "Process the redemption report and verify today's EOD reports"
   ];
 
   return (
@@ -50,7 +50,7 @@ const SearchView = ({ onSubmit }) => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.4}}
         >
-          TRMS AI Assistant
+          NACC - NextAgent
         </motion.h1>
         <motion.p 
           className="text-gray-500 dark:text-gray-400 mb-8"
@@ -58,7 +58,7 @@ const SearchView = ({ onSubmit }) => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.4}}
         >
-          Your intelligent Treasury and Risk Management copilot.
+          Your Intelligent Operational copilot.
         </motion.p>
         <form onSubmit={handleSubmit} className="relative flex justify-center w-full">
           <motion.div

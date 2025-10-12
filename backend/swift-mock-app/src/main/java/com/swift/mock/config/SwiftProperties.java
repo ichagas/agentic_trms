@@ -14,6 +14,7 @@ public class SwiftProperties {
     private String eodReportsDir;
     private String ourBic;
     private String defaultReceiverBic;
+    private String trmsBaseUrl;
 
     public String getRedemptionReportsDir() {
         return redemptionReportsDir;
@@ -45,5 +46,13 @@ public class SwiftProperties {
 
     public void setDefaultReceiverBic(String defaultReceiverBic) {
         this.defaultReceiverBic = defaultReceiverBic;
+    }
+
+    public String getTrmsBaseUrl() {
+        return trmsBaseUrl;
+    }
+
+    public void setTrmsBaseUrl(String trmsBaseUrl) {
+        this.trmsBaseUrl = trmsBaseUrl;
     }
 }

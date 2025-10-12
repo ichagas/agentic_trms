@@ -1,5 +1,6 @@
 package com.trms.mock.service;
 
+import com.trms.mock.client.SwiftMockClient;
 import com.trms.mock.dto.EODRunRequest;
 import com.trms.mock.dto.ProposeFixingsRequest;
 import com.trms.mock.model.*;
@@ -17,43 +18,48 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class EODService {
-    
+
     private final MockDataService mockDataService;
+    private final SwiftMockClient swiftClient;
     
     public EODCheckResult checkEODReadiness() {
-        log.info("Performing comprehensive EOD readiness check");
-        
+        log.info("Performing comprehensive EOD readiness check including SWIFT reconciliation");
+
         // Check market data status
         MarketDataStatus marketDataStatus = aggregateMarketDataStatus();
-        
+
         // Check transaction status
         TransactionStatusSummary transactionStatus = mockDataService.getTransactionStatusSummary();
-        
+
         // Check missing rate resets
         List<RateReset> missingResets = mockDataService.getMissingRateResets();
-        
-        // Determine overall readiness
+
+        // NEW: Check SWIFT reconciliation status
+        EODCheckResult.SwiftReconciliationStatus swiftStatus = checkSwiftReconciliation();
+
+        // Determine overall readiness (now includes SWIFT)
         boolean marketDataReady = marketDataStatus.getComplete();
-        boolean transactionsReady = transactionStatus.getCriticalCount() == 0 && 
+        boolean transactionsReady = transactionStatus.getCriticalCount() == 0 &&
                                    transactionStatus.getCompletionPercentage() >= 95.0;
         boolean rateResetsReady = missingResets.isEmpty();
-        
-        boolean overallReady = marketDataReady && transactionsReady && rateResetsReady;
-        
-        // Generate required actions
-        List<String> requiredActions = generateRequiredActions(marketDataStatus, transactionStatus, missingResets);
-        
-        // Generate blockers and warnings
-        List<EODCheckResult.BlockerIssue> blockers = generateBlockers(marketDataStatus, transactionStatus, missingResets);
-        List<EODCheckResult.WarningIssue> warnings = generateWarnings(marketDataStatus, transactionStatus, missingResets);
-        
-        // Calculate readiness percentage
-        double readinessPercentage = calculateReadinessPercentage(marketDataReady, transactionsReady, rateResetsReady);
-        
+        boolean swiftReady = swiftStatus.getIsComplete();
+
+        boolean overallReady = marketDataReady && transactionsReady && rateResetsReady && swiftReady;
+
+        // Generate required actions (now includes SWIFT)
+        List<String> requiredActions = generateRequiredActions(marketDataStatus, transactionStatus, missingResets, swiftStatus);
+
+        // Generate blockers and warnings (now includes SWIFT)
+        List<EODCheckResult.BlockerIssue> blockers = generateBlockers(marketDataStatus, transactionStatus, missingResets, swiftStatus);
+        List<EODCheckResult.WarningIssue> warnings = generateWarnings(marketDataStatus, transactionStatus, missingResets, swiftStatus);
+
+        // Calculate readiness percentage (now includes SWIFT - 4 components)
+        double readinessPercentage = calculateReadinessPercentage(marketDataReady, transactionsReady, rateResetsReady, swiftReady);
+
         EODCheckResult.EODStatus eodStatus = determineEODStatus(overallReady, blockers.size(), warnings.size());
-        
-        String summary = generateEODSummary(eodStatus, marketDataStatus, transactionStatus, missingResets.size());
-        
+
+        String summary = generateEODSummary(eodStatus, marketDataStatus, transactionStatus, missingResets.size(), swiftStatus);
+
         return EODCheckResult.builder()
                 .ready(overallReady)
                 .marketDataStatus(marketDataStatus)
@@ -66,7 +72,57 @@ public class EODService {
                 .blockers(blockers)
                 .warnings(warnings)
                 .readinessPercentage(readinessPercentage)
+                .swiftReconciliation(swiftStatus)
+                .unreconciledSwiftMessages(swiftStatus.getUnreconciledCount())
+                .swiftIssues(swiftStatus.getSwiftServiceAvailable() ? new ArrayList<>() : List.of("SWIFT service unavailable"))
                 .build();
+    }
+
+    /**
+     * Check SWIFT reconciliation status by calling SWIFT mock service
+     */
+    private EODCheckResult.SwiftReconciliationStatus checkSwiftReconciliation() {
+        log.debug("Checking SWIFT reconciliation status");
+
+        try {
+            SwiftMockClient.ReconciliationResult result = swiftClient.getReconciliationStatus();
+
+            if (result == null) {
+                log.warn("SWIFT service unavailable or returned null result");
+                return EODCheckResult.SwiftReconciliationStatus.builder()
+                        .totalMessages(0)
+                        .reconciledCount(0)
+                        .unreconciledCount(0)
+                        .isComplete(false)
+                        .summary("SWIFT service unavailable")
+                        .swiftServiceAvailable(false)
+                        .build();
+            }
+
+            boolean isComplete = result.getUnreconciledCount() == 0 && result.getPendingCount() == 0;
+
+            log.info("SWIFT reconciliation status: {} reconciled, {} unreconciled, {} pending",
+                    result.getReconciledCount(), result.getUnreconciledCount(), result.getPendingCount());
+
+            return EODCheckResult.SwiftReconciliationStatus.builder()
+                    .totalMessages(result.getTotalMessages())
+                    .reconciledCount(result.getReconciledCount())
+                    .unreconciledCount(result.getUnreconciledCount())
+                    .isComplete(isComplete)
+                    .summary(result.getSummary())
+                    .swiftServiceAvailable(true)
+                    .build();
+        } catch (Exception e) {
+            log.error("Failed to check SWIFT reconciliation: {}", e.getMessage());
+            return EODCheckResult.SwiftReconciliationStatus.builder()
+                    .totalMessages(0)
+                    .reconciledCount(0)
+                    .unreconciledCount(0)
+                    .isComplete(false)
+                    .summary("Error checking SWIFT: " + e.getMessage())
+                    .swiftServiceAvailable(false)
+                    .build();
+        }
     }
     
     public List<RateReset> proposeRateFixings(ProposeFixingsRequest request) {
@@ -199,39 +255,50 @@ public class EODService {
                 .build();
     }
     
-    private List<String> generateRequiredActions(MarketDataStatus marketData, 
-                                               TransactionStatusSummary transactions, 
-                                               List<RateReset> missingResets) {
+    private List<String> generateRequiredActions(MarketDataStatus marketData,
+                                               TransactionStatusSummary transactions,
+                                               List<RateReset> missingResets,
+                                               EODCheckResult.SwiftReconciliationStatus swiftStatus) {
         List<String> actions = new ArrayList<>();
-        
+
         if (!marketData.getComplete()) {
             actions.add("Resolve missing market data items: " + String.join(", ", marketData.getMissingItems()));
         }
-        
+
         if (transactions.getCriticalCount() > 0) {
             actions.add("Investigate and resolve " + transactions.getCriticalCount() + " failed transactions");
         }
-        
+
         if (transactions.getWarningCount() > 0) {
             actions.add("Process " + transactions.getWarningCount() + " pending transactions");
         }
-        
+
         if (!missingResets.isEmpty()) {
             actions.add("Provide rate fixings for " + missingResets.size() + " instruments");
         }
-        
+
+        // NEW: Add SWIFT-specific actions
+        if (!swiftStatus.getIsComplete()) {
+            if (!swiftStatus.getSwiftServiceAvailable()) {
+                actions.add("SWIFT service unavailable - verify SWIFT mock service is running");
+            } else if (swiftStatus.getUnreconciledCount() > 0) {
+                actions.add("Reconcile " + swiftStatus.getUnreconciledCount() + " unreconciled SWIFT messages");
+            }
+        }
+
         if (actions.isEmpty()) {
             actions.add("All systems ready - EOD processing can proceed");
         }
-        
+
         return actions;
     }
     
-    private List<EODCheckResult.BlockerIssue> generateBlockers(MarketDataStatus marketData, 
-                                                             TransactionStatusSummary transactions, 
-                                                             List<RateReset> missingResets) {
+    private List<EODCheckResult.BlockerIssue> generateBlockers(MarketDataStatus marketData,
+                                                             TransactionStatusSummary transactions,
+                                                             List<RateReset> missingResets,
+                                                             EODCheckResult.SwiftReconciliationStatus swiftStatus) {
         List<EODCheckResult.BlockerIssue> blockers = new ArrayList<>();
-        
+
         if (transactions.getCriticalCount() > 0) {
             blockers.add(EODCheckResult.BlockerIssue.builder()
                     .type("FAILED_TRANSACTIONS")
@@ -240,7 +307,7 @@ public class EODService {
                     .severity(EODCheckResult.IssueSeverity.CRITICAL)
                     .build());
         }
-        
+
         if (marketData.getMissing() > 20) {
             blockers.add(EODCheckResult.BlockerIssue.builder()
                     .type("MARKET_DATA_INCOMPLETE")
@@ -249,15 +316,26 @@ public class EODService {
                     .severity(EODCheckResult.IssueSeverity.HIGH)
                     .build());
         }
-        
+
+        // NEW: Add SWIFT-specific blockers
+        if (swiftStatus.getUnreconciledCount() > 0 && swiftStatus.getSwiftServiceAvailable()) {
+            blockers.add(EODCheckResult.BlockerIssue.builder()
+                    .type("SWIFT_UNRECONCILED")
+                    .description(swiftStatus.getUnreconciledCount() + " SWIFT messages not reconciled with TRMS transactions")
+                    .resolution("Run SWIFT reconciliation or manually resolve discrepancies")
+                    .severity(EODCheckResult.IssueSeverity.HIGH)
+                    .build());
+        }
+
         return blockers;
     }
     
-    private List<EODCheckResult.WarningIssue> generateWarnings(MarketDataStatus marketData, 
-                                                             TransactionStatusSummary transactions, 
-                                                             List<RateReset> missingResets) {
+    private List<EODCheckResult.WarningIssue> generateWarnings(MarketDataStatus marketData,
+                                                             TransactionStatusSummary transactions,
+                                                             List<RateReset> missingResets,
+                                                             EODCheckResult.SwiftReconciliationStatus swiftStatus) {
         List<EODCheckResult.WarningIssue> warnings = new ArrayList<>();
-        
+
         if (!missingResets.isEmpty()) {
             warnings.add(EODCheckResult.WarningIssue.builder()
                     .type("MISSING_RATE_RESETS")
@@ -266,7 +344,7 @@ public class EODService {
                     .severity(EODCheckResult.IssueSeverity.MEDIUM)
                     .build());
         }
-        
+
         if (transactions.getWarningCount() > 0) {
             warnings.add(EODCheckResult.WarningIssue.builder()
                     .type("PENDING_TRANSACTIONS")
@@ -275,7 +353,7 @@ public class EODService {
                     .severity(EODCheckResult.IssueSeverity.MEDIUM)
                     .build());
         }
-        
+
         if (marketData.getMissing() > 0 && marketData.getMissing() <= 20) {
             warnings.add(EODCheckResult.WarningIssue.builder()
                     .type("MINOR_MARKET_DATA_GAPS")
@@ -284,17 +362,29 @@ public class EODService {
                     .severity(EODCheckResult.IssueSeverity.LOW)
                     .build());
         }
-        
+
+        // NEW: Add SWIFT-specific warnings
+        if (!swiftStatus.getSwiftServiceAvailable()) {
+            warnings.add(EODCheckResult.WarningIssue.builder()
+                    .type("SWIFT_SERVICE_UNAVAILABLE")
+                    .description("SWIFT service could not be reached")
+                    .recommendation("Verify SWIFT mock service is running on port 8091")
+                    .severity(EODCheckResult.IssueSeverity.HIGH)
+                    .build());
+        }
+
         return warnings;
     }
     
-    private double calculateReadinessPercentage(boolean marketDataReady, boolean transactionsReady, boolean rateResetsReady) {
+    private double calculateReadinessPercentage(boolean marketDataReady, boolean transactionsReady,
+                                               boolean rateResetsReady, boolean swiftReady) {
         int readyComponents = 0;
         if (marketDataReady) readyComponents++;
         if (transactionsReady) readyComponents++;
         if (rateResetsReady) readyComponents++;
-        
-        return (readyComponents / 3.0) * 100.0;
+        if (swiftReady) readyComponents++;
+
+        return (readyComponents / 4.0) * 100.0; // Changed from 3.0 to 4.0
     }
     
     private EODCheckResult.EODStatus determineEODStatus(boolean overallReady, int blockerCount, int warningCount) {
@@ -309,21 +399,30 @@ public class EODService {
         }
     }
     
-    private String generateEODSummary(EODCheckResult.EODStatus status, MarketDataStatus marketData, 
-                                    TransactionStatusSummary transactions, int missingResets) {
+    private String generateEODSummary(EODCheckResult.EODStatus status, MarketDataStatus marketData,
+                                    TransactionStatusSummary transactions, int missingResets,
+                                    EODCheckResult.SwiftReconciliationStatus swiftStatus) {
         StringBuilder summary = new StringBuilder();
-        
+
         summary.append("EOD Status: ").append(status).append("\n");
         summary.append("Market Data: ").append(marketData.getReceived()).append("/").append(marketData.getExpected()).append(" received\n");
         summary.append("Transactions: ").append(String.format("%.1f%%", transactions.getCompletionPercentage())).append(" completion rate\n");
         summary.append("Rate Resets: ").append(missingResets).append(" missing fixings\n");
-        
+
+        // NEW: Add SWIFT reconciliation to summary
+        if (swiftStatus.getSwiftServiceAvailable()) {
+            summary.append("SWIFT Reconciliation: ").append(swiftStatus.getReconciledCount())
+                    .append(" reconciled, ").append(swiftStatus.getUnreconciledCount()).append(" unreconciled\n");
+        } else {
+            summary.append("SWIFT Reconciliation: Service unavailable\n");
+        }
+
         if (status == EODCheckResult.EODStatus.READY) {
             summary.append("\nAll systems are ready for EOD processing.");
         } else {
             summary.append("\nReview required actions before proceeding with EOD.");
         }
-        
+
         return summary.toString();
     }
     

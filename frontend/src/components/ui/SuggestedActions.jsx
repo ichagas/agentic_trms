@@ -50,22 +50,25 @@ export const SuggestedActions = ({ suggestions = [], onSuggestionClick }) => {
  */
 export const QuickActions = ({ onActionClick }) => {
   const actions = [
-    { id: 'accounts', label: '📊 View Accounts', query: 'Show me all USD accounts' },
-    { id: 'eod', label: '🕐 EOD Check', query: 'Can we run End-of-Day?' },
-    { id: 'balance', label: '💰 Check Balance', query: 'What\'s the balance for ACC-001-USD?' },
-    { id: 'transfer', label: '💸 Transfer', query: 'Transfer $50,000 from ACC-001-USD to ACC-002-USD' },
-    { id: 'rates', label: '📈 Rate Fixings', query: 'Propose missing rate fixings' },
+    { id: 'accounts', label: '📊 View Accounts', query: 'Show me all USD accounts with their current balances' },
+    { id: 'eod', label: '🕐 EOD Readiness', query: 'Can we run End-of-Day? Include SWIFT reconciliation status' },
+    { id: 'swift', label: '🔄 SWIFT Status', query: 'Check unreconciled SWIFT messages and reconcile them automatically' },
+    { id: 'transfer', label: '💸 Payment Flow', query: 'Transfer $75,000 from ACC-001-USD to ACC-002-USD and send payment via SWIFT' },
+    { id: 'redemption', label: '📄 Process Report', query: 'Process the latest redemption report from the shared drive' },
+    { id: 'rates', label: '📈 Rate Fixings', query: 'Propose missing rate fixings for all instruments' },
+    { id: 'verification', label: '✅ EOD Reports', query: 'Verify today\'s EOD reports in the shared drive' },
+    { id: 'reconcile', label: '🔍 Full Check', query: 'Run comprehensive EOD check including market data, transactions, and SWIFT reconciliation' },
   ];
   
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-2 sm:gap-3 md:gap-4 mt-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-2 sm:gap-3 md:gap-4 mt-4">
       {actions.map((action) => (
         <button
           key={action.id}
           onClick={() => onActionClick(action.query)}
-          className="p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors text-left"
+          className="p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:border-blue-300 dark:hover:border-blue-600 transition-all text-left group"
         >
-          <div className="font-medium">{action.label}</div>
+          <div className="font-medium group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{action.label}</div>
         </button>
       ))}
     </div>

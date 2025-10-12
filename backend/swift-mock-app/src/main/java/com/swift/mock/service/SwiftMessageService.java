@@ -6,6 +6,7 @@ import com.swift.mock.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,10 +33,12 @@ public class SwiftMessageService {
 
     private final MockSwiftDataService dataService;
     private final SwiftProperties swiftProperties;
+    private final RestTemplate restTemplate;
 
     public SwiftMessageService(MockSwiftDataService dataService, SwiftProperties swiftProperties) {
         this.dataService = dataService;
         this.swiftProperties = swiftProperties;
+        this.restTemplate = new RestTemplate();
     }
 
     /**
@@ -124,6 +127,7 @@ public class SwiftMessageService {
 
     /**
      * Reconcile SWIFT messages with transactions
+     * Enhanced with real TRMS transaction validation
      */
     public ReconciliationResult reconcileMessages(ReconciliationRequest request) {
         logger.info("Starting SWIFT message reconciliation for account: {}", request.getAccountId());
@@ -137,23 +141,61 @@ public class SwiftMessageService {
         List<String> issues = new ArrayList<>();
 
         for (SwiftMessage message : allMessages) {
+            // Skip already reconciled messages
             if (message.getStatus() == MessageStatus.RECONCILED) {
                 reconciled.add(message);
                 continue;
             }
 
             // Check if message has transaction ID
-            if (message.getTransactionId() != null && !message.getTransactionId().isEmpty()) {
-                // In real system, would verify with TRMS
-                // For mock, just mark as reconciled if has transaction ID
-                if (request.isAutoReconcile()) {
-                    message.setStatus(MessageStatus.RECONCILED);
-                    dataService.saveMessage(message);
-                }
-                reconciled.add(message);
-            } else {
+            if (message.getTransactionId() == null || message.getTransactionId().isEmpty()) {
                 unreconciled.add(message);
                 issues.add(String.format("Message %s has no transaction ID", message.getId()));
+                continue;
+            }
+
+            // Fetch actual transaction from TRMS
+            TrmsTransaction trmsTransaction = fetchTransactionFromTRMS(message.getTransactionId());
+
+            if (trmsTransaction == null) {
+                unreconciled.add(message);
+                message.setStatus(MessageStatus.UNRECONCILED);
+                dataService.saveMessage(message);
+                issues.add(String.format("Message %s: Transaction %s not found in TRMS",
+                    message.getId(), message.getTransactionId()));
+            } else {
+                // Validate amount, currency, and account match
+                boolean amountMatch = message.getAmount().compareTo(trmsTransaction.getAmount()) == 0;
+                boolean currencyMatch = message.getCurrency().equals(trmsTransaction.getCurrency());
+                boolean accountMatch = message.getAccountId().equals(trmsTransaction.getFromAccount())
+                                    || message.getAccountId().equals(trmsTransaction.getToAccount());
+
+                if (amountMatch && currencyMatch && accountMatch) {
+                    // All validations passed
+                    if (request.isAutoReconcile()) {
+                        message.setStatus(MessageStatus.RECONCILED);
+                        dataService.saveMessage(message);
+                    }
+                    reconciled.add(message);
+                    logger.debug("Message {} successfully reconciled with transaction {}",
+                        message.getId(), message.getTransactionId());
+                } else {
+                    // Validation failed - mark as unreconciled
+                    message.setStatus(MessageStatus.UNRECONCILED);
+                    dataService.saveMessage(message);
+                    unreconciled.add(message);
+
+                    String mismatchDetails = String.format(
+                        "Message %s: Mismatch with transaction %s - Amount: %s, Currency: %s, Account: %s",
+                        message.getId(),
+                        message.getTransactionId(),
+                        amountMatch ? "OK" : "FAIL (SWIFT: " + message.getAmount() + ", TRMS: " + trmsTransaction.getAmount() + ")",
+                        currencyMatch ? "OK" : "FAIL (SWIFT: " + message.getCurrency() + ", TRMS: " + trmsTransaction.getCurrency() + ")",
+                        accountMatch ? "OK" : "FAIL (SWIFT account not in transaction)"
+                    );
+                    issues.add(mismatchDetails);
+                    logger.warn("Reconciliation failed for message {}: {}", message.getId(), mismatchDetails);
+                }
             }
         }
 
@@ -163,6 +205,8 @@ public class SwiftMessageService {
 
         String summary = String.format("Reconciled: %d, Unreconciled: %d, Pending: %d",
                 reconciled.size(), unreconciled.size(), pending);
+
+        logger.info("Reconciliation complete: {}", summary);
 
         return ReconciliationResult.builder()
                 .totalMessages(allMessages.size())
@@ -174,6 +218,29 @@ public class SwiftMessageService {
                 .issues(issues)
                 .summary(summary)
                 .build();
+    }
+
+    /**
+     * Fetch transaction from TRMS system for reconciliation
+     */
+    private TrmsTransaction fetchTransactionFromTRMS(String transactionId) {
+        try {
+            String trmsBaseUrl = swiftProperties.getTrmsBaseUrl();
+            if (trmsBaseUrl == null || trmsBaseUrl.isEmpty()) {
+                logger.warn("TRMS base URL not configured, skipping transaction fetch");
+                return null;
+            }
+
+            String url = trmsBaseUrl + "/transactions/" + transactionId;
+            logger.debug("Fetching transaction from TRMS: {}", url);
+
+            TrmsTransaction transaction = restTemplate.getForObject(url, TrmsTransaction.class);
+            logger.debug("Successfully fetched transaction {} from TRMS", transactionId);
+            return transaction;
+        } catch (Exception e) {
+            logger.warn("Failed to fetch transaction {} from TRMS: {}", transactionId, e.getMessage());
+            return null;
+        }
     }
 
     /**

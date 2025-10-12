@@ -40,8 +40,9 @@ public class MockSwiftDataService {
         logger.info("Initializing mock SWIFT data...");
 
         // Create some sample SWIFT messages
-        createSampleMessage("ACC-001-USD", "TRX-001", new BigDecimal("10000.00"), "USD", "TESTGB2LXXX");
-        createSampleMessage("ACC-002-EUR", "TRX-002", new BigDecimal("50000.00"), "EUR", "TESTDE5FXXX");
+        // Updated to use TXN-XXXX format to match TRMS transaction IDs
+        createSampleMessage("ACC-001-USD", "TXN-0001", new BigDecimal("10000.00"), "USD", "TESTGB2LXXX");
+        createSampleMessage("ACC-002-EUR", "TXN-0002", new BigDecimal("50000.00"), "EUR", "TESTDE5FXXX");
         createSampleMessage("ACC-003-GBP", null, new BigDecimal("25000.00"), "GBP", "TESTFR21XXX");
 
         logger.info("Initialized {} SWIFT messages", messages.size());
