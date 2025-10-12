@@ -43,20 +43,44 @@ const useServiceEvents = (messages = []) => {
 
     // When AI responds, process the function calls
     if (lastMessage.sender === 'ai' && !lastMessage.isError) {
-      // Detect function calls from message content
-      const functionCalls = detectFunctionCalls(lastMessage.text);
+      // First, try to use metadata from backend (preferred approach)
+      let functionCalls = [];
+
+      if (lastMessage.metadata && lastMessage.metadata.functionCalls && lastMessage.metadata.functionCalls.length > 0) {
+        // Backend provided function metadata - use it directly
+        // Define SWIFT functions (all others are TRMS functions)
+        const swiftFunctions = [
+          'sendSwiftPayment',
+          'checkSwiftMessageStatus',
+          'getSwiftMessagesByAccount',
+          'getSwiftMessagesByTransaction',
+          'reconcileSwiftMessages',
+          'getUnreconciledMessages',
+          'processRedemptionReport',
+          'verifyEODReports'
+        ];
+
+        functionCalls = lastMessage.metadata.functionCalls.map(fnName => ({
+          name: fnName,
+          params: {},
+          path: swiftFunctions.includes(fnName) ? 'AI Backend → SWIFT Mock' : 'AI Backend → TRMS Mock',
+          response: 'Data retrieved'
+        }));
+      } else {
+        // Fallback to pattern detection if no metadata
+        functionCalls = detectFunctionCalls(lastMessage.text);
+      }
 
       if (functionCalls.length > 0) {
-        // Clear previous events - will collect all from current request
-        setRecentEvents([]);
-
+        // Keep historical events - accumulate all requests over time
         // Process each function call sequentially (wait for each to complete before starting next)
         functionCalls.forEach((fn, idx) => {
           // Each call takes 2.5 seconds total (2s animation + 0.5s gap)
           const startDelay = idx * 2500;
 
           setTimeout(() => {
-            const target = fn.name.toLowerCase().includes('swift') ? 'swift' : 'trms';
+            // Determine target from the path (which already has correct SWIFT/TRMS routing)
+            const target = fn.path && fn.path.includes('SWIFT') ? 'swift' : 'trms';
             const eventId = `event-${Date.now()}-${idx}`;
 
             // Step 1: Show active call (AI Backend → TRMS/SWIFT)
@@ -72,8 +96,8 @@ const useServiceEvents = (messages = []) => {
             // Step 2: Complete the call after 2 seconds
             setTimeout(() => {
               setActiveCalls([]);
-              // Add to recent events (keep all from this request)
-              setRecentEvents(prev => [...prev, {
+              // Add to recent events at the top (newest first - stack behavior)
+              setRecentEvents(prev => [{
                 id: eventId,
                 function: fn.name,
                 params: fn.params,
@@ -82,7 +106,7 @@ const useServiceEvents = (messages = []) => {
                 timestamp: new Date(),
                 path: fn.path,
                 response: fn.response
-              }]);
+              }, ...prev]);
             }, 2000);
           }, startDelay);
         });
@@ -99,18 +123,27 @@ const useServiceEvents = (messages = []) => {
    */
   const detectFunctionCalls = (text) => {
     const functions = [];
+    const lowerText = text.toLowerCase();
 
-    // TRMS Functions
-    if (text.includes('accounts') && text.includes('USD')) {
+    // Only detect actual function executions, not descriptions
+    // Look for specific data patterns that indicate actual API responses
+
+    // Check for actual account data (not just mentions of accounts)
+    // Pattern: Multiple ACC-XXX-CUR account IDs or structured account data
+    const accountMatches = text.match(/ACC-\d+-[A-Z]{3}/g);
+    if (accountMatches && accountMatches.length >= 2) {
+      // Multiple accounts returned = getAccountsByCurrency was called
+      const currency = accountMatches[0].split('-')[2];
       functions.push({
         name: 'getAccountsByCurrency',
-        params: { currency: 'USD' },
+        params: { currency },
         path: 'AI Backend → TRMS Mock',
         response: 'Retrieved account data'
       });
     }
 
-    if (text.includes('balance') && text.match(/ACC-\d+-\w+/)) {
+    // Check for specific account balance (single account with balance info)
+    if (text.match(/ACC-\d+-\w+/) && lowerText.match(/balance.*\$[\d,]+/)) {
       const accountId = text.match(/ACC-\d+-\w+/)?.[0];
       functions.push({
         name: 'checkAccountBalance',
@@ -120,7 +153,19 @@ const useServiceEvents = (messages = []) => {
       });
     }
 
-    if (text.toLowerCase().includes('eod') || text.toLowerCase().includes('end of day')) {
+    // Check for transaction confirmation (must have transaction ID)
+    if (text.match(/TRX-\d+/) || (lowerText.includes('successfully') && lowerText.includes('transferred'))) {
+      functions.push({
+        name: 'bookTransaction',
+        params: {},
+        path: 'AI Backend → TRMS Mock',
+        response: 'Transaction completed'
+      });
+    }
+
+    // Check for EOD status data (must have specific status indicators AND actual data)
+    if ((lowerText.includes('eod readiness') || lowerText.includes('end of day readiness'))
+        && lowerText.match(/is\s+(not\s+)?ready|status:\s+/)) {
       functions.push({
         name: 'checkEODReadiness',
         params: {},
@@ -129,26 +174,22 @@ const useServiceEvents = (messages = []) => {
       });
     }
 
-    if (text.includes('transaction') || text.includes('transfer')) {
-      functions.push({
-        name: 'bookTransaction',
-        params: { /* extracted from text */ },
-        path: 'AI Backend → TRMS Mock',
-        response: 'Transaction completed'
-      });
+    // SWIFT Functions - require specific message IDs or data
+
+    // Check for SWIFT message data (must have SWIFT-MSG-XXX ID)
+    if (text.match(/SWIFT-MSG-\d+/)) {
+      if (lowerText.includes('sent') || lowerText.includes('payment')) {
+        functions.push({
+          name: 'sendSwiftPayment',
+          params: {},
+          path: 'AI Backend → SWIFT Mock',
+          response: 'SWIFT message sent'
+        });
+      }
     }
 
-    // SWIFT Functions
-    if (text.toLowerCase().includes('swift') && text.toLowerCase().includes('payment')) {
-      functions.push({
-        name: 'sendSwiftPayment',
-        params: {},
-        path: 'AI Backend → SWIFT Mock',
-        response: 'SWIFT message sent'
-      });
-    }
-
-    if (text.toLowerCase().includes('reconcil')) {
+    // Check for reconciliation results (must have specific data)
+    if (lowerText.includes('reconcil') && (lowerText.includes('matched') || lowerText.includes('unmatched'))) {
       functions.push({
         name: 'reconcileSwiftMessages',
         params: {},
@@ -157,7 +198,8 @@ const useServiceEvents = (messages = []) => {
       });
     }
 
-    if (text.toLowerCase().includes('redemption') && text.toLowerCase().includes('report')) {
+    // Check for redemption report processing (must have processed count)
+    if (lowerText.includes('redemption') && (lowerText.includes('processed') || lowerText.match(/\d+\s+redemption/))) {
       functions.push({
         name: 'processRedemptionReport',
         params: { fileName: 'redemption_report_latest.csv' },
@@ -166,7 +208,8 @@ const useServiceEvents = (messages = []) => {
       });
     }
 
-    if (text.toLowerCase().includes('verify') && text.toLowerCase().includes('eod report')) {
+    // Check for EOD report verification (must have verification results)
+    if (lowerText.includes('report') && lowerText.includes('verif') && (lowerText.includes('passed') || lowerText.includes('failed'))) {
       functions.push({
         name: 'verifyEODReports',
         params: {},

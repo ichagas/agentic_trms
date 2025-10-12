@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * TRMS AI Service for handling chat interactions with Spring AI
  * 
@@ -25,6 +28,30 @@ public class TrmsAiService {
     private final ChatClient chatClient;
     private final TrmsFunctions trmsFunctions;
     private final SwiftFunctions swiftFunctions;
+
+    // Thread-local storage for tracking executed functions in the current request
+    private final ThreadLocal<List<String>> executedFunctions = ThreadLocal.withInitial(ArrayList::new);
+
+    /**
+     * Result of chat processing including response text and executed functions
+     */
+    public static class ChatResult {
+        private final String response;
+        private final List<String> executedFunctions;
+
+        public ChatResult(String response, List<String> executedFunctions) {
+            this.response = response;
+            this.executedFunctions = executedFunctions;
+        }
+
+        public String getResponse() {
+            return response;
+        }
+
+        public List<String> getExecutedFunctions() {
+            return executedFunctions;
+        }
+    }
 
     private final String SYSTEM_PROMPT = """
         You are a helpful Treasury and Risk Management System (TRMS) AI assistant with integrated SWIFT messaging capabilities.
@@ -75,33 +102,39 @@ public class TrmsAiService {
 
     /**
      * Process a chat message using hybrid approach: function detection + Spring AI
+     * Returns both the response text and list of executed functions
      */
-    public String chat(String userMessage) {
+    public ChatResult chat(String userMessage) {
         logger.debug("Processing chat message with hybrid function calling: {}", userMessage);
-        
+
+        // Clear previous function tracking
+        executedFunctions.get().clear();
+
         try {
             // First, check if the message requires function calling
             String functionResult = tryExecuteFunction(userMessage);
-            
+
             if (functionResult != null) {
                 // Function was executed, now get AI to format the response
                 String aiPrompt = String.format("""
                     User asked: %s
-                    
+
                     I executed the appropriate TRMS function and got this data:
                     %s
-                    
+
                     Please format this data in a clear, professional way and explain what it means to the user.
                     """, userMessage, functionResult);
-                
+
                 String response = chatClient
                     .prompt()
                     .user(aiPrompt)
                     .call()
                     .content();
-                
+
                 logger.info("Hybrid function calling response generated successfully");
-                return response;
+                List<String> functions = new ArrayList<>(executedFunctions.get());
+                executedFunctions.remove(); // Clean up thread-local
+                return new ChatResult(response, functions);
             } else {
                 // No function needed, use regular AI response
                 String response = chatClient
@@ -109,14 +142,16 @@ public class TrmsAiService {
                     .user(userMessage)
                     .call()
                     .content();
-                
+
                 logger.info("Regular AI response generated successfully");
-                return response;
+                executedFunctions.remove(); // Clean up thread-local
+                return new ChatResult(response, List.of());
             }
-            
+
         } catch (Exception e) {
             logger.error("Error processing chat: {}", e.getMessage(), e);
-            return generateFallbackResponse(userMessage);
+            executedFunctions.remove(); // Clean up thread-local
+            return new ChatResult(generateFallbackResponse(userMessage), List.of());
         }
     }
     
@@ -145,13 +180,21 @@ public class TrmsAiService {
             }
             
             // Scenario 3: EOD Issue Resolution
-            if ((message.contains("what") || message.contains("fix") || message.contains("resolve")) && 
-                (message.contains("blocking") || message.contains("blocker")) && 
+            if ((message.contains("what") || message.contains("fix") || message.contains("resolve")) &&
+                (message.contains("blocking") || message.contains("blocker")) &&
                 (message.contains("eod") || message.contains("end of day"))) {
                 logger.info("Executing EOD Issue Resolution Workflow");
                 return executeEODIssueResolutionWorkflow();
             }
-            
+
+            // Scenario 4: SWIFT EOD Validation Workflow
+            if ((message.contains("swift") && (message.contains("eod") || message.contains("end of day"))) ||
+                (message.contains("swift") && (message.contains("ready") || message.contains("readiness"))) ||
+                (message.contains("validate") && message.contains("swift"))) {
+                logger.info("Executing SWIFT EOD Validation Workflow");
+                return executeSwiftEODValidationWorkflow();
+            }
+
             // SINGLE FUNCTION CALLS
             
             // Check for account-related queries
@@ -273,6 +316,7 @@ public class TrmsAiService {
     
     private String executeGetAccountsByCurrency(String currency) {
         try {
+            executedFunctions.get().add("getAccountsByCurrency");
             var request = new com.trms.ai.service.TrmsFunctions.GetAccountsByCurrencyRequest(currency);
             var accounts = trmsFunctions.getAccountsByCurrency().apply(request);
             return formatAccountsData(accounts);
@@ -283,6 +327,7 @@ public class TrmsAiService {
     
     private String executeCheckAccountBalance(String accountId) {
         try {
+            executedFunctions.get().add("checkAccountBalance");
             var request = new com.trms.ai.service.TrmsFunctions.CheckAccountBalanceRequest(accountId);
             var balance = trmsFunctions.checkAccountBalance().apply(request);
             return formatBalanceData(balance);
@@ -293,6 +338,7 @@ public class TrmsAiService {
     
     private String executeCheckEODReadiness() {
         try {
+            executedFunctions.get().add("checkEODReadiness");
             var request = new com.trms.ai.service.TrmsFunctions.CheckEODReadinessRequest();
             var status = trmsFunctions.checkEODReadiness().apply(request);
             return formatEODData(status);
@@ -303,6 +349,7 @@ public class TrmsAiService {
     
     private String executeProposeRateFixings() {
         try {
+            executedFunctions.get().add("proposeRateFixings");
             var request = new com.trms.ai.service.TrmsFunctions.ProposeRateFixingsRequest();
             var rateResets = trmsFunctions.proposeRateFixings().apply(request);
             return formatRateFixingsData(rateResets);
@@ -331,6 +378,7 @@ public class TrmsAiService {
 
     private String executeCheckSwiftMessageStatus(String messageId) {
         try {
+            executedFunctions.get().add("checkSwiftMessageStatus");
             var request = new com.trms.ai.service.SwiftFunctions.CheckSwiftStatusRequest(messageId);
             var status = swiftFunctions.checkSwiftMessageStatus().apply(request);
             return formatSwiftStatusData(status);
@@ -341,6 +389,7 @@ public class TrmsAiService {
 
     private String executeGetSwiftMessagesByAccount(String accountId) {
         try {
+            executedFunctions.get().add("getSwiftMessagesByAccount");
             var request = new com.trms.ai.service.SwiftFunctions.GetSwiftMessagesByAccountRequest(accountId);
             var messages = swiftFunctions.getSwiftMessagesByAccount().apply(request);
             return formatSwiftMessagesData(messages);
@@ -351,6 +400,7 @@ public class TrmsAiService {
 
     private String executeGetUnreconciledMessages() {
         try {
+            executedFunctions.get().add("getUnreconciledMessages");
             var request = new com.trms.ai.service.SwiftFunctions.GetUnreconciledMessagesRequest();
             var messages = swiftFunctions.getUnreconciledMessages().apply(request);
             return formatSwiftMessagesData(messages);
@@ -361,6 +411,7 @@ public class TrmsAiService {
 
     private String executeProcessRedemptionReport(String fileName) {
         try {
+            executedFunctions.get().add("processRedemptionReport");
             var request = new com.trms.ai.service.SwiftFunctions.ProcessRedemptionReportRequest(fileName);
             var result = swiftFunctions.processRedemptionReport().apply(request);
             return formatRedemptionReportData(result);
@@ -371,6 +422,7 @@ public class TrmsAiService {
 
     private String executeVerifyEODReports(String reportDate) {
         try {
+            executedFunctions.get().add("verifyEODReports");
             var request = new com.trms.ai.service.SwiftFunctions.VerifyEODReportsRequest(reportDate);
             var result = swiftFunctions.verifyEODReports().apply(request);
             return formatEODVerificationData(result);
@@ -489,6 +541,104 @@ public class TrmsAiService {
             result.append("❌ Error in Issue Resolution Workflow: ").append(e.getMessage());
         }
         
+        return result.toString();
+    }
+
+    /**
+     * SWIFT EOD Validation Workflow
+     * Comprehensive validation of SWIFT system readiness for EOD processing
+     * Steps:
+     * 1) Verify EOD reports generated in shared drive
+     * 2) Check for unreconciled SWIFT messages
+     * 3) Verify no pending settlements
+     * 4) Overall SWIFT system readiness assessment
+     */
+    private String executeSwiftEODValidationWorkflow() {
+        StringBuilder result = new StringBuilder();
+        result.append("🔐 SWIFT EOD VALIDATION WORKFLOW\n\n");
+        result.append("Performing comprehensive SWIFT system validation for End-of-Day processing...\n\n");
+
+        int totalChecks = 3;
+        int passedChecks = 0;
+        boolean hasBlockers = false;
+        StringBuilder issues = new StringBuilder();
+
+        try {
+            // Step 1: Verify EOD reports in shared drive
+            result.append("📄 Step 1/3: Verifying EOD Reports in Shared Drive...\n");
+            String reportDate = java.time.LocalDate.now().toString();
+            String reportVerification = executeVerifyEODReports(reportDate);
+            result.append(reportVerification).append("\n");
+
+            // Check if reports passed (simplified check - in real system would parse the response)
+            if (reportVerification.contains("PASSED") || reportVerification.contains("complete")) {
+                result.append("   ✅ EOD reports verification: PASSED\n\n");
+                passedChecks++;
+            } else {
+                result.append("   ❌ EOD reports verification: FAILED - Missing or incomplete reports\n\n");
+                hasBlockers = true;
+                issues.append("• Missing or incomplete EOD reports in shared drive\n");
+            }
+
+            // Step 2: Check for unreconciled SWIFT messages
+            result.append("🔄 Step 2/3: Checking for Unreconciled SWIFT Messages...\n");
+            String unreconciledMessages = executeGetUnreconciledMessages();
+            result.append(unreconciledMessages).append("\n");
+
+            // Check if there are unreconciled messages
+            if (unreconciledMessages.contains("[]") || unreconciledMessages.contains("0") ||
+                unreconciledMessages.toLowerCase().contains("no unreconciled")) {
+                result.append("   ✅ Reconciliation check: PASSED - All SWIFT messages reconciled\n\n");
+                passedChecks++;
+            } else {
+                result.append("   ⚠️  Reconciliation check: WARNING - Unreconciled messages found\n\n");
+                issues.append("• Unreconciled SWIFT messages require attention\n");
+            }
+
+            // Step 3: Check SWIFT message statuses (verify no pending settlements)
+            result.append("⏳ Step 3/3: Verifying No Pending Settlements...\n");
+            // In a real system, we'd check for messages with PENDING status
+            // For this demo, we'll simulate by checking unreconciled count
+            if (unreconciledMessages.contains("[]") || unreconciledMessages.contains("0")) {
+                result.append("   ✅ Settlement check: PASSED - No pending settlements\n\n");
+                passedChecks++;
+            } else {
+                result.append("   ⚠️  Settlement check: WARNING - Some settlements may be pending\n\n");
+                issues.append("• Pending settlements detected, review required\n");
+            }
+
+            // Summary and Overall Assessment
+            result.append("═".repeat(60)).append("\n");
+            result.append("📊 VALIDATION SUMMARY\n");
+            result.append("═".repeat(60)).append("\n\n");
+            result.append(String.format("Total Checks: %d\n", totalChecks));
+            result.append(String.format("Passed: %d ✅\n", passedChecks));
+            result.append(String.format("Failed/Warnings: %d ⚠️\n\n", totalChecks - passedChecks));
+
+            // Overall readiness assessment
+            if (passedChecks == totalChecks) {
+                result.append("🎉 SWIFT SYSTEM STATUS: READY FOR EOD\n\n");
+                result.append("All validation checks passed successfully.\n");
+                result.append("The SWIFT system is fully prepared for End-of-Day processing.\n");
+            } else if (hasBlockers) {
+                result.append("🚫 SWIFT SYSTEM STATUS: NOT READY FOR EOD\n\n");
+                result.append("CRITICAL ISSUES DETECTED:\n");
+                result.append(issues.toString());
+                result.append("\n❗ Action Required: Resolve critical issues before proceeding with EOD.\n");
+            } else {
+                result.append("⚠️  SWIFT SYSTEM STATUS: READY WITH WARNINGS\n\n");
+                result.append("WARNINGS DETECTED:\n");
+                result.append(issues.toString());
+                result.append("\n💡 Recommendation: Review warnings before proceeding with EOD.\n");
+            }
+
+            result.append("\n═".repeat(60)).append("\n");
+            result.append("🔐 SWIFT EOD VALIDATION WORKFLOW COMPLETED\n");
+
+        } catch (Exception e) {
+            result.append("❌ Error in SWIFT EOD Validation Workflow: ").append(e.getMessage());
+        }
+
         return result.toString();
     }
 

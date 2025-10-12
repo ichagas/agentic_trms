@@ -11,7 +11,7 @@ import { ChevronRight, ChevronDown, Clock, CheckCircle2, XCircle, Loader2 } from
  * - Expandable details with request/response info
  */
 const ActiveCallsList = ({ activeCalls = [], recentEvents = [], expandedCall, onToggleExpand }) => {
-  // Show active calls and all recent events from the last request
+  // Show active calls and all historical events (accumulated over the session)
   const allCalls = [...activeCalls, ...recentEvents];
 
   if (allCalls.length === 0) {
@@ -26,7 +26,7 @@ const ActiveCallsList = ({ activeCalls = [], recentEvents = [], expandedCall, on
     <div className="h-full flex flex-col overflow-hidden">
       <div className="flex-shrink-0 p-3 border-b border-gray-200 dark:border-gray-700">
         <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">
-          {activeCalls.length > 0 ? 'Active Now' : 'Last Request'}
+          {activeCalls.length > 0 ? 'Active Now' : 'Request History'}
         </h4>
       </div>
       <div className="flex-1 overflow-y-auto p-3 space-y-2">
@@ -46,6 +46,10 @@ const ActiveCallsList = ({ activeCalls = [], recentEvents = [], expandedCall, on
 };
 
 const CallItem = ({ call, isExpanded, onToggle }) => {
+  let isTRMS = false;
+  if (call.path !== undefined) {
+    isTRMS = call.path.indexOf('TRMS') !== -1;
+  }
   const statusConfig = {
     active: {
       icon: Loader2,
@@ -56,7 +60,7 @@ const CallItem = ({ call, isExpanded, onToggle }) => {
     completed: {
       icon: CheckCircle2,
       color: 'text-green-600 dark:text-green-400',
-      bg: 'bg-green-50 dark:bg-green-900/20',
+      bg: isTRMS ? 'bg-green-50 dark:bg-green-900/20' : 'bg-orange-100 dark:bg-orange-900/30',
       label: 'Success'
     },
     failed: {

@@ -3,10 +3,32 @@
 > vite
 
 Port 5173 is in use, trying another one...
-Port 5174 is in use, trying another one...
-Port 5175 is in use, trying another one...
 
-  VITE v7.1.2  ready in 5160 ms
+  VITE v7.1.2  ready in 181 ms
 
-  ➜  Local:   http://localhost:5176/
+  ➜  Local:   http://localhost:5174/
   ➜  Network: use --host to expose
+11:44:20 a.m. [vite] (client) hmr update /src/components/topology/ServiceGraph.jsx, /src/index.css
+11:44:51 a.m. [vite] (client) hmr update /src/components/topology/ServiceGraph.jsx, /src/index.css
+11:47:52 a.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+11:48:00 a.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+11:50:18 a.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+11:50:21 a.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+11:51:28 a.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+11:52:36 a.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+11:53:10 a.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+11:53:18 a.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+11:57:32 a.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:00:12 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:01:01 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:01:09 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:01:35 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:03:15 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:03:30 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:03:44 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:03:54 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:05:56 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:06:19 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:07:23 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:08:03 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css
+12:11:34 p.m. [vite] (client) hmr update /src/components/topology/ActiveCallsList.jsx, /src/index.css

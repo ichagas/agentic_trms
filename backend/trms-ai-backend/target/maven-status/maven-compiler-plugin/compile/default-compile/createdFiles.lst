@@ -4,6 +4,7 @@ com/trms/ai/client/SwiftClient.class
 com/trms/ai/config/AiConfiguration.class
 com/trms/ai/service/TrmsFunctions$CheckAccountBalanceRequest.class
 com/trms/ai/service/TrmsFunctions$CheckEODReadinessRequest.class
+com/trms/ai/service/TrmsAiService$ChatResult.class
 com/trms/ai/config/OllamaConfiguration$OllamaClient.class
 com/trms/ai/controller/HealthController.class
 com/trms/ai/client/LegacyTrmsClient$1.class
@@ -18,6 +19,7 @@ com/trms/ai/dto/Account.class
 com/trms/ai/controller/GlobalExceptionHandler.class
 com/trms/ai/dto/CreateTransactionRequest.class
 com/trms/ai/service/TrmsFunctions$GetAccountsByCurrencyRequest.class
+com/trms/ai/dto/ChatResponse$Metadata.class
 com/trms/ai/config/WebConfig.class
 com/trms/ai/service/TrmsFunctions.class
 com/trms/ai/controller/ChatController.class

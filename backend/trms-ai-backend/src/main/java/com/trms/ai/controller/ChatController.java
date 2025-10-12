@@ -52,15 +52,19 @@ public class ChatController {
 
         try {
             String response;
-            
+            java.util.List<String> executedFunctions = java.util.List.of();
+
             // Try to use Spring AI with function calling first, then fallback
             try {
                 logger.debug("Using Spring AI with function calling for response generation");
-                response = trmsAiService.chat(request.message());
-                logger.info("Spring AI response generated successfully for session: {}", sessionId);
+                TrmsAiService.ChatResult result = trmsAiService.chat(request.message());
+                response = result.getResponse();
+                executedFunctions = result.getExecutedFunctions();
+                logger.info("Spring AI response generated successfully for session: {}, executed {} functions",
+                           sessionId, executedFunctions.size());
             } catch (Exception e) {
                 logger.warn("Spring AI failed, falling back to Ollama: {}", e.getMessage());
-                
+
                 // Fallback to direct Ollama if Spring AI fails
                 if (ollamaClient != null && ollamaClient.isAvailable()) {
                     logger.debug("Using direct Ollama for AI response generation");
@@ -70,8 +74,8 @@ public class ChatController {
                     response = generatePatternMatchedResponse(request.message());
                 }
             }
-            
-            return ResponseEntity.ok(ChatResponse.success(response, sessionId, timestamp));
+
+            return ResponseEntity.ok(ChatResponse.success(response, sessionId, timestamp, executedFunctions));
 
         } catch (Exception e) {
             logger.error("Error processing chat request for session {}: {}", sessionId, e.getMessage(), e);
