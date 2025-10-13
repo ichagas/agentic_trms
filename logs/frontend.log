@@ -8,3 +8,4 @@ Port 5173 is in use, trying another one...
 
   ➜  Local:   http://localhost:5174/
   ➜  Network: use --host to expose
+12:23:18 p.m. [vite] (client) hmr update /src/components/topology/ServiceGraph.jsx, /src/index.css

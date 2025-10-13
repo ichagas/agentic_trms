@@ -202,7 +202,7 @@ const ServiceGraph = ({ activeCalls = [], recentEvents = [] }) => {
       ))}
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 bg-white dark:bg-gray-800 rounded-lg p-2 shadow-lg border border-gray-200 dark:border-gray-700">
+      <div className="absolute top-4 right-4 bg-white dark:bg-gray-800 rounded-lg p-2 shadow-lg border border-gray-200 dark:border-gray-700">
         <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">Legend</div>
         <div className="flex flex-col gap-1 text-xs">
           <div className="flex items-center gap-2">

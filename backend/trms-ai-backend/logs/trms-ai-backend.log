@@ -827,3 +827,11 @@
 2025-10-13 12:20:05 [http-nio-8080-exec-10] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 6939e5ba-be42-4023-9b73-d572c65f1028 (functions: checkEODReadiness, getUnreconciledMessages, verifyEODReports)
 2025-10-13 12:20:05 [http-nio-8080-exec-10] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 6939e5ba-be42-4023-9b73-d572c65f1028, executed 3 functions
 2025-10-13 12:20:15 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 12:20:45 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 12:21:15 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 12:21:45 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 12:22:15 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 12:22:45 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 12:23:15 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 12:23:45 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 12:24:15 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
