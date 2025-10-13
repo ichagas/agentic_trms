@@ -3,6 +3,7 @@
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/ReconciliationResult.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/config/AiConfiguration.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/AccountBalance.java
+/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/model/ConversationHistory.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/config/OllamaConfiguration.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/service/TrmsAiService.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/TrmsAiApplication.java
@@ -12,7 +13,9 @@
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/client/SwiftClient.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/controller/GlobalExceptionHandler.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/RedemptionReportResult.java
+/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/service/ConversationMemory.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/Account.java
+/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/model/ConversationMessage.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/RateReset.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/ChatResponse.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/CreateTransactionRequest.java

@@ -1,111 +1,45 @@
-2025-10-11 10:03:36 [http-nio-8090-exec-4] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:03:36 [http-nio-8090-exec-4] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:07:58 [http-nio-8090-exec-6] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:07:58 [http-nio-8090-exec-6] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:08:31 [http-nio-8090-exec-7] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:08:31 [http-nio-8090-exec-7] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:15:33 [http-nio-8090-exec-9] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:15:33 [http-nio-8090-exec-9] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:21:29 [http-nio-8090-exec-1] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:21:29 [http-nio-8090-exec-1] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:22:13 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:22:13 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:23:10 [http-nio-8090-exec-3] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:23:10 [http-nio-8090-exec-3] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:24:14 [http-nio-8090-exec-5] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:24:14 [http-nio-8090-exec-5] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:25:25 [main] INFO  com.trms.mock.TrmsMockApplication - Starting TrmsMockApplication using Java 21.0.8 with PID 86479 (/Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app)
-2025-10-11 10:25:25 [main] INFO  com.trms.mock.TrmsMockApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-11 10:25:26 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
-2025-10-11 10:25:26 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-10-11 10:25:26 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
-2025-10-11 10:25:26 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-10-11 10:25:26 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 501 ms
-2025-10-11 10:25:26 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
-2025-10-11 10:25:26 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path ''
-2025-10-11 10:25:26 [main] INFO  com.trms.mock.TrmsMockApplication - Started TrmsMockApplication in 0.967 seconds (process running for 1.104)
-2025-10-11 10:25:27 [http-nio-8090-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-10-11 10:25:27 [http-nio-8090-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-10-11 10:25:27 [http-nio-8090-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2025-10-11 10:28:20 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:28:20 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:29:02 [http-nio-8090-exec-3] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:29:02 [http-nio-8090-exec-3] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:41:07 [http-nio-8090-exec-5] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:41:07 [http-nio-8090-exec-5] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:45:58 [http-nio-8090-exec-7] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:45:58 [http-nio-8090-exec-7] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:49:09 [http-nio-8090-exec-9] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:49:09 [http-nio-8090-exec-9] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:57:31 [http-nio-8090-exec-1] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:57:31 [http-nio-8090-exec-1] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 10:58:03 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 10:58:03 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 11:17:19 [http-nio-8090-exec-4] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 11:17:19 [http-nio-8090-exec-4] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 11:23:13 [http-nio-8090-exec-6] INFO  c.trms.mock.controller.EODController - Performing EOD readiness check
-2025-10-11 11:23:13 [http-nio-8090-exec-6] INFO  com.trms.mock.service.EODService - Performing comprehensive EOD readiness check
-2025-10-11 11:23:13 [http-nio-8090-exec-6] INFO  c.trms.mock.controller.EODController - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
-2025-10-11 11:23:13 [http-nio-8090-exec-7] INFO  c.trms.mock.controller.EODController - Fetching missing rate resets
-2025-10-11 11:23:13 [http-nio-8090-exec-7] INFO  c.trms.mock.controller.EODController - Found 3 missing rate resets
-2025-10-11 11:23:13 [http-nio-8090-exec-8] INFO  c.trms.mock.controller.EODController - Performing EOD readiness check
-2025-10-11 11:23:13 [http-nio-8090-exec-8] INFO  com.trms.mock.service.EODService - Performing comprehensive EOD readiness check
-2025-10-11 11:23:13 [http-nio-8090-exec-8] INFO  c.trms.mock.controller.EODController - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
-2025-10-11 11:23:59 [http-nio-8090-exec-9] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 11:23:59 [http-nio-8090-exec-9] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 11:23:59 [http-nio-8090-exec-10] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: EUR
-2025-10-11 11:23:59 [http-nio-8090-exec-10] INFO  c.t.m.controller.AccountController - Found 2 accounts for currency: EUR
-2025-10-11 11:23:59 [http-nio-8090-exec-1] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: GBP
-2025-10-11 11:23:59 [http-nio-8090-exec-1] INFO  c.t.m.controller.AccountController - Found 2 accounts for currency: GBP
-2025-10-11 11:23:59 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: JPY
-2025-10-11 11:23:59 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Found 1 accounts for currency: JPY
-2025-10-11 11:24:39 [http-nio-8090-exec-3] INFO  c.trms.mock.controller.EODController - Performing EOD readiness check
-2025-10-11 11:24:39 [http-nio-8090-exec-3] INFO  com.trms.mock.service.EODService - Performing comprehensive EOD readiness check
-2025-10-11 11:24:39 [http-nio-8090-exec-3] INFO  c.trms.mock.controller.EODController - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
-2025-10-11 11:24:39 [http-nio-8090-exec-4] INFO  c.trms.mock.controller.EODController - Fetching missing rate resets
-2025-10-11 11:24:39 [http-nio-8090-exec-4] INFO  c.trms.mock.controller.EODController - Found 3 missing rate resets
-2025-10-11 11:24:39 [http-nio-8090-exec-5] INFO  c.trms.mock.controller.EODController - Performing EOD readiness check
-2025-10-11 11:24:39 [http-nio-8090-exec-5] INFO  com.trms.mock.service.EODService - Performing comprehensive EOD readiness check
-2025-10-11 11:24:39 [http-nio-8090-exec-5] INFO  c.trms.mock.controller.EODController - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
-2025-10-11 11:25:11 [http-nio-8090-exec-6] INFO  c.trms.mock.controller.EODController - Performing EOD readiness check
-2025-10-11 11:25:11 [http-nio-8090-exec-6] INFO  com.trms.mock.service.EODService - Performing comprehensive EOD readiness check
-2025-10-11 11:25:11 [http-nio-8090-exec-6] INFO  c.trms.mock.controller.EODController - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
-2025-10-11 11:25:11 [http-nio-8090-exec-7] INFO  c.trms.mock.controller.EODController - Fetching missing rate resets
-2025-10-11 11:25:11 [http-nio-8090-exec-7] INFO  c.trms.mock.controller.EODController - Found 3 missing rate resets
-2025-10-11 11:25:11 [http-nio-8090-exec-8] INFO  c.trms.mock.controller.EODController - Performing EOD readiness check
-2025-10-11 11:25:11 [http-nio-8090-exec-8] INFO  com.trms.mock.service.EODService - Performing comprehensive EOD readiness check
-2025-10-11 11:25:11 [http-nio-8090-exec-8] INFO  c.trms.mock.controller.EODController - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
-2025-10-11 11:26:49 [http-nio-8090-exec-10] INFO  c.trms.mock.controller.EODController - Fetching missing rate resets
-2025-10-11 11:26:49 [http-nio-8090-exec-10] INFO  c.trms.mock.controller.EODController - Found 3 missing rate resets
-2025-10-11 11:31:04 [main] INFO  com.trms.mock.TrmsMockApplication - Starting TrmsMockApplication using Java 21.0.8 with PID 88765 (/Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app)
-2025-10-11 11:31:04 [main] INFO  com.trms.mock.TrmsMockApplication - No active profile set, falling back to 1 default profile: "default"
-2025-10-11 11:31:05 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
-2025-10-11 11:31:05 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-10-11 11:31:05 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
-2025-10-11 11:31:05 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-10-11 11:31:05 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 503 ms
-2025-10-11 11:31:05 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
-2025-10-11 11:31:05 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path ''
-2025-10-11 11:31:05 [main] INFO  com.trms.mock.TrmsMockApplication - Started TrmsMockApplication in 0.974 seconds (process running for 1.101)
-2025-10-11 11:31:07 [http-nio-8090-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-10-11 11:31:07 [http-nio-8090-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-10-11 11:31:07 [http-nio-8090-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2025-10-11 11:31:53 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 11:31:53 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 11:43:38 [http-nio-8090-exec-4] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 11:43:38 [http-nio-8090-exec-4] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 11:53:27 [http-nio-8090-exec-6] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 11:53:27 [http-nio-8090-exec-6] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 12:00:32 [http-nio-8090-exec-8] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 12:00:32 [http-nio-8090-exec-8] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 12:01:18 [http-nio-8090-exec-9] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 12:01:18 [http-nio-8090-exec-9] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 12:01:46 [http-nio-8090-exec-10] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 12:01:46 [http-nio-8090-exec-10] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 12:06:22 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 12:06:22 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 12:10:33 [http-nio-8090-exec-4] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
-2025-10-11 12:10:33 [http-nio-8090-exec-4] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
-2025-10-11 12:11:57 [http-nio-8090-exec-6] INFO  c.trms.mock.controller.EODController - Performing EOD readiness check
-2025-10-11 12:11:57 [http-nio-8090-exec-6] INFO  com.trms.mock.service.EODService - Performing comprehensive EOD readiness check
-2025-10-11 12:11:57 [http-nio-8090-exec-6] INFO  c.trms.mock.controller.EODController - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
+2025-10-13 08:57:28 [http-nio-8090-exec-6] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
+2025-10-13 08:57:28 [http-nio-8090-exec-6] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
+2025-10-13 08:58:45 [http-nio-8090-exec-8] INFO  c.t.m.controller.AccountController - Fetching balance for account: ACC-001-USD
+2025-10-13 08:58:45 [http-nio-8090-exec-8] INFO  c.t.m.controller.AccountController - Balance found for account ACC-001-USD: 15750000.00 USD
+2025-10-13 08:59:24 [http-nio-8090-exec-9] INFO  c.trms.mock.controller.EODController - Performing EOD readiness check
+2025-10-13 08:59:24 [http-nio-8090-exec-9] INFO  com.trms.mock.service.EODService - Performing comprehensive EOD readiness check including SWIFT reconciliation
+2025-10-13 08:59:25 [http-nio-8090-exec-9] ERROR c.trms.mock.client.SwiftMockClient - Failed to fetch reconciliation status from SWIFT service: 404 : "{<EOL>  "timestamp" : "2025-10-13T12:59:25.216+00:00",<EOL>  "status" : 404,<EOL>  "error" : "Not Found",<EOL>  "path" : "/api/v1/swift/reconciliation"<EOL>}"
+2025-10-13 08:59:25 [http-nio-8090-exec-9] WARN  com.trms.mock.service.EODService - SWIFT service unavailable or returned null result
+2025-10-13 08:59:25 [http-nio-8090-exec-9] INFO  c.trms.mock.controller.EODController - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
+2025-10-13 09:44:38 [main] INFO  com.trms.mock.TrmsMockApplication - Starting TrmsMockApplication using Java 21.0.8 with PID 18302 (/Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app)
+2025-10-13 09:44:38 [main] INFO  com.trms.mock.TrmsMockApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-13 09:44:38 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2025-10-13 09:44:38 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-13 09:44:38 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-10-13 09:44:38 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-13 09:44:38 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 592 ms
+2025-10-13 09:44:39 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-10-13 09:44:39 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path ''
+2025-10-13 09:44:39 [main] INFO  com.trms.mock.TrmsMockApplication - Started TrmsMockApplication in 1.068 seconds (process running for 1.193)
+2025-10-13 09:44:40 [http-nio-8090-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-13 09:44:40 [http-nio-8090-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-10-13 09:44:40 [http-nio-8090-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-10-13 09:51:23 [http-nio-8090-exec-3] INFO  c.trms.mock.controller.EODController - Fetching missing rate resets
+2025-10-13 09:51:23 [http-nio-8090-exec-3] INFO  c.trms.mock.controller.EODController - Found 3 missing rate resets
+2025-10-13 09:57:50 [http-nio-8090-exec-5] INFO  c.t.m.controller.AccountController - Fetching balance for account: ACC-001-USD
+2025-10-13 09:57:50 [http-nio-8090-exec-5] INFO  c.t.m.controller.AccountController - Balance found for account ACC-001-USD: 15750000.00 USD
+2025-10-13 09:59:13 [http-nio-8090-exec-7] INFO  c.trms.mock.controller.EODController - Fetching missing rate resets
+2025-10-13 09:59:13 [http-nio-8090-exec-7] INFO  c.trms.mock.controller.EODController - Found 3 missing rate resets
+2025-10-13 10:00:01 [http-nio-8090-exec-8] INFO  c.trms.mock.controller.EODController - Fetching missing rate resets
+2025-10-13 10:00:01 [http-nio-8090-exec-8] INFO  c.trms.mock.controller.EODController - Found 3 missing rate resets
+2025-10-13 10:51:12 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Fetching accounts with currency filter: USD
+2025-10-13 10:51:12 [http-nio-8090-exec-2] INFO  c.t.m.controller.AccountController - Found 3 accounts for currency: USD
+2025-10-13 11:13:17 [main] INFO  com.trms.mock.TrmsMockApplication - Starting TrmsMockApplication using Java 21.0.8 with PID 19977 (/Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app)
+2025-10-13 11:13:17 [main] INFO  com.trms.mock.TrmsMockApplication - No active profile set, falling back to 1 default profile: "default"
+2025-10-13 11:13:17 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8090 (http)
+2025-10-13 11:13:17 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-10-13 11:13:17 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-10-13 11:13:18 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-10-13 11:13:18 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 489 ms
+2025-10-13 11:13:18 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-10-13 11:13:18 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8090 (http) with context path ''
+2025-10-13 11:13:18 [main] INFO  com.trms.mock.TrmsMockApplication - Started TrmsMockApplication in 0.952 seconds (process running for 1.082)
+2025-10-13 11:13:19 [http-nio-8090-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-13 11:13:19 [http-nio-8090-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-10-13 11:13:19 [http-nio-8090-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms

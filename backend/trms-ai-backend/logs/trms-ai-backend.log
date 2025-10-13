@@ -1,21 +1,539 @@
-2025-10-12 10:07:42 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:08:44 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:08:54 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:09:24 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:09:54 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:10:24 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:10:54 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:11:24 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:11:54 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:12:24 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:12:54 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:13:24 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:13:54 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:14:24 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:14:54 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:15:25 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:15:56 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:16:27 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:16:58 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:17:29 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
-2025-10-12 10:18:00 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 00:13:53 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 00:28:53 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 00:43:53 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 00:58:53 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 01:13:56 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 01:29:00 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 01:44:00 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 01:59:00 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 02:14:00 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 02:29:01 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 02:44:01 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 02:59:01 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 03:14:01 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 03:29:02 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 03:44:03 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 03:59:03 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 04:14:03 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 04:29:03 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 04:44:07 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 04:59:07 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 05:14:07 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 05:29:07 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 05:44:10 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 05:59:10 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 06:14:09 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 06:29:10 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 06:44:11 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 06:59:11 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 07:14:11 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 07:29:11 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 07:44:12 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 07:59:13 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 08:14:13 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 08:29:13 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 08:44:13 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 08:54:56 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:54:59 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:55:29 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:55:59 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:56:29 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:56:49 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:57:19 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:57:28 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: fff9aab6-7cc3-419c-8787-e93973d2a4da, Message: can you list me all usd accounts?
+2025-10-13 08:57:28 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 08:57:28 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session fff9aab6-7cc3-419c-8787-e93973d2a4da: can you list me all usd accounts?
+2025-10-13 08:57:28 [http-nio-8080-exec-8] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: fff9aab6-7cc3-419c-8787-e93973d2a4da
+2025-10-13 08:57:28 [http-nio-8080-exec-8] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session fff9aab6-7cc3-419c-8787-e93973d2a4da: can you list me all usd accounts?
+2025-10-13 08:57:28 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
+2025-10-13 08:57:28 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
+2025-10-13 08:57:28 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
+2025-10-13 08:57:28 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
+2025-10-13 08:57:28 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
+2025-10-13 08:57:46 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: fff9aab6-7cc3-419c-8787-e93973d2a4da
+2025-10-13 08:57:46 [http-nio-8080-exec-8] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session fff9aab6-7cc3-419c-8787-e93973d2a4da (functions: getAccountsByCurrency)
+2025-10-13 08:57:46 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: fff9aab6-7cc3-419c-8787-e93973d2a4da, executed 1 functions
+2025-10-13 08:57:49 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:58:17 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 9cf7d974-bc9f-4c82-8a13-1ab9b2ca7a4a, Message: transfer 1000 usd from acc-001-usd to acc-002-usd
+2025-10-13 08:58:17 [http-nio-8080-exec-9] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 08:58:17 [http-nio-8080-exec-9] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 9cf7d974-bc9f-4c82-8a13-1ab9b2ca7a4a: transfer 1000 usd from acc-001-usd to acc-002-usd
+2025-10-13 08:58:17 [http-nio-8080-exec-9] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 9cf7d974-bc9f-4c82-8a13-1ab9b2ca7a4a
+2025-10-13 08:58:17 [http-nio-8080-exec-9] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 9cf7d974-bc9f-4c82-8a13-1ab9b2ca7a4a: transfer 1000 usd from acc-001-usd to acc-002-usd
+2025-10-13 08:58:19 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:58:29 [http-nio-8080-exec-9] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: 9cf7d974-bc9f-4c82-8a13-1ab9b2ca7a4a
+2025-10-13 08:58:29 [http-nio-8080-exec-9] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 9cf7d974-bc9f-4c82-8a13-1ab9b2ca7a4a (functions: null)
+2025-10-13 08:58:29 [http-nio-8080-exec-9] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 9cf7d974-bc9f-4c82-8a13-1ab9b2ca7a4a, executed 0 functions
+2025-10-13 08:58:45 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 03f9aa9f-163c-4235-adf7-c547190dfc87, Message: Check balance for ACC-001-USD
+2025-10-13 08:58:45 [http-nio-8080-exec-1] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 08:58:45 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 03f9aa9f-163c-4235-adf7-c547190dfc87: Check balance for ACC-001-USD
+2025-10-13 08:58:45 [http-nio-8080-exec-1] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 03f9aa9f-163c-4235-adf7-c547190dfc87
+2025-10-13 08:58:45 [http-nio-8080-exec-1] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 03f9aa9f-163c-4235-adf7-c547190dfc87: Check balance for ACC-001-USD
+2025-10-13 08:58:45 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Executing checkAccountBalance with account: ACC-001-USD
+2025-10-13 08:58:45 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkAccountBalance for account: ACC-001-USD
+2025-10-13 08:58:45 [http-nio-8080-exec-1] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching account balance from TRMS: http://localhost:8090/api/v1/accounts/ACC-001-USD/balance
+2025-10-13 08:58:45 [http-nio-8080-exec-1] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved balance for account: ACC-001-USD
+2025-10-13 08:58:45 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved balance for account ACC-001-USD: null USD
+2025-10-13 08:58:49 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:58:56 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: 03f9aa9f-163c-4235-adf7-c547190dfc87
+2025-10-13 08:58:56 [http-nio-8080-exec-1] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 03f9aa9f-163c-4235-adf7-c547190dfc87 (functions: checkAccountBalance)
+2025-10-13 08:58:56 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 03f9aa9f-163c-4235-adf7-c547190dfc87, executed 1 functions
+2025-10-13 08:59:14 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 08:59:19 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 08:59:24 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 181daa63-aaea-4b31-a7d4-f3fa3396cbaa, Message: check eod for trms
+2025-10-13 08:59:24 [http-nio-8080-exec-5] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 08:59:24 [http-nio-8080-exec-5] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 181daa63-aaea-4b31-a7d4-f3fa3396cbaa: check eod for trms
+2025-10-13 08:59:24 [http-nio-8080-exec-5] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 181daa63-aaea-4b31-a7d4-f3fa3396cbaa
+2025-10-13 08:59:24 [http-nio-8080-exec-5] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 181daa63-aaea-4b31-a7d4-f3fa3396cbaa: check eod for trms
+2025-10-13 08:59:24 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsAiService] - Executing checkEODReadiness
+2025-10-13 08:59:24 [http-nio-8080-exec-5] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkEODReadiness
+2025-10-13 08:59:24 [http-nio-8080-exec-5] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Checking EOD readiness from TRMS: http://localhost:8090/api/v1/eod/readiness
+2025-10-13 08:59:25 [http-nio-8080-exec-5] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved EOD status: ready=false
+2025-10-13 08:59:25 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsFunctions] - EOD readiness status: ready=false, status=null
+2025-10-13 08:59:38 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: 181daa63-aaea-4b31-a7d4-f3fa3396cbaa
+2025-10-13 08:59:38 [http-nio-8080-exec-5] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 181daa63-aaea-4b31-a7d4-f3fa3396cbaa (functions: checkEODReadiness)
+2025-10-13 08:59:38 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 181daa63-aaea-4b31-a7d4-f3fa3396cbaa, executed 1 functions
+2025-10-13 08:59:49 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:00:06 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 6a6a6199-0293-4ee8-9023-6f235ff6868e, Message: check eod swift
+2025-10-13 09:00:06 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:00:06 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 6a6a6199-0293-4ee8-9023-6f235ff6868e: check eod swift
+2025-10-13 09:00:06 [http-nio-8080-exec-8] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 6a6a6199-0293-4ee8-9023-6f235ff6868e
+2025-10-13 09:00:06 [http-nio-8080-exec-8] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 6a6a6199-0293-4ee8-9023-6f235ff6868e: check eod swift
+2025-10-13 09:00:06 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Executing SWIFT EOD Validation Workflow
+2025-10-13 09:00:06 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.SwiftFunctions] - AI function call: verifyEODReports for date: 2025-10-13
+2025-10-13 09:00:06 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.SwiftClient] - Verifying EOD reports: http://localhost:8091/api/v1/swift/reports/eod/verify?reportDate=2025-10-13
+2025-10-13 09:00:06 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.SwiftClient] - EOD report verification completed: EOD Verification: 0/4 checks passed. 4 issue(s) found
+2025-10-13 09:00:06 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.SwiftFunctions] - EOD report verification completed: EOD Verification: 0/4 checks passed. 4 issue(s) found
+2025-10-13 09:00:06 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.SwiftFunctions] - AI function call: getUnreconciledMessages
+2025-10-13 09:00:06 [http-nio-8080-exec-8] DEBUG [com.trms.ai.client.SwiftClient] - Getting unreconciled SWIFT messages: http://localhost:8091/api/v1/swift/messages/unreconciled
+2025-10-13 09:00:06 [http-nio-8080-exec-8] INFO  [com.trms.ai.client.SwiftClient] - Retrieved 1 unreconciled SWIFT messages
+2025-10-13 09:00:06 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.SwiftFunctions] - Retrieved 1 unreconciled SWIFT messages
+2025-10-13 09:00:19 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:00:22 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: 6a6a6199-0293-4ee8-9023-6f235ff6868e
+2025-10-13 09:00:22 [http-nio-8080-exec-8] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 6a6a6199-0293-4ee8-9023-6f235ff6868e (functions: verifyEODReports, getUnreconciledMessages)
+2025-10-13 09:00:22 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 6a6a6199-0293-4ee8-9023-6f235ff6868e, executed 2 functions
+2025-10-13 09:00:49 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:01:19 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:01:49 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:02:19 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:02:49 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:03:19 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:03:49 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:04:19 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:04:49 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:05:19 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:05:49 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:06:19 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:06:49 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:07:19 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:07:49 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:08:19 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:08:49 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:09:19 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:09:49 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:10:19 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:10:49 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:11:19 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:11:49 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:12:19 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:12:49 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:13:20 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:13:50 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:14:15 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 09:29:25 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 09:39:08 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:39:38 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:40:08 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:40:38 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:41:08 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:41:38 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:42:08 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:42:38 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:43:08 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:43:38 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:44:08 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:44:25 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 09:44:56 [main] INFO  [com.trms.ai.TrmsAiApplication] - Starting TrmsAiApplication using Java 21.0.8 with PID 18362 (/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend)
+2025-10-13 09:44:56 [main] DEBUG [com.trms.ai.TrmsAiApplication] - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-10-13 09:44:56 [main] INFO  [com.trms.ai.TrmsAiApplication] - The following 1 profile is active: "dev"
+2025-10-13 09:44:57 [main] INFO  [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat initialized with port 8080 (http)
+2025-10-13 09:44:57 [main] INFO  [o.a.catalina.core.StandardService] - Starting service [Tomcat]
+2025-10-13 09:44:57 [main] INFO  [o.a.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-10-13 09:44:57 [main] INFO  [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2025-10-13 09:44:57 [main] INFO  [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 499 ms
+2025-10-13 09:44:57 [main] INFO  [com.trms.ai.service.TrmsAiService] - TrmsAiService initialized with Ollama ChatModel, conversation memory, TRMS and SWIFT function calling
+2025-10-13 09:44:57 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Configuring Ollama HTTP Client for TRMS operations
+2025-10-13 09:44:57 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Ollama Base URL: http://localhost:11434
+2025-10-13 09:44:57 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Ollama Model: qwen3:1.7b
+2025-10-13 09:44:57 [main] INFO  [o.s.b.a.e.web.EndpointLinksResolver] - Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-10-13 09:44:57 [main] INFO  [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat started on port 8080 (http) with context path ''
+2025-10-13 09:44:57 [main] INFO  [com.trms.ai.TrmsAiApplication] - Started TrmsAiApplication in 1.253 seconds (process running for 1.39)
+2025-10-13 09:44:57 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 09:44:59 [http-nio-8080-exec-1] INFO  [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-13 09:44:59 [http-nio-8080-exec-1] INFO  [o.s.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
+2025-10-13 09:44:59 [http-nio-8080-exec-1] INFO  [o.s.web.servlet.DispatcherServlet] - Completed initialization in 1 ms
+2025-10-13 09:44:59 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:45:08 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:45:15 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:45:22 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 427b93ef-5eed-4a9f-a86c-313d6dfec67c, Message: Can we run End-of-Day? Check SWIFT reconciliation status
+2025-10-13 09:45:22 [http-nio-8080-exec-5] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:45:22 [http-nio-8080-exec-5] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 427b93ef-5eed-4a9f-a86c-313d6dfec67c: Can we run End-of-Day? Check SWIFT reconciliation status
+2025-10-13 09:45:22 [http-nio-8080-exec-5] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 427b93ef-5eed-4a9f-a86c-313d6dfec67c
+2025-10-13 09:45:22 [http-nio-8080-exec-5] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 427b93ef-5eed-4a9f-a86c-313d6dfec67c: Can we run End-of-Day? Check SWIFT reconciliation 
+2025-10-13 09:45:22 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsAiService] - Executing getUnreconciledMessages
+2025-10-13 09:45:22 [http-nio-8080-exec-5] DEBUG [com.trms.ai.service.SwiftFunctions] - AI function call: getUnreconciledMessages
+2025-10-13 09:45:22 [http-nio-8080-exec-5] DEBUG [com.trms.ai.client.SwiftClient] - Getting unreconciled SWIFT messages: http://localhost:8091/api/v1/swift/messages/unreconciled
+2025-10-13 09:45:22 [http-nio-8080-exec-5] INFO  [com.trms.ai.client.SwiftClient] - Retrieved 1 unreconciled SWIFT messages
+2025-10-13 09:45:22 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.SwiftFunctions] - Retrieved 1 unreconciled SWIFT messages
+2025-10-13 09:45:45 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:45:46 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: 427b93ef-5eed-4a9f-a86c-313d6dfec67c
+2025-10-13 09:45:46 [http-nio-8080-exec-5] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 427b93ef-5eed-4a9f-a86c-313d6dfec67c (functions: getUnreconciledMessages)
+2025-10-13 09:45:46 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 427b93ef-5eed-4a9f-a86c-313d6dfec67c, executed 1 functions
+2025-10-13 09:46:15 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:46:45 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:47:03 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Debug request for all active sessions
+2025-10-13 09:47:15 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:47:45 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:48:15 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:48:45 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:49:15 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:49:45 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:50:15 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:50:45 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:51:15 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:51:23 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b65f8183-38bb-47ef-88b8-56de719537e8, Message: Propose missing rate fixings
+2025-10-13 09:51:23 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:51:23 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session b65f8183-38bb-47ef-88b8-56de719537e8: Propose missing rate fixings
+2025-10-13 09:51:23 [http-nio-8080-exec-4] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: b65f8183-38bb-47ef-88b8-56de719537e8
+2025-10-13 09:51:23 [http-nio-8080-exec-4] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session b65f8183-38bb-47ef-88b8-56de719537e8: Propose missing rate fixings
+2025-10-13 09:51:23 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Executing proposeRateFixings
+2025-10-13 09:51:23 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: proposeRateFixings
+2025-10-13 09:51:23 [http-nio-8080-exec-4] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching proposed rate fixings from TRMS: http://localhost:8090/api/v1/eod/missing-resets
+2025-10-13 09:51:23 [http-nio-8080-exec-4] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 rate fixing proposals
+2025-10-13 09:51:23 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 rate fixing proposals
+2025-10-13 09:51:44 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: b65f8183-38bb-47ef-88b8-56de719537e8
+2025-10-13 09:51:44 [http-nio-8080-exec-4] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session b65f8183-38bb-47ef-88b8-56de719537e8 (functions: proposeRateFixings)
+2025-10-13 09:51:44 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b65f8183-38bb-47ef-88b8-56de719537e8, executed 1 functions
+2025-10-13 09:51:45 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:51:58 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Debug request for session: b65f8183-38bb-47ef-88b8-56de719537e8, found 2 messages
+2025-10-13 09:52:10 [http-nio-8080-exec-10] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 7cda0e20-19b4-4310-a877-7e5bbeaadae9, Message: my name is Igor, remember it
+2025-10-13 09:52:10 [http-nio-8080-exec-10] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:52:10 [http-nio-8080-exec-10] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 7cda0e20-19b4-4310-a877-7e5bbeaadae9: my name is Igor, remember it
+2025-10-13 09:52:10 [http-nio-8080-exec-10] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 7cda0e20-19b4-4310-a877-7e5bbeaadae9
+2025-10-13 09:52:10 [http-nio-8080-exec-10] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 7cda0e20-19b4-4310-a877-7e5bbeaadae9: my name is Igor, remember it
+2025-10-13 09:52:14 [http-nio-8080-exec-10] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: 7cda0e20-19b4-4310-a877-7e5bbeaadae9
+2025-10-13 09:52:14 [http-nio-8080-exec-10] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 7cda0e20-19b4-4310-a877-7e5bbeaadae9 (functions: null)
+2025-10-13 09:52:14 [http-nio-8080-exec-10] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 7cda0e20-19b4-4310-a877-7e5bbeaadae9, executed 0 functions
+2025-10-13 09:52:15 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:52:20 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 497b7ae0-9807-4289-b77d-c9ce7f810610, Message: Show recent transactions
+2025-10-13 09:52:20 [http-nio-8080-exec-2] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:52:20 [http-nio-8080-exec-2] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 497b7ae0-9807-4289-b77d-c9ce7f810610: Show recent transactions
+2025-10-13 09:52:20 [http-nio-8080-exec-2] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 497b7ae0-9807-4289-b77d-c9ce7f810610
+2025-10-13 09:52:20 [http-nio-8080-exec-2] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 497b7ae0-9807-4289-b77d-c9ce7f810610: Show recent transactions
+2025-10-13 09:52:24 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Debug request for session: b65f8183-38bb-47ef-88b8-56de719537e8, found 2 messages
+2025-10-13 09:52:28 [http-nio-8080-exec-2] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: 497b7ae0-9807-4289-b77d-c9ce7f810610
+2025-10-13 09:52:28 [http-nio-8080-exec-2] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 497b7ae0-9807-4289-b77d-c9ce7f810610 (functions: null)
+2025-10-13 09:52:28 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 497b7ae0-9807-4289-b77d-c9ce7f810610, executed 0 functions
+2025-10-13 09:52:34 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 01f8aa5f-00be-4bbc-9060-72f796ff5bc2, Message: what is my name
+2025-10-13 09:52:34 [http-nio-8080-exec-5] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:52:34 [http-nio-8080-exec-5] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 01f8aa5f-00be-4bbc-9060-72f796ff5bc2: what is my name
+2025-10-13 09:52:34 [http-nio-8080-exec-5] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 01f8aa5f-00be-4bbc-9060-72f796ff5bc2
+2025-10-13 09:52:34 [http-nio-8080-exec-5] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 01f8aa5f-00be-4bbc-9060-72f796ff5bc2: what is my name
+2025-10-13 09:52:40 [http-nio-8080-exec-5] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: 01f8aa5f-00be-4bbc-9060-72f796ff5bc2
+2025-10-13 09:52:40 [http-nio-8080-exec-5] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 01f8aa5f-00be-4bbc-9060-72f796ff5bc2 (functions: null)
+2025-10-13 09:52:40 [http-nio-8080-exec-5] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 01f8aa5f-00be-4bbc-9060-72f796ff5bc2, executed 0 functions
+2025-10-13 09:52:44 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Debug request for session: b65f8183-38bb-47ef-88b8-56de719537e8, found 2 messages
+2025-10-13 09:52:45 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:53:15 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:53:45 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:54:16 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:54:47 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:55:18 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:55:49 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:56:20 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:56:50 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:56:52 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:57:03 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, Message: my name is Igor, remember it
+2025-10-13 09:57:03 [http-nio-8080-exec-7] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:57:03 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 867d55d9-87bd-4a5e-a1da-36922137cfbb: my name is Igor, remember it
+2025-10-13 09:57:03 [http-nio-8080-exec-7] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb
+2025-10-13 09:57:03 [http-nio-8080-exec-7] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb: my name is Igor, remember it
+2025-10-13 09:57:08 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb
+2025-10-13 09:57:08 [http-nio-8080-exec-7] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb (functions: null)
+2025-10-13 09:57:08 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, executed 0 functions
+2025-10-13 09:57:12 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, Message: Show recent transactions
+2025-10-13 09:57:12 [http-nio-8080-exec-8] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:57:12 [http-nio-8080-exec-8] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 867d55d9-87bd-4a5e-a1da-36922137cfbb: Show recent transactions
+2025-10-13 09:57:12 [http-nio-8080-exec-8] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb: Show recent transactions
+2025-10-13 09:57:18 [http-nio-8080-exec-8] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb
+2025-10-13 09:57:18 [http-nio-8080-exec-8] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb (functions: null)
+2025-10-13 09:57:18 [http-nio-8080-exec-8] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, executed 0 functions
+2025-10-13 09:57:22 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:57:41 [http-nio-8080-exec-10] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, Message: Show recent transactions
+2025-10-13 09:57:41 [http-nio-8080-exec-10] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:57:41 [http-nio-8080-exec-10] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 867d55d9-87bd-4a5e-a1da-36922137cfbb: Show recent transactions
+2025-10-13 09:57:41 [http-nio-8080-exec-10] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb: Show recent transactions
+2025-10-13 09:57:45 [http-nio-8080-exec-10] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb
+2025-10-13 09:57:45 [http-nio-8080-exec-10] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb (functions: null)
+2025-10-13 09:57:45 [http-nio-8080-exec-10] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, executed 0 functions
+2025-10-13 09:57:50 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, Message: Check balance for ACC-001-USD
+2025-10-13 09:57:50 [http-nio-8080-exec-1] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:57:50 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 867d55d9-87bd-4a5e-a1da-36922137cfbb: Check balance for ACC-001-USD
+2025-10-13 09:57:50 [http-nio-8080-exec-1] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb: Check balance for ACC-001-USD
+2025-10-13 09:57:50 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Executing checkAccountBalance with account: ACC-001-USD
+2025-10-13 09:57:50 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: checkAccountBalance for account: ACC-001-USD
+2025-10-13 09:57:50 [http-nio-8080-exec-1] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching account balance from TRMS: http://localhost:8090/api/v1/accounts/ACC-001-USD/balance
+2025-10-13 09:57:50 [http-nio-8080-exec-1] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved balance for account: ACC-001-USD
+2025-10-13 09:57:50 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved balance for account ACC-001-USD: null USD
+2025-10-13 09:57:52 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:57:59 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb
+2025-10-13 09:57:59 [http-nio-8080-exec-1] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb (functions: checkAccountBalance)
+2025-10-13 09:57:59 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, executed 1 functions
+2025-10-13 09:58:06 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, Message: what is my name?
+2025-10-13 09:58:06 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:58:06 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 867d55d9-87bd-4a5e-a1da-36922137cfbb: what is my name?
+2025-10-13 09:58:06 [http-nio-8080-exec-6] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb: what is my name?
+2025-10-13 09:58:09 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb
+2025-10-13 09:58:09 [http-nio-8080-exec-6] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 867d55d9-87bd-4a5e-a1da-36922137cfbb (functions: null)
+2025-10-13 09:58:09 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 867d55d9-87bd-4a5e-a1da-36922137cfbb, executed 0 functions
+2025-10-13 09:58:22 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:58:27 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:58:39 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:58:45 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 35198767-c4fe-4a13-bb75-dc4eb3aab926, Message: Can we run End-of-Day? Check SWIFT reconciliation status
+2025-10-13 09:58:45 [http-nio-8080-exec-7] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:58:45 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 35198767-c4fe-4a13-bb75-dc4eb3aab926: Can we run End-of-Day? Check SWIFT reconciliation status
+2025-10-13 09:58:45 [http-nio-8080-exec-7] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: 35198767-c4fe-4a13-bb75-dc4eb3aab926
+2025-10-13 09:58:45 [http-nio-8080-exec-7] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 35198767-c4fe-4a13-bb75-dc4eb3aab926: Can we run End-of-Day? Check SWIFT reconciliation 
+2025-10-13 09:58:45 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Executing getUnreconciledMessages
+2025-10-13 09:58:45 [http-nio-8080-exec-7] DEBUG [com.trms.ai.service.SwiftFunctions] - AI function call: getUnreconciledMessages
+2025-10-13 09:58:45 [http-nio-8080-exec-7] DEBUG [com.trms.ai.client.SwiftClient] - Getting unreconciled SWIFT messages: http://localhost:8091/api/v1/swift/messages/unreconciled
+2025-10-13 09:58:45 [http-nio-8080-exec-7] INFO  [com.trms.ai.client.SwiftClient] - Retrieved 1 unreconciled SWIFT messages
+2025-10-13 09:58:45 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.SwiftFunctions] - Retrieved 1 unreconciled SWIFT messages
+2025-10-13 09:59:04 [http-nio-8080-exec-7] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: 35198767-c4fe-4a13-bb75-dc4eb3aab926
+2025-10-13 09:59:04 [http-nio-8080-exec-7] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 35198767-c4fe-4a13-bb75-dc4eb3aab926 (functions: getUnreconciledMessages)
+2025-10-13 09:59:04 [http-nio-8080-exec-7] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 35198767-c4fe-4a13-bb75-dc4eb3aab926, executed 1 functions
+2025-10-13 09:59:09 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:59:13 [http-nio-8080-exec-10] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: 35198767-c4fe-4a13-bb75-dc4eb3aab926, Message: Propose missing rate fixings
+2025-10-13 09:59:13 [http-nio-8080-exec-10] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 09:59:13 [http-nio-8080-exec-10] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session 35198767-c4fe-4a13-bb75-dc4eb3aab926: Propose missing rate fixings
+2025-10-13 09:59:13 [http-nio-8080-exec-10] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session 35198767-c4fe-4a13-bb75-dc4eb3aab926: Propose missing rate fixings
+2025-10-13 09:59:13 [http-nio-8080-exec-10] INFO  [com.trms.ai.service.TrmsAiService] - Executing proposeRateFixings
+2025-10-13 09:59:13 [http-nio-8080-exec-10] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: proposeRateFixings
+2025-10-13 09:59:13 [http-nio-8080-exec-10] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching proposed rate fixings from TRMS: http://localhost:8090/api/v1/eod/missing-resets
+2025-10-13 09:59:13 [http-nio-8080-exec-10] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 rate fixing proposals
+2025-10-13 09:59:13 [http-nio-8080-exec-10] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 rate fixing proposals
+2025-10-13 09:59:24 [http-nio-8080-exec-10] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: 35198767-c4fe-4a13-bb75-dc4eb3aab926
+2025-10-13 09:59:24 [http-nio-8080-exec-10] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session 35198767-c4fe-4a13-bb75-dc4eb3aab926 (functions: proposeRateFixings)
+2025-10-13 09:59:24 [http-nio-8080-exec-10] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: 35198767-c4fe-4a13-bb75-dc4eb3aab926, executed 1 functions
+2025-10-13 09:59:39 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 09:59:57 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 10:00:09 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:00:39 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:01:09 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:01:39 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:02:09 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:02:39 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:03:09 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:03:39 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:04:09 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:04:39 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:05:09 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:05:39 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:06:09 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:06:39 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:07:09 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:07:39 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:08:09 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:08:39 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:09:09 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:09:39 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:10:09 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:10:39 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:11:10 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:15:01 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 10:30:09 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 10:41:50 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:42:01 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:42:08 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: c7d8fa4e-37a1-4f28-9dfe-b7fcd9c06400, Message: Can we run End-of-Day? Check SWIFT reconciliation status
+2025-10-13 10:42:08 [http-nio-8080-exec-1] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 10:42:08 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session c7d8fa4e-37a1-4f28-9dfe-b7fcd9c06400: Can we run End-of-Day? Check SWIFT reconciliation status
+2025-10-13 10:42:08 [http-nio-8080-exec-1] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: c7d8fa4e-37a1-4f28-9dfe-b7fcd9c06400
+2025-10-13 10:42:08 [http-nio-8080-exec-1] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session c7d8fa4e-37a1-4f28-9dfe-b7fcd9c06400: Can we run End-of-Day? Check SWIFT reconciliation 
+2025-10-13 10:42:08 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Executing getUnreconciledMessages
+2025-10-13 10:42:08 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.SwiftFunctions] - AI function call: getUnreconciledMessages
+2025-10-13 10:42:08 [http-nio-8080-exec-1] DEBUG [com.trms.ai.client.SwiftClient] - Getting unreconciled SWIFT messages: http://localhost:8091/api/v1/swift/messages/unreconciled
+2025-10-13 10:42:08 [http-nio-8080-exec-1] INFO  [com.trms.ai.client.SwiftClient] - Retrieved 1 unreconciled SWIFT messages
+2025-10-13 10:42:08 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.SwiftFunctions] - Retrieved 1 unreconciled SWIFT messages
+2025-10-13 10:42:29 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: c7d8fa4e-37a1-4f28-9dfe-b7fcd9c06400
+2025-10-13 10:42:29 [http-nio-8080-exec-1] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session c7d8fa4e-37a1-4f28-9dfe-b7fcd9c06400 (functions: getUnreconciledMessages)
+2025-10-13 10:42:29 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: c7d8fa4e-37a1-4f28-9dfe-b7fcd9c06400, executed 1 functions
+2025-10-13 10:42:31 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:43:01 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:43:31 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:43:44 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:44:14 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:44:44 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, Message: Transfer $75,000 from ACC-001-USD to ACC-002-USD and send payment via SWIFT
+2025-10-13 10:44:44 [http-nio-8080-exec-1] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 10:44:44 [http-nio-8080-exec-1] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: Transfer $75,000 from ACC-001-USD to ACC-002-USD and send payment via SWIFT
+2025-10-13 10:44:44 [http-nio-8080-exec-1] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14
+2025-10-13 10:44:44 [http-nio-8080-exec-1] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: Transfer $75,000 from ACC-001-USD to ACC-002-USD a
+2025-10-13 10:44:44 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:45:02 [http-nio-8080-exec-1] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14
+2025-10-13 10:45:02 [http-nio-8080-exec-1] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14 (functions: null)
+2025-10-13 10:45:02 [http-nio-8080-exec-1] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, executed 0 functions
+2025-10-13 10:45:09 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 10:45:14 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:45:29 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, Message: proceed with the transaction and SWIFT message
+2025-10-13 10:45:29 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 10:45:29 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: proceed with the transaction and SWIFT message
+2025-10-13 10:45:29 [http-nio-8080-exec-4] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: proceed with the transaction and SWIFT message
+2025-10-13 10:45:43 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14
+2025-10-13 10:45:43 [http-nio-8080-exec-4] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14 (functions: null)
+2025-10-13 10:45:43 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, executed 0 functions
+2025-10-13 10:45:44 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:46:14 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:46:44 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:47:00 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, Message: step 3 now
+2025-10-13 10:47:00 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 10:47:00 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: step 3 now
+2025-10-13 10:47:00 [http-nio-8080-exec-6] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: step 3 now
+2025-10-13 10:47:14 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:47:21 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14
+2025-10-13 10:47:21 [http-nio-8080-exec-6] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14 (functions: null)
+2025-10-13 10:47:21 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, executed 0 functions
+2025-10-13 10:47:34 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, Message: Step 4: Send SWIFT Payment
+2025-10-13 10:47:34 [http-nio-8080-exec-2] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 10:47:34 [http-nio-8080-exec-2] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: Step 4: Send SWIFT Payment
+2025-10-13 10:47:34 [http-nio-8080-exec-2] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: Step 4: Send SWIFT Payment
+2025-10-13 10:47:44 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:47:54 [http-nio-8080-exec-2] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14
+2025-10-13 10:47:54 [http-nio-8080-exec-2] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14 (functions: null)
+2025-10-13 10:47:54 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, executed 0 functions
+2025-10-13 10:48:14 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:48:44 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:49:14 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:50:13 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:50:43 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:51:12 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, Message: book a cash transaction amount 75k from ACC-001-USD to account ACC-002-USD
+2025-10-13 10:51:12 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 10:51:12 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: book a cash transaction amount 75k from ACC-001-USD to account ACC-002-USD
+2025-10-13 10:51:12 [http-nio-8080-exec-4] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: book a cash transaction amount 75k from ACC-001-US
+2025-10-13 10:51:12 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Executing getAccountsByCurrency with currency: USD
+2025-10-13 10:51:12 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsFunctions] - AI function call: getAccountsByCurrency with currency: USD
+2025-10-13 10:51:12 [http-nio-8080-exec-4] DEBUG [com.trms.ai.client.LegacyTrmsClient] - Fetching accounts from TRMS: http://localhost:8090/api/v1/accounts?currency=USD
+2025-10-13 10:51:12 [http-nio-8080-exec-4] INFO  [com.trms.ai.client.LegacyTrmsClient] - Successfully retrieved 3 accounts for currency: USD
+2025-10-13 10:51:12 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsFunctions] - Retrieved 3 accounts for currency: USD
+2025-10-13 10:51:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:51:28 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Contextual function calling response generated for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14
+2025-10-13 10:51:28 [http-nio-8080-exec-4] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14 (functions: getAccountsByCurrency)
+2025-10-13 10:51:28 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, executed 1 functions
+2025-10-13 10:51:43 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:52:13 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:52:28 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, Message: Send SWIFT Payment for cash transaction
+2025-10-13 10:52:28 [http-nio-8080-exec-6] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 10:52:28 [http-nio-8080-exec-6] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: Send SWIFT Payment for cash transaction
+2025-10-13 10:52:28 [http-nio-8080-exec-6] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: Send SWIFT Payment for cash transaction
+2025-10-13 10:52:43 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:52:47 [http-nio-8080-exec-6] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14
+2025-10-13 10:52:47 [http-nio-8080-exec-6] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14 (functions: null)
+2025-10-13 10:52:47 [http-nio-8080-exec-6] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, executed 0 functions
+2025-10-13 10:53:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:53:33 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, Message: send swift payment of 75k
+2025-10-13 10:53:33 [http-nio-8080-exec-4] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 10:53:33 [http-nio-8080-exec-4] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: send swift payment of 75k
+2025-10-13 10:53:33 [http-nio-8080-exec-4] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14: send swift payment of 75k
+2025-10-13 10:53:43 [http-nio-8080-exec-8] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:53:51 [http-nio-8080-exec-4] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14
+2025-10-13 10:53:51 [http-nio-8080-exec-4] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session b6373e2e-e4fe-42d5-b53b-6d549cf92b14 (functions: null)
+2025-10-13 10:53:51 [http-nio-8080-exec-4] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, executed 0 functions
+2025-10-13 10:54:13 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:54:24 [http-nio-8080-exec-3] INFO  [c.trms.ai.controller.ChatController] - Debug request for session: b6373e2e-e4fe-42d5-b53b-6d549cf92b14, found 14 messages
+2025-10-13 10:54:43 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:55:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:55:43 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:56:13 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:56:43 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:57:13 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:57:43 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:58:13 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:58:43 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:59:13 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 10:59:43 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:00:09 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 11:00:09 [scheduling-1] INFO  [c.trms.ai.service.ConversationMemory] - Removed expired session: 01f8aa5f-00be-4bbc-9060-72f796ff5bc2
+2025-10-13 11:00:09 [scheduling-1] INFO  [c.trms.ai.service.ConversationMemory] - Removed expired session: 7cda0e20-19b4-4310-a877-7e5bbeaadae9
+2025-10-13 11:00:09 [scheduling-1] INFO  [c.trms.ai.service.ConversationMemory] - Removed expired session: 35198767-c4fe-4a13-bb75-dc4eb3aab926
+2025-10-13 11:00:09 [scheduling-1] INFO  [c.trms.ai.service.ConversationMemory] - Removed expired session: 427b93ef-5eed-4a9f-a86c-313d6dfec67c
+2025-10-13 11:00:09 [scheduling-1] INFO  [c.trms.ai.service.ConversationMemory] - Removed expired session: 497b7ae0-9807-4289-b77d-c9ce7f810610
+2025-10-13 11:00:09 [scheduling-1] INFO  [c.trms.ai.service.ConversationMemory] - Removed expired session: 867d55d9-87bd-4a5e-a1da-36922137cfbb
+2025-10-13 11:00:09 [scheduling-1] INFO  [c.trms.ai.service.ConversationMemory] - Removed expired session: b65f8183-38bb-47ef-88b8-56de719537e8
+2025-10-13 11:00:09 [scheduling-1] INFO  [c.trms.ai.service.ConversationMemory] - Cleaned up 7 expired sessions. Active sessions: 2
+2025-10-13 11:00:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:00:43 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:01:13 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:01:43 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:02:13 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:02:43 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:03:13 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:03:43 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:04:13 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:04:43 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:05:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:05:43 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:06:13 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:06:43 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:07:13 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:07:43 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:08:13 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:08:43 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:09:13 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:09:43 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:10:13 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:10:43 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:11:13 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:11:43 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:12:13 [http-nio-8080-exec-6] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:12:43 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:13:35 [main] INFO  [com.trms.ai.TrmsAiApplication] - Starting TrmsAiApplication using Java 21.0.8 with PID 20029 (/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend)
+2025-10-13 11:13:35 [main] DEBUG [com.trms.ai.TrmsAiApplication] - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-10-13 11:13:35 [main] INFO  [com.trms.ai.TrmsAiApplication] - The following 1 profile is active: "dev"
+2025-10-13 11:13:36 [main] INFO  [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat initialized with port 8080 (http)
+2025-10-13 11:13:36 [main] INFO  [o.a.catalina.core.StandardService] - Starting service [Tomcat]
+2025-10-13 11:13:36 [main] INFO  [o.a.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-10-13 11:13:36 [main] INFO  [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2025-10-13 11:13:36 [main] INFO  [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 481 ms
+2025-10-13 11:13:36 [main] INFO  [com.trms.ai.service.TrmsAiService] - TrmsAiService initialized with Ollama ChatModel, conversation memory, TRMS and SWIFT function calling
+2025-10-13 11:13:36 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Configuring Ollama HTTP Client for TRMS operations
+2025-10-13 11:13:36 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Ollama Base URL: http://localhost:11434
+2025-10-13 11:13:36 [main] INFO  [c.trms.ai.config.OllamaConfiguration] - Ollama Model: qwen3:1.7b
+2025-10-13 11:13:36 [main] INFO  [o.s.b.a.e.web.EndpointLinksResolver] - Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-10-13 11:13:36 [main] INFO  [o.s.b.w.e.tomcat.TomcatWebServer] - Tomcat started on port 8080 (http) with context path ''
+2025-10-13 11:13:36 [main] INFO  [com.trms.ai.TrmsAiApplication] - Started TrmsAiApplication in 1.23 seconds (process running for 1.365)
+2025-10-13 11:13:36 [scheduling-1] DEBUG [c.trms.ai.service.ConversationMemory] - Running scheduled cleanup of expired sessions
+2025-10-13 11:13:37 [http-nio-8080-exec-1] INFO  [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-13 11:13:37 [http-nio-8080-exec-1] INFO  [o.s.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
+2025-10-13 11:13:37 [http-nio-8080-exec-1] INFO  [o.s.web.servlet.DispatcherServlet] - Completed initialization in 1 ms
+2025-10-13 11:13:37 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:13:43 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:14:13 [http-nio-8080-exec-4] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:14:15 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:14:43 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:15:13 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:15:21 [http-nio-8080-exec-10] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:15:26 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Processing chat request - Session: e8d302b4-092a-4c70-8240-71c3ad73f0ca, Message: Transfer $100,000 from ACC-001-USD to ACC-002-USD and send via SWIFT
+2025-10-13 11:15:26 [http-nio-8080-exec-2] DEBUG [c.trms.ai.controller.ChatController] - Using Spring AI with function calling for response generation
+2025-10-13 11:15:26 [http-nio-8080-exec-2] DEBUG [com.trms.ai.service.TrmsAiService] - Processing chat message for session e8d302b4-092a-4c70-8240-71c3ad73f0ca: Transfer $100,000 from ACC-001-USD to ACC-002-USD and send via SWIFT
+2025-10-13 11:15:26 [http-nio-8080-exec-2] INFO  [c.trms.ai.service.ConversationMemory] - Creating new conversation for session: e8d302b4-092a-4c70-8240-71c3ad73f0ca
+2025-10-13 11:15:26 [http-nio-8080-exec-2] DEBUG [c.trms.ai.service.ConversationMemory] - Added user message to session e8d302b4-092a-4c70-8240-71c3ad73f0ca: Transfer $100,000 from ACC-001-USD to ACC-002-USD 
+2025-10-13 11:15:51 [http-nio-8080-exec-3] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:15:55 [http-nio-8080-exec-2] INFO  [com.trms.ai.service.TrmsAiService] - Contextual AI response generated for session: e8d302b4-092a-4c70-8240-71c3ad73f0ca
+2025-10-13 11:15:55 [http-nio-8080-exec-2] DEBUG [c.trms.ai.service.ConversationMemory] - Added assistant message to session e8d302b4-092a-4c70-8240-71c3ad73f0ca (functions: null)
+2025-10-13 11:15:55 [http-nio-8080-exec-2] INFO  [c.trms.ai.controller.ChatController] - Spring AI response generated successfully for session: e8d302b4-092a-4c70-8240-71c3ad73f0ca, executed 0 functions
+2025-10-13 11:16:21 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:16:51 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:17:21 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:17:51 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:18:21 [http-nio-8080-exec-2] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:18:51 [http-nio-8080-exec-5] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:19:21 [http-nio-8080-exec-7] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:19:51 [http-nio-8080-exec-9] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE
+2025-10-13 11:20:21 [http-nio-8080-exec-1] DEBUG [c.t.a.c.OllamaConfiguration$OllamaClient] - Ollama availability check: AVAILABLE

@@ -1,3 +1,4 @@
+com/trms/ai/model/ConversationMessage.class
 com/trms/ai/service/SwiftFunctions$GetUnreconciledMessagesRequest.class
 com/trms/ai/service/SwiftFunctions$CheckSwiftStatusRequest.class
 com/trms/ai/client/SwiftClient.class
@@ -10,6 +11,7 @@ com/trms/ai/controller/HealthController.class
 com/trms/ai/client/LegacyTrmsClient$1.class
 com/trms/ai/dto/Transaction.class
 com/trms/ai/dto/ChatResponse.class
+com/trms/ai/service/ConversationMemory.class
 com/trms/ai/dto/MessageStatusResponse.class
 com/trms/ai/config/OllamaConfiguration.class
 com/trms/ai/dto/EODReportVerificationResult.class
@@ -19,6 +21,7 @@ com/trms/ai/dto/Account.class
 com/trms/ai/controller/GlobalExceptionHandler.class
 com/trms/ai/dto/CreateTransactionRequest.class
 com/trms/ai/service/TrmsFunctions$GetAccountsByCurrencyRequest.class
+com/trms/ai/model/ConversationMessage$Role.class
 com/trms/ai/dto/ChatResponse$Metadata.class
 com/trms/ai/config/WebConfig.class
 com/trms/ai/service/TrmsFunctions.class
@@ -45,6 +48,7 @@ com/trms/ai/client/SwiftClient$2.class
 com/trms/ai/dto/AccountBalance.class
 com/trms/ai/service/SwiftFunctions.class
 com/trms/ai/client/LegacyTrmsClient.class
+com/trms/ai/model/ConversationHistory.class
 com/trms/ai/service/TrmsAiService.class
 com/trms/ai/dto/RateReset.class
 com/trms/ai/dto/EODReportVerificationResult$ReportCheck.class

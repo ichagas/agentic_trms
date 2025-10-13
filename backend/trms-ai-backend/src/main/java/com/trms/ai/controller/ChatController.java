@@ -4,6 +4,9 @@ import com.trms.ai.client.LegacyTrmsClient;
 import com.trms.ai.config.OllamaConfiguration;
 import com.trms.ai.dto.ChatRequest;
 import com.trms.ai.dto.ChatResponse;
+import com.trms.ai.model.ConversationHistory;
+import com.trms.ai.model.ConversationMessage;
+import com.trms.ai.service.ConversationMemory;
 import com.trms.ai.service.TrmsAiService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -15,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST Controller for AI chat interactions with TRMS functionality
@@ -31,13 +35,17 @@ public class ChatController {
 
     private final LegacyTrmsClient legacyTrmsClient;
     private final TrmsAiService trmsAiService;
-    
+    private final ConversationMemory conversationMemory;
+
     @Autowired(required = false)
     private OllamaConfiguration.OllamaClient ollamaClient;
 
-    public ChatController(LegacyTrmsClient legacyTrmsClient, TrmsAiService trmsAiService) {
+    public ChatController(LegacyTrmsClient legacyTrmsClient,
+                         TrmsAiService trmsAiService,
+                         ConversationMemory conversationMemory) {
         this.legacyTrmsClient = legacyTrmsClient;
         this.trmsAiService = trmsAiService;
+        this.conversationMemory = conversationMemory;
     }
 
     /**
@@ -57,7 +65,7 @@ public class ChatController {
             // Try to use Spring AI with function calling first, then fallback
             try {
                 logger.debug("Using Spring AI with function calling for response generation");
-                TrmsAiService.ChatResult result = trmsAiService.chat(request.message());
+                TrmsAiService.ChatResult result = trmsAiService.chat(sessionId, request.message());
                 response = result.getResponse();
                 executedFunctions = result.getExecutedFunctions();
                 logger.info("Spring AI response generated successfully for session: {}, executed {} functions",
@@ -124,7 +132,7 @@ public class ChatController {
     @GetMapping("/chat/health")
     public ResponseEntity<String> health() {
         String status = "TRMS AI Chat Service is running";
-        
+
         // Add Ollama status if available
         if (ollamaClient != null) {
             if (ollamaClient.isAvailable()) {
@@ -135,7 +143,85 @@ public class ChatController {
         } else {
             status += " (Ollama: NOT CONFIGURED - using pattern matching)";
         }
-        
+
         return ResponseEntity.ok(status);
+    }
+
+    /**
+     * Debug endpoint: Get conversation history for a specific session
+     *
+     * Usage: GET /api/chat/debug/session/{sessionId}
+     * Example: curl http://localhost:8080/api/chat/debug/session/abc-123
+     */
+    @GetMapping("/chat/debug/session/{sessionId}")
+    public ResponseEntity<Map<String, Object>> getSessionContext(@PathVariable String sessionId) {
+        ConversationHistory history = conversationMemory.getHistory(sessionId);
+
+        if (history == null) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("error", "Session not found");
+            response.put("sessionId", sessionId);
+            response.put("message", "No conversation history exists for this session ID");
+            return ResponseEntity.ok(response);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("sessionId", history.getSessionId());
+        response.put("startTime", history.getStartTime().toString());
+        response.put("lastAccessTime", history.getLastAccessTime().toString());
+        response.put("messageCount", history.getMessageCount());
+
+        // Convert messages to readable format
+        List<Map<String, String>> messages = history.getMessages().stream()
+            .map(msg -> {
+                Map<String, String> msgMap = new HashMap<>();
+                msgMap.put("role", msg.getRole().toString());
+                msgMap.put("content", msg.getContent());
+                msgMap.put("timestamp", msg.getTimestamp().toString());
+                if (msg.getFunctionCalls() != null) {
+                    msgMap.put("functionCalls", msg.getFunctionCalls());
+                }
+                return msgMap;
+            })
+            .collect(Collectors.toList());
+
+        response.put("messages", messages);
+
+        logger.info("Debug request for session: {}, found {} messages", sessionId, history.getMessageCount());
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Debug endpoint: List all active sessions
+     *
+     * Usage: GET /api/chat/debug/sessions
+     * Example: curl http://localhost:8080/api/chat/debug/sessions
+     */
+    @GetMapping("/chat/debug/sessions")
+    public ResponseEntity<Map<String, Object>> getAllSessions() {
+        Map<String, Object> response = new HashMap<>();
+        response.put("activeSessionCount", conversationMemory.getActiveSessionCount());
+        response.put("statistics", conversationMemory.getStatistics());
+
+        logger.info("Debug request for all active sessions");
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Debug endpoint: Clear a specific session's conversation history
+     *
+     * Usage: DELETE /api/chat/debug/session/{sessionId}
+     * Example: curl -X DELETE http://localhost:8080/api/chat/debug/session/abc-123
+     */
+    @DeleteMapping("/chat/debug/session/{sessionId}")
+    public ResponseEntity<Map<String, Object>> clearSession(@PathVariable String sessionId) {
+        conversationMemory.clearConversation(sessionId);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Session cleared successfully");
+        response.put("sessionId", sessionId);
+
+        logger.info("Debug: Cleared session {}", sessionId);
+        return ResponseEntity.ok(response);
     }
 }

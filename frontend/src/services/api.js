@@ -87,6 +87,9 @@ const disconnectWebSocket = () => {
   }
 };
 
+// Session ID management
+let currentSessionId = null;
+
 // API Service
 class TrmsApiService {
   /**
@@ -118,12 +121,20 @@ class TrmsApiService {
     try {
       const response = await apiClient.post('/api/chat', {
         message: message.trim(),
+        sessionId: currentSessionId, // Include sessionId in request
         timestamp: new Date().toISOString(),
       });
+
+      // Store sessionId from backend response
+      if (response.data.sessionId) {
+        currentSessionId = response.data.sessionId;
+        console.log('[API] Session ID:', currentSessionId);
+      }
 
       return {
         success: true,
         message: response.data.message || response.data.response,
+        sessionId: response.data.sessionId,
         timestamp: response.data.timestamp || new Date().toISOString(),
         metadata: response.data.metadata,
       };
@@ -133,9 +144,24 @@ class TrmsApiService {
         console.warn('[API] Backend unavailable, falling back to mock responses');
         return this.getMockResponse(message);
       }
-      
+
       throw new Error(error.userMessage || 'Failed to send message');
     }
+  }
+
+  /**
+   * Clear the current session (start fresh conversation)
+   */
+  static clearSession() {
+    console.log('[API] Clearing session:', currentSessionId);
+    currentSessionId = null;
+  }
+
+  /**
+   * Get the current session ID
+   */
+  static getSessionId() {
+    return currentSessionId;
   }
 
   /**

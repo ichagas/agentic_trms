@@ -20,3 +20,4 @@
 /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/src/main/java/com/trms/mock/dto/CreateTransactionRequest.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/src/main/java/com/trms/mock/controller/TransactionController.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/src/main/java/com/trms/mock/model/TransactionStatusSummary.java
+/Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/src/main/java/com/trms/mock/client/SwiftMockClient.java

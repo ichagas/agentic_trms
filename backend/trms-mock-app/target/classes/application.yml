@@ -52,6 +52,10 @@ trms:
     version: "1.0.0"
     description: "Mock Treasury and Risk Management System for AI Agent POC"
     environment: "development"
+
+# SWIFT mock integration
+swift-mock:
+  base-url: ${SWIFT_MOCK_BASE_URL:http://localhost:8091/api/v1/swift}
     
   data:
     initialization:

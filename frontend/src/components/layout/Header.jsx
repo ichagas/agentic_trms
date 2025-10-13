@@ -21,8 +21,8 @@ const Header = ({ connectionStatus, children }) => {
           AI
         </div>
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">TRMS AI Assistant</h2>
-          <p className="text-xs text-gray-500 dark:text-gray-400">Treasury & Risk Management System</p>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">NACC</h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400">NextAgent Command Control</p>
         </div>
       </div>
 

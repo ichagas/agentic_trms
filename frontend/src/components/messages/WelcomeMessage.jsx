@@ -21,7 +21,7 @@ const WelcomeMessage = () => (
       <span className="text-2xl font-bold text-white">AI</span>
     </div>
     <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-2">
-      Welcome to TRMS AI Assistant
+      Welcome to NextAgent Command Control
     </h3>
     <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
       I can help you with treasury operations, account management, EOD processing, and financial data analysis.

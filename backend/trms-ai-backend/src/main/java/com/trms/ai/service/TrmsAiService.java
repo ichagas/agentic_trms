@@ -28,6 +28,7 @@ public class TrmsAiService {
     private final ChatClient chatClient;
     private final TrmsFunctions trmsFunctions;
     private final SwiftFunctions swiftFunctions;
+    private final ConversationMemory conversationMemory;
 
     // Thread-local storage for tracking executed functions in the current request
     private final ThreadLocal<List<String>> executedFunctions = ThreadLocal.withInitial(ArrayList::new);
@@ -90,66 +91,90 @@ public class TrmsAiService {
     @Autowired
     public TrmsAiService(@Qualifier("ollamaChatModel") ChatModel chatModel,
                         TrmsFunctions trmsFunctions,
-                        SwiftFunctions swiftFunctions) {
+                        SwiftFunctions swiftFunctions,
+                        ConversationMemory conversationMemory) {
         this.trmsFunctions = trmsFunctions;
         this.swiftFunctions = swiftFunctions;
+        this.conversationMemory = conversationMemory;
         this.chatClient = ChatClient.builder(chatModel)
             .defaultSystem(SYSTEM_PROMPT)
             .build();
 
-        logger.info("TrmsAiService initialized with Ollama ChatModel, TRMS and SWIFT function calling");
+        logger.info("TrmsAiService initialized with Ollama ChatModel, conversation memory, TRMS and SWIFT function calling");
     }
 
     /**
-     * Process a chat message using hybrid approach: function detection + Spring AI
-     * Returns both the response text and list of executed functions
+     * Process a chat message with conversation context
+     * NEW: Now accepts sessionId for context management
+     *
+     * @param sessionId Unique session identifier for conversation continuity
+     * @param userMessage The user's message
+     * @return ChatResult containing response and executed functions
      */
-    public ChatResult chat(String userMessage) {
-        logger.debug("Processing chat message with hybrid function calling: {}", userMessage);
+    public ChatResult chat(String sessionId, String userMessage) {
+        logger.debug("Processing chat message for session {}: {}", sessionId, userMessage);
 
         // Clear previous function tracking
         executedFunctions.get().clear();
 
         try {
+            // Add user message to conversation history
+            conversationMemory.addUserMessage(sessionId, userMessage);
+
             // First, check if the message requires function calling
             String functionResult = tryExecuteFunction(userMessage);
 
+            String response;
             if (functionResult != null) {
-                // Function was executed, now get AI to format the response
-                String aiPrompt = String.format("""
-                    User asked: %s
+                // Function was executed, build contextual prompt for AI formatting
+                String contextualPrompt = conversationMemory.buildContextualPrompt(
+                    sessionId,
+                    String.format("""
+                        User asked: %s
 
-                    I executed the appropriate TRMS function and got this data:
-                    %s
+                        Function execution result:
+                        %s
 
-                    Please format this data in a clear, professional way and explain what it means to the user.
-                    """, userMessage, functionResult);
+                        Please format this data in a clear, professional way and explain what it means.
+                        Remember the conversation context and refer to it if relevant.
+                        """, userMessage, functionResult),
+                    6 // Include last 6 messages for context
+                );
 
-                String response = chatClient
+                response = chatClient
                     .prompt()
-                    .user(aiPrompt)
+                    .user(contextualPrompt)
                     .call()
                     .content();
 
-                logger.info("Hybrid function calling response generated successfully");
-                List<String> functions = new ArrayList<>(executedFunctions.get());
-                executedFunctions.remove(); // Clean up thread-local
-                return new ChatResult(response, functions);
+                logger.info("Contextual function calling response generated for session: {}", sessionId);
             } else {
-                // No function needed, use regular AI response
-                String response = chatClient
+                // No function needed, use contextual prompt with conversation history
+                String contextualPrompt = conversationMemory.buildContextualPrompt(
+                    sessionId,
+                    userMessage,
+                    8 // Include last 8 messages for context
+                );
+
+                response = chatClient
                     .prompt()
-                    .user(userMessage)
+                    .user(contextualPrompt)
                     .call()
                     .content();
 
-                logger.info("Regular AI response generated successfully");
-                executedFunctions.remove(); // Clean up thread-local
-                return new ChatResult(response, List.of());
+                logger.info("Contextual AI response generated for session: {}", sessionId);
             }
 
+            // Save assistant response to conversation history
+            List<String> functions = new ArrayList<>(executedFunctions.get());
+            String functionCallsStr = functions.isEmpty() ? null : String.join(", ", functions);
+            conversationMemory.addAssistantMessage(sessionId, response, functionCallsStr);
+
+            executedFunctions.remove(); // Clean up thread-local
+            return new ChatResult(response, functions);
+
         } catch (Exception e) {
-            logger.error("Error processing chat: {}", e.getMessage(), e);
+            logger.error("Error processing chat for session {}: {}", sessionId, e.getMessage(), e);
             executedFunctions.remove(); // Clean up thread-local
             return new ChatResult(generateFallbackResponse(userMessage), List.of());
         }

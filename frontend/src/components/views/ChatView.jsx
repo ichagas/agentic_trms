@@ -28,7 +28,7 @@ import useServiceEvents from '../../hooks/useServiceEvents';
  */
 const ChatView = ({ messages, onNewMessage, isLoading, connectionStatus }) => {
   const [input, setInput] = useState('');
-  const [showTopology, setShowTopology] = useState(true);
+  const [showTopology, setShowTopology] = useState(false);
   const messagesEndRef = useRef(null);
 
   // Track service events from messages
