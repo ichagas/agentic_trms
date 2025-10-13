@@ -34,16 +34,21 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.5)
 
-2025-10-13 11:13:17 - Starting TrmsMockApplication using Java 21.0.8 with PID 19977 (/Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app)
-2025-10-13 11:13:17 - No active profile set, falling back to 1 default profile: "default"
-2025-10-13 11:13:17 - Tomcat initialized with port(s): 8090 (http)
-2025-10-13 11:13:17 - Starting service [Tomcat]
-2025-10-13 11:13:17 - Starting Servlet engine: [Apache Tomcat/10.1.15]
-2025-10-13 11:13:18 - Initializing Spring embedded WebApplicationContext
-2025-10-13 11:13:18 - Root WebApplicationContext: initialization completed in 489 ms
-2025-10-13 11:13:18 - Exposing 1 endpoint(s) beneath base path '/actuator'
-2025-10-13 11:13:18 - Tomcat started on port(s): 8090 (http) with context path ''
-2025-10-13 11:13:18 - Started TrmsMockApplication in 0.952 seconds (process running for 1.082)
-2025-10-13 11:13:19 - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-10-13 11:13:19 - Initializing Servlet 'dispatcherServlet'
-2025-10-13 11:13:19 - Completed initialization in 1 ms
+2025-10-13 12:15:48 - Starting TrmsMockApplication using Java 21.0.8 with PID 21353 (/Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app/target/classes started by igorchagas in /Users/igorchagas/ideas/agentic_trms/backend/trms-mock-app)
+2025-10-13 12:15:48 - No active profile set, falling back to 1 default profile: "default"
+2025-10-13 12:15:49 - Tomcat initialized with port(s): 8090 (http)
+2025-10-13 12:15:49 - Starting service [Tomcat]
+2025-10-13 12:15:49 - Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-10-13 12:15:49 - Initializing Spring embedded WebApplicationContext
+2025-10-13 12:15:49 - Root WebApplicationContext: initialization completed in 495 ms
+2025-10-13 12:15:49 - Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-10-13 12:15:49 - Tomcat started on port(s): 8090 (http) with context path ''
+2025-10-13 12:15:49 - Started TrmsMockApplication in 0.961 seconds (process running for 1.089)
+2025-10-13 12:15:50 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-13 12:15:50 - Initializing Servlet 'dispatcherServlet'
+2025-10-13 12:15:50 - Completed initialization in 1 ms
+2025-10-13 12:19:45 - Performing EOD readiness check
+2025-10-13 12:19:45 - Performing comprehensive EOD readiness check including SWIFT reconciliation
+2025-10-13 12:19:45 - Failed to fetch reconciliation status from SWIFT service: 404 : "{<EOL>  "timestamp" : "2025-10-13T16:19:45.881+00:00",<EOL>  "status" : 404,<EOL>  "error" : "Not Found",<EOL>  "path" : "/api/v1/swift/reconciliation"<EOL>}"
+2025-10-13 12:19:45 - SWIFT service unavailable or returned null result
+2025-10-13 12:19:45 - EOD readiness check completed - Status: PARTIAL_READY, Ready: false
