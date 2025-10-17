@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import SearchView from './components/views/SearchView';
 import ChatView from './components/views/ChatView';
 import ErrorBanner from './components/layout/ErrorBanner';
+import TrmsDashboard from './pages/TrmsDashboard';
+import SwiftDashboard from './pages/SwiftDashboard';
 import useConnectionStatus from './hooks/useConnectionStatus';
 import useMessageHandler from './hooks/useMessageHandler';
 
@@ -56,32 +59,43 @@ const App = () => {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 font-sans h-screen w-screen flex flex-col overflow-hidden">
-      {/* Error Display */}
-      {error && (
-        <ErrorBanner error={error} onDismiss={() => setError(null)} />
-      )}
+    <BrowserRouter>
+      <div className="bg-gray-100 dark:bg-gray-900 font-sans h-screen w-screen flex flex-col overflow-hidden">
+        {/* Error Display */}
+        {error && (
+          <ErrorBanner error={error} onDismiss={() => setError(null)} />
+        )}
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex w-full overflow-hidden">
-        <AnimatePresence mode="wait">
-          {view === 'search' ? (
-            <SearchView
-              key="search"
-              onSubmit={handleSendMessage}
-            />
-          ) : (
-            <ChatView
-              key="chat"
-              messages={messages}
-              onNewMessage={handleSendMessage}
-              isLoading={isLoading}
-              connectionStatus={connectionStatus}
-            />
-          )}
-        </AnimatePresence>
+        {/* Main Content Area */}
+        <div className="flex-1 flex w-full overflow-hidden">
+          <Routes>
+            {/* Chat Interface Routes */}
+            <Route path="/" element={
+              <AnimatePresence mode="wait">
+                {view === 'search' ? (
+                  <SearchView
+                    key="search"
+                    onSubmit={handleSendMessage}
+                  />
+                ) : (
+                  <ChatView
+                    key="chat"
+                    messages={messages}
+                    onNewMessage={handleSendMessage}
+                    isLoading={isLoading}
+                    connectionStatus={connectionStatus}
+                  />
+                )}
+              </AnimatePresence>
+            } />
+
+            {/* Dashboard Routes */}
+            <Route path="/dashboard/trms" element={<TrmsDashboard />} />
+            <Route path="/dashboard/swift" element={<SwiftDashboard />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </BrowserRouter>
   );
 };
 

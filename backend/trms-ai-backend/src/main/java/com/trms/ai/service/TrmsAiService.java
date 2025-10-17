@@ -705,38 +705,109 @@ public class TrmsAiService {
 
         try {
             // Extract transfer details from message
-            String fromAccount = extractAccountId(message);
-            String amount = extractAmount(message);
+            String[] accounts = extractBothAccountIds(message);
+            String fromAccount = accounts[0];
+            String toAccount = accounts[1];
+            String amountStr = extractAmount(message);
             String currency = extractCurrency(message);
 
-            result.append("📝 Transfer Details Extracted:\n");
-            result.append(String.format("   From: %s\n", fromAccount != null ? fromAccount : "Not specified"));
-            result.append(String.format("   Amount: %s\n", amount != null ? amount : "Not specified"));
-            result.append(String.format("   Currency: %s\n\n", currency != null ? currency : "USD"));
+            // Validate extracted data
+            if (fromAccount == null || toAccount == null) {
+                result.append("❌ ERROR: Could not extract both source and destination accounts.\n");
+                result.append("   Please specify transfer in format: 'Transfer $AMOUNT from ACC-XXX-CUR to ACC-YYY-CUR'\n");
+                return result.toString();
+            }
 
-            // Step 1: Book the transaction (simplified - would need to/from accounts)
+            if (amountStr == null) {
+                result.append("❌ ERROR: Could not extract amount from message.\n");
+                return result.toString();
+            }
+
+            // Remove commas and parse amount
+            Double amount = Double.parseDouble(amountStr.replace(",", ""));
+
+            // Default currency if not specified
+            if (currency == null) {
+                currency = "USD";
+            }
+
+            result.append("📝 Transfer Details Extracted:\n");
+            result.append(String.format("   From: %s\n", fromAccount));
+            result.append(String.format("   To: %s\n", toAccount));
+            result.append(String.format("   Amount: %s\n", amountStr));
+            result.append(String.format("   Currency: %s\n\n", currency));
+
+            // Step 1: Book the transaction
             result.append("💰 Step 1/2: Booking transaction in TRMS...\n");
-            result.append("   [Transaction booking would occur here]\n");
-            result.append("   Transaction ID: TXN-" + System.currentTimeMillis() + "\n\n");
+            executedFunctions.get().add("bookTransaction");
+
+            var bookRequest = new TrmsFunctions.BookTransactionRequest(fromAccount, toAccount, amount, currency);
+            var transaction = trmsFunctions.bookTransaction().apply(bookRequest);
+
+            result.append(String.format("   ✅ Transaction booked successfully!\n"));
+            result.append(String.format("   Transaction ID: %s\n", transaction.id()));
+            result.append(String.format("   Status: %s\n", transaction.status()));
+            result.append(String.format("   Amount: %s %s\n\n", transaction.amount(), transaction.currency()));
 
             // Step 2: Send SWIFT payment
             result.append("📤 Step 2/2: Sending SWIFT payment message...\n");
-            result.append("   [SWIFT MT103 message would be sent here]\n");
-            result.append("   SWIFT Message ID: SWIFT-MSG-" + System.currentTimeMillis() + "\n");
-            result.append("   Status: SENT\n\n");
+            executedFunctions.get().add("sendSwiftPayment");
+
+            var swiftRequest = new SwiftFunctions.SendSwiftPaymentRequest(
+                fromAccount,
+                transaction.id(),
+                new java.math.BigDecimal(amount),
+                currency,
+                "DEUTDEFFXXX", // Default receiver BIC
+                "Beneficiary Name", // Default beneficiary name
+                toAccount
+            );
+            var swiftMessage = swiftFunctions.sendSwiftPayment().apply(swiftRequest);
+
+            result.append(String.format("   ✅ SWIFT MT103 message sent successfully!\n"));
+            result.append(String.format("   SWIFT Message ID: %s\n", swiftMessage.id()));
+            result.append(String.format("   Status: %s\n", swiftMessage.status()));
+            result.append(String.format("   Message Type: %s\n\n", swiftMessage.messageType()));
 
             result.append("✅ WORKFLOW COMPLETED SUCCESSFULLY\n");
             result.append("Transaction booked and SWIFT payment message sent.\n");
 
-            // Track executed functions
-            executedFunctions.get().add("bookTransaction");
-            executedFunctions.get().add("sendSwiftPayment");
-
         } catch (Exception e) {
             result.append("❌ Error in Transfer + SWIFT Workflow: ").append(e.getMessage());
+            logger.error("Error in executeTransferAndSwiftWorkflow", e);
         }
 
         return result.toString();
+    }
+
+    /**
+     * Extract both fromAccount and toAccount from transfer message
+     * Expected format: "transfer $X from ACC-001-USD to ACC-002-USD"
+     */
+    private String[] extractBothAccountIds(String message) {
+        String[] result = new String[2];
+
+        // Find "from ACC-XXX-XXX"
+        java.util.regex.Pattern fromPattern = java.util.regex.Pattern.compile(
+            "from\\s+(acc-\\d+-\\w+)",
+            java.util.regex.Pattern.CASE_INSENSITIVE
+        );
+        java.util.regex.Matcher fromMatcher = fromPattern.matcher(message);
+        if (fromMatcher.find()) {
+            result[0] = fromMatcher.group(1).toUpperCase();
+        }
+
+        // Find "to ACC-XXX-XXX"
+        java.util.regex.Pattern toPattern = java.util.regex.Pattern.compile(
+            "to\\s+(acc-\\d+-\\w+)",
+            java.util.regex.Pattern.CASE_INSENSITIVE
+        );
+        java.util.regex.Matcher toMatcher = toPattern.matcher(message);
+        if (toMatcher.find()) {
+            result[1] = toMatcher.group(1).toUpperCase();
+        }
+
+        return result;
     }
 
     /**

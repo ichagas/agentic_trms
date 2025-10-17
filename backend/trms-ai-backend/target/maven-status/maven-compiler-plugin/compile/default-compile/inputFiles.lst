@@ -11,6 +11,7 @@
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/config/WebConfig.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/client/LegacyTrmsClient.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/client/SwiftClient.java
+/Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/config/ChatModelConfiguration.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/controller/GlobalExceptionHandler.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/dto/RedemptionReportResult.java
 /Users/igorchagas/ideas/agentic_trms/backend/trms-ai-backend/src/main/java/com/trms/ai/service/ConversationMemory.java

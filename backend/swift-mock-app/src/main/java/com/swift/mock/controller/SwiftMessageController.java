@@ -66,6 +66,14 @@ public class SwiftMessageController {
         }
     }
 
+    @GetMapping
+    @Operation(summary = "Get all SWIFT messages")
+    public ResponseEntity<List<SwiftMessage>> getAllMessages() {
+        logger.info("GET /api/v1/swift/messages - Retrieving all messages");
+        List<SwiftMessage> messages = swiftMessageService.getAllMessages();
+        return ResponseEntity.ok(messages);
+    }
+
     @GetMapping("/account/{accountId}")
     @Operation(summary = "Get all SWIFT messages for an account")
     public ResponseEntity<List<SwiftMessage>> getMessagesByAccount(@PathVariable String accountId) {
