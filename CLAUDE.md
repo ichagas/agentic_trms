@@ -17,7 +17,7 @@ This is a TRMS (Treasury and Risk Management System) AI Agent POC that demonstra
 - **Frontend**: React with TypeScript, Framer Motion animations
 - **Build Tools**: Maven (backend), npm (frontend)
 - **Development**: Docker Compose for full stack deployment
-- **AI Provider Options**: Mock (development), OpenAI, or Ollama
+- **AI Provider Options**: Mock (development), OpenAI, Azure OpenAI, or Ollama
 
 ## Core Architecture Patterns
 
@@ -52,7 +52,7 @@ this.chatClient = chatClientBuilder
 - **Clients**:
   - LegacyTrmsClient for REST communication with TRMS mock
   - SwiftClient for REST communication with SWIFT mock
-- **Configuration**: AI provider selection (mock/openai/ollama) via properties
+- **Configuration**: AI provider selection (mock/openai/azure/ollama) via properties
 
 ## Development Commands
 
@@ -113,10 +113,11 @@ npm test
 ## Key Configuration
 
 ### Spring AI Configuration
-- **Ollama**: `http://localhost:11434`, model: `llama3`, temperature: `0.7`
-- **OpenAI**: API key via `OPENAI_API_KEY`, model: `gpt-3.5-turbo`
+- **Ollama**: `http://localhost:11434`, model: `qwen3:1.7b`, temperature: `0.3`
+- **OpenAI**: API key via `OPENAI_API_KEY`, model: `gpt-4o-mini`, temperature: `0.3`
+- **Azure OpenAI**: Endpoint via `AZURE_OPENAI_ENDPOINT`, deployment via `AZURE_OPENAI_DEPLOYMENT_NAME`, temperature: `0.3`
 - **Mock Mode**: `app.mock-ai=true` for development without LLM
-- **AI Provider**: `app.ai-provider` (mock/openai/ollama)
+- **AI Provider**: `app.ai-provider` (mock/openai/azure/ollama)
 - **Legacy TRMS**: `legacy-trms.base-url=http://localhost:8090/api/v1`
 
 ### API Endpoints
@@ -130,7 +131,10 @@ npm test
 - SWIFT Swagger: `http://localhost:8091/swagger-ui.html`
 
 ### Environment Variables
-- `OPENAI_API_KEY`: For OpenAI integration (optional, defaults to mock-key-for-development)
+- `OPENAI_API_KEY`: For OpenAI integration (optional, defaults to sk-demo-key)
+- `AZURE_OPENAI_API_KEY`: For Azure OpenAI integration (optional, defaults to your-azure-key)
+- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI endpoint URL (e.g., https://myresource.openai.azure.com/)
+- `AZURE_OPENAI_DEPLOYMENT_NAME`: Azure deployment name (e.g., gpt-4)
 - `OLLAMA_BASE_URL`: Ollama server URL (defaults to http://localhost:11434)
 - `OLLAMA_MODEL`: Ollama model name (defaults to qwen3:1.7b)
 - `SWIFT_MOCK_BASE_URL`: SWIFT mock base URL (defaults to http://localhost:8091)

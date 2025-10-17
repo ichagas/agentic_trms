@@ -239,7 +239,7 @@ function Start-AIBackend {
 
     Push-Location $AIBackendDir
 
-    # Set AI Provider (ollama or openai)
+    # Set AI Provider (ollama, openai, or azure)
     $env:AI_PROVIDER = if ($env:AI_PROVIDER) { $env:AI_PROVIDER } else { "ollama" }
 
     # Ollama configuration
@@ -251,11 +251,18 @@ function Start-AIBackend {
     $env:OPENAI_BASE_URL = if ($env:OPENAI_BASE_URL) { $env:OPENAI_BASE_URL } else { "https://api.openai.com" }
     $env:AI_MODEL = if ($env:AI_MODEL) { $env:AI_MODEL } else { "gpt-4o-mini" }
 
+    # Azure OpenAI configuration
+    $env:AZURE_OPENAI_API_KEY = if ($env:AZURE_OPENAI_API_KEY) { $env:AZURE_OPENAI_API_KEY } else { "your-azure-key" }
+    $env:AZURE_OPENAI_ENDPOINT = if ($env:AZURE_OPENAI_ENDPOINT) { $env:AZURE_OPENAI_ENDPOINT } else { "https://your-resource.openai.azure.com/" }
+    $env:AZURE_OPENAI_DEPLOYMENT_NAME = if ($env:AZURE_OPENAI_DEPLOYMENT_NAME) { $env:AZURE_OPENAI_DEPLOYMENT_NAME } else { "gpt-4" }
+
     $env:SPRING_PROFILES_ACTIVE = "dev"
 
     Write-Info "AI Provider: $env:AI_PROVIDER"
     if ($env:AI_PROVIDER -eq "openai") {
         Write-Info "OpenAI Model: $env:AI_MODEL"
+    } elseif ($env:AI_PROVIDER -eq "azure") {
+        Write-Info "Azure Deployment: $env:AZURE_OPENAI_DEPLOYMENT_NAME"
     } else {
         Write-Info "Ollama Model: $env:OLLAMA_MODEL"
     }
@@ -642,6 +649,11 @@ function Show-Usage {
     Write-Host ""
     Write-Host "  # Use custom OpenAI endpoint"
     Write-Host '  $env:AI_PROVIDER="openai"; $env:OPENAI_BASE_URL="https://custom.ai"; $env:OPENAI_API_KEY="xxx"; .\trms-services.ps1 start'
+    Write-Host ""
+    Write-Host "  # Use Azure OpenAI"
+    Write-Host '  $env:AI_PROVIDER="azure"; $env:AZURE_OPENAI_API_KEY="xxx"; \'
+    Write-Host '    $env:AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com/"; \'
+    Write-Host '    $env:AZURE_OPENAI_DEPLOYMENT_NAME="gpt-4"; .\trms-services.ps1 start'
     Write-Host ""
     Write-Host "Services:"
     Write-Host "  [Frontend] (React):     http://localhost:$FrontendPort"

@@ -13,12 +13,13 @@ import org.springframework.context.annotation.Primary;
 /**
  * ChatModel Provider Configuration for TRMS AI Backend
  *
- * Enables runtime selection between different AI providers (Ollama, OpenAI)
+ * Enables runtime selection between different AI providers (Ollama, OpenAI, Azure OpenAI)
  * based on the app.ai-provider configuration property.
  *
  * Usage:
  * - Default (Ollama): mvn spring-boot:run
  * - OpenAI: AI_PROVIDER=openai OPENAI_API_KEY=sk-xxx mvn spring-boot:run
+ * - Azure: AI_PROVIDER=azure AZURE_OPENAI_API_KEY=xxx AZURE_OPENAI_ENDPOINT=https://xxx.openai.azure.com/ AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4 mvn spring-boot:run
  */
 @Configuration
 public class ChatModelConfiguration {
@@ -33,6 +34,7 @@ public class ChatModelConfiguration {
      *
      * @param ollamaChatModel Auto-configured Ollama ChatModel (optional)
      * @param openAiChatModel Auto-configured OpenAI ChatModel (optional)
+     * @param azureOpenAiChatModel Auto-configured Azure OpenAI ChatModel (optional)
      * @return The selected ChatModel based on app.ai-provider property
      * @throws IllegalStateException if selected provider is not configured
      */
@@ -40,7 +42,8 @@ public class ChatModelConfiguration {
     @Primary
     public ChatModel primaryChatModel(
             @Autowired(required = false) @Qualifier("ollamaChatModel") ChatModel ollamaChatModel,
-            @Autowired(required = false) @Qualifier("openAiChatModel") ChatModel openAiChatModel) {
+            @Autowired(required = false) @Qualifier("openAiChatModel") ChatModel openAiChatModel,
+            @Autowired(required = false) @Qualifier("azureOpenAiChatModel") ChatModel azureOpenAiChatModel) {
 
         logger.info("Configuring primary ChatModel with provider: {}", aiProvider);
 
@@ -52,6 +55,18 @@ public class ChatModelConfiguration {
             } else {
                 String errorMsg = "OpenAI provider selected but OpenAI ChatModel bean is not available. " +
                                 "Please ensure OPENAI_API_KEY is set and spring-ai-openai-spring-boot-starter is on the classpath.";
+                logger.error(errorMsg);
+                throw new IllegalStateException(errorMsg);
+            }
+        } else if ("azure".equalsIgnoreCase(aiProvider)) {
+            if (azureOpenAiChatModel != null) {
+                logger.info("✓ Using Azure OpenAI ChatModel as primary AI provider");
+                logger.debug("Azure OpenAI provider successfully configured and available");
+                return azureOpenAiChatModel;
+            } else {
+                String errorMsg = "Azure OpenAI provider selected but Azure OpenAI ChatModel bean is not available. " +
+                                "Please ensure AZURE_OPENAI_API_KEY, AZURE_OPENAI_ENDPOINT, and AZURE_OPENAI_DEPLOYMENT_NAME are set " +
+                                "and spring-ai-azure-openai-spring-boot-starter is on the classpath.";
                 logger.error(errorMsg);
                 throw new IllegalStateException(errorMsg);
             }
@@ -67,7 +82,7 @@ public class ChatModelConfiguration {
                 throw new IllegalStateException(errorMsg);
             }
         } else {
-            String errorMsg = String.format("Unknown AI provider: '%s'. Valid options are: 'ollama', 'openai'", aiProvider);
+            String errorMsg = String.format("Unknown AI provider: '%s'. Valid options are: 'ollama', 'openai', 'azure'", aiProvider);
             logger.error(errorMsg);
             throw new IllegalStateException(errorMsg);
         }
