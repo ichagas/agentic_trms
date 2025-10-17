@@ -60,12 +60,12 @@ public class TrmsAiService {
         You have access to the following TRMS functions:
         - getAccountsByCurrency: Get accounts filtered by currency (USD, EUR, GBP, JPY)
         - checkAccountBalance: Check balance for a specific account by account ID
-        - bookTransaction: Book transactions between accounts
+        - bookTransaction: Book transactions between accounts (creates transaction with PENDING status)
         - checkEODReadiness: Check End of Day processing readiness
         - proposeRateFixings: Get proposed rate fixings for missing resets
 
         You also have access to SWIFT messaging functions:
-        - sendSwiftPayment: Send payment via SWIFT network (MT103 message)
+        - sendSwiftPayment: Send payment via SWIFT network (MT103 message) - ONLY for VALIDATED transactions
         - checkSwiftMessageStatus: Check status of a SWIFT message
         - getSwiftMessagesByAccount: Get all SWIFT messages for an account
         - getSwiftMessagesByTransaction: Get SWIFT messages for a transaction
@@ -73,6 +73,13 @@ public class TrmsAiService {
         - getUnreconciledMessages: Get unreconciled SWIFT messages
         - processRedemptionReport: Process redemption report file (automates manual data entry)
         - verifyEODReports: Verify EOD reports in shared drive
+
+        IMPORTANT TRANSACTION WORKFLOW:
+        1. When booking a transaction, it is created with PENDING status
+        2. User must manually APPROVE the transaction in the dashboard (changes status to VALIDATED)
+        3. SWIFT payments can ONLY be sent for VALIDATED transactions
+        4. If user asks to "transfer and send via SWIFT", book the transaction first and inform them to approve it
+        5. Do NOT automatically send SWIFT for PENDING transactions
 
         Always use the appropriate function to get real data from the systems when users ask about:
         - Account information or balances
@@ -248,6 +255,16 @@ public class TrmsAiService {
                 return executeAccountsWithBalancesWorkflow(message);
             }
 
+            // Scenario 9: Send SWIFT for existing transaction
+            if ((message.contains("send") && message.contains("swift")) &&
+                (message.contains("txn-") || message.contains("transaction"))) {
+                String transactionId = extractTransactionId(message);
+                if (transactionId != null) {
+                    logger.info("Executing Send SWIFT for Transaction: {}", transactionId);
+                    return executeSendSwiftForTransaction(transactionId);
+                }
+            }
+
             // SINGLE FUNCTION CALLS
             
             // Check for account-related queries
@@ -365,6 +382,14 @@ public class TrmsAiService {
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
         java.util.regex.Matcher matcher = pattern.matcher(message);
         return matcher.find() ? matcher.group() : null;
+    }
+
+    private String extractTransactionId(String message) {
+        // Extract transaction IDs like TXN-12345678 or TXN-ABCD1234
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("txn-[a-z0-9]+",
+            java.util.regex.Pattern.CASE_INSENSITIVE);
+        java.util.regex.Matcher matcher = pattern.matcher(message);
+        return matcher.find() ? matcher.group().toUpperCase() : null;
     }
     
     private String executeGetAccountsByCurrency(String currency) {
@@ -501,7 +526,81 @@ public class TrmsAiService {
     }
 
     // ========== MULTI-FUNCTION WORKFLOWS ==========
-    
+
+    /**
+     * Send SWIFT for Existing Transaction Workflow
+     * Retrieves transaction details and sends SWIFT if transaction is VALIDATED
+     *
+     * @param transactionId The transaction ID to send via SWIFT
+     * @return Result of the workflow execution
+     */
+    private String executeSendSwiftForTransaction(String transactionId) {
+        StringBuilder result = new StringBuilder();
+        result.append("📤 SEND SWIFT FOR TRANSACTION WORKFLOW\n\n");
+        result.append(String.format("Transaction ID: %s\n\n", transactionId));
+
+        try {
+            // Step 1: Retrieve transaction details
+            result.append("⏳ Step 1: Retrieving transaction details from TRMS...\n");
+
+            var transaction = trmsFunctions.legacyTrmsClient.getTransactionById(transactionId);
+
+            if (transaction == null) {
+                result.append("   ❌ Transaction not found: ").append(transactionId).append("\n");
+                return result.toString();
+            }
+
+            result.append(String.format("   ✅ Transaction found!\n"));
+            result.append(String.format("   From: %s\n", transaction.fromAccount()));
+            result.append(String.format("   To: %s\n", transaction.toAccount()));
+            result.append(String.format("   Amount: %s %s\n", transaction.amount(), transaction.currency()));
+            result.append(String.format("   Status: %s\n\n", transaction.status()));
+
+            // Step 2: Validate transaction status
+            if (!"VALIDATED".equalsIgnoreCase(transaction.status())) {
+                result.append("⚠️  Step 2: Transaction Status Check FAILED\n");
+                result.append(String.format("   Transaction status is '%s', but SWIFT can only be sent for VALIDATED transactions.\n\n", transaction.status()));
+                result.append("📋 NEXT STEPS:\n");
+                result.append("   1. Go to the TRMS Dashboard\n");
+                result.append("   2. Find transaction ").append(transactionId).append(" in 'Recent Transactions'\n");
+                result.append("   3. Click the 'Approve' button to change status to VALIDATED\n");
+                result.append("   4. Then retry sending via SWIFT\n");
+                return result.toString();
+            }
+
+            result.append("✅ Step 2: Transaction is VALIDATED, proceeding with SWIFT...\n\n");
+
+            // Step 3: Send SWIFT payment
+            result.append("📤 Step 3: Sending SWIFT MT103 payment message...\n");
+            executedFunctions.get().add("sendSwiftPayment");
+
+            var swiftRequest = new SwiftFunctions.SendSwiftPaymentRequest(
+                transaction.fromAccount(),
+                transaction.id(),
+                new java.math.BigDecimal(transaction.amount()),
+                transaction.currency(),
+                "DEUTDEFFXXX", // Default receiver BIC
+                transaction.toAccount(), // Using to account as beneficiary name for simplicity
+                transaction.toAccount()
+            );
+            var swiftMessage = swiftFunctions.sendSwiftPayment().apply(swiftRequest);
+
+            result.append(String.format("   ✅ SWIFT MT103 message sent successfully!\n"));
+            result.append(String.format("   SWIFT Message ID: %s\n", swiftMessage.id()));
+            result.append(String.format("   Status: %s\n", swiftMessage.status()));
+            result.append(String.format("   Message Type: %s\n\n", swiftMessage.messageType()));
+
+            result.append("✅ WORKFLOW COMPLETED SUCCESSFULLY\n");
+            result.append("Transaction approved and SWIFT payment message sent.\n");
+
+        } catch (Exception e) {
+            result.append("❌ Error sending SWIFT for transaction: ").append(e.getMessage()).append("\n");
+            logger.error("Error in executeSendSwiftForTransaction", e);
+        }
+
+        return result.toString();
+    }
+
     /**
      * Complete EOD Preparation Workflow
      * Steps: 1) Check current EOD status, 2) Propose rate fixings, 3) Verify improvements
@@ -697,7 +796,10 @@ public class TrmsAiService {
 
     /**
      * Transfer + SWIFT Payment Workflow
-     * Steps: 1) Extract transfer details, 2) Book transaction, 3) Send SWIFT payment
+     * Steps: 1) Extract transfer details, 2) Book transaction, 3) Check status, 4) Send SWIFT only if VALIDATED
+     *
+     * IMPORTANT: Transactions are created with PENDING status and require manual approval.
+     * SWIFT messages are only sent for VALIDATED transactions.
      */
     private String executeTransferAndSwiftWorkflow(String message) {
         StringBuilder result = new StringBuilder();
@@ -738,7 +840,7 @@ public class TrmsAiService {
             result.append(String.format("   Currency: %s\n\n", currency));
 
             // Step 1: Book the transaction
-            result.append("💰 Step 1/2: Booking transaction in TRMS...\n");
+            result.append("💰 Step 1: Booking transaction in TRMS...\n");
             executedFunctions.get().add("bookTransaction");
 
             var bookRequest = new TrmsFunctions.BookTransactionRequest(fromAccount, toAccount, amount, currency);
@@ -749,28 +851,46 @@ public class TrmsAiService {
             result.append(String.format("   Status: %s\n", transaction.status()));
             result.append(String.format("   Amount: %s %s\n\n", transaction.amount(), transaction.currency()));
 
-            // Step 2: Send SWIFT payment
-            result.append("📤 Step 2/2: Sending SWIFT payment message...\n");
-            executedFunctions.get().add("sendSwiftPayment");
+            // Step 2: Check transaction status and handle SWIFT accordingly
+            if ("PENDING".equalsIgnoreCase(transaction.status())) {
+                result.append("⏳ Step 2: Transaction Status Check\n");
+                result.append("   ⚠️  Transaction is in PENDING status and requires manual approval.\n\n");
+                result.append("📋 NEXT STEPS:\n");
+                result.append("   1. Go to the TRMS Dashboard\n");
+                result.append("   2. Find the transaction in the 'Recent Transactions' panel (it will be at the top)\n");
+                result.append("   3. Click the 'Approve' button to validate the transaction\n");
+                result.append("   4. Once approved (status changes to VALIDATED), you can send it via SWIFT\n\n");
+                result.append("💡 TIP: You can then ask me to 'send transaction " + transaction.id() + " via SWIFT'\n\n");
+                result.append("✅ WORKFLOW COMPLETED\n");
+                result.append("Transaction created and awaiting approval. SWIFT message will not be sent until approved.\n");
+            } else if ("VALIDATED".equalsIgnoreCase(transaction.status())) {
+                // Transaction is already validated, proceed with SWIFT
+                result.append("✅ Step 2: Transaction is VALIDATED, proceeding with SWIFT...\n\n");
+                result.append("📤 Step 3: Sending SWIFT payment message...\n");
+                executedFunctions.get().add("sendSwiftPayment");
 
-            var swiftRequest = new SwiftFunctions.SendSwiftPaymentRequest(
-                fromAccount,
-                transaction.id(),
-                new java.math.BigDecimal(amount),
-                currency,
-                "DEUTDEFFXXX", // Default receiver BIC
-                "Beneficiary Name", // Default beneficiary name
-                toAccount
-            );
-            var swiftMessage = swiftFunctions.sendSwiftPayment().apply(swiftRequest);
+                var swiftRequest = new SwiftFunctions.SendSwiftPaymentRequest(
+                    fromAccount,
+                    transaction.id(),
+                    new java.math.BigDecimal(amount),
+                    currency,
+                    "DEUTDEFFXXX", // Default receiver BIC
+                    "Beneficiary Name", // Default beneficiary name
+                    toAccount
+                );
+                var swiftMessage = swiftFunctions.sendSwiftPayment().apply(swiftRequest);
 
-            result.append(String.format("   ✅ SWIFT MT103 message sent successfully!\n"));
-            result.append(String.format("   SWIFT Message ID: %s\n", swiftMessage.id()));
-            result.append(String.format("   Status: %s\n", swiftMessage.status()));
-            result.append(String.format("   Message Type: %s\n\n", swiftMessage.messageType()));
+                result.append(String.format("   ✅ SWIFT MT103 message sent successfully!\n"));
+                result.append(String.format("   SWIFT Message ID: %s\n", swiftMessage.id()));
+                result.append(String.format("   Status: %s\n", swiftMessage.status()));
+                result.append(String.format("   Message Type: %s\n\n", swiftMessage.messageType()));
 
-            result.append("✅ WORKFLOW COMPLETED SUCCESSFULLY\n");
-            result.append("Transaction booked and SWIFT payment message sent.\n");
+                result.append("✅ WORKFLOW COMPLETED SUCCESSFULLY\n");
+                result.append("Transaction booked and SWIFT payment message sent.\n");
+            } else {
+                result.append(String.format("   ⚠️  Transaction status is %s\n", transaction.status()));
+                result.append("   Please check the transaction status before sending SWIFT.\n");
+            }
 
         } catch (Exception e) {
             result.append("❌ Error in Transfer + SWIFT Workflow: ").append(e.getMessage());
