@@ -339,7 +339,7 @@ function Start-SwiftMock {
 
 # Start all services
 function Start-AllServices {
-    Write-Info "🚀 Starting TRMS AI Services..."
+    Write-Info "Starting TRMS AI Services..."
     Write-Host ""
 
     # Start services in order
@@ -352,20 +352,20 @@ function Start-AllServices {
     Start-Frontend
 
     Write-Host ""
-    Write-Success "🎉 All TRMS services started successfully!"
+    Write-Success "All TRMS services started successfully!"
     Write-Host ""
-    Write-Host "📱 Frontend:         http://localhost:$FrontendPort"
-    Write-Host "🤖 AI Backend:       http://localhost:$AIBackendPort"
-    Write-Host "🏦 TRMS Mock:        http://localhost:$MockBackendPort"
-    Write-Host "💳 SWIFT Mock:       http://localhost:$SwiftMockPort"
+    Write-Host "[Frontend]         http://localhost:$FrontendPort"
+    Write-Host "[AI Backend]       http://localhost:$AIBackendPort"
+    Write-Host "[TRMS Mock]        http://localhost:$MockBackendPort"
+    Write-Host "[SWIFT Mock]       http://localhost:$SwiftMockPort"
     Write-Host ""
-    Write-Host "📋 Use '.\trms-services.ps1 status' to check service health"
-    Write-Host "📋 Use '.\trms-services.ps1 logs' to view service logs"
+    Write-Host "Use '.\trms-services.ps1 status' to check service health"
+    Write-Host "Use '.\trms-services.ps1 logs' to view service logs"
 }
 
 # Stop all services
 function Stop-AllServices {
-    Write-Info "🛑 Stopping TRMS AI Services..."
+    Write-Info "Stopping TRMS AI Services..."
 
     Stop-ServiceByPort -Port $FrontendPort -ServiceName "Frontend"
     Stop-ServiceByPort -Port $AIBackendPort -ServiceName "Spring AI Backend"
@@ -378,21 +378,21 @@ function Stop-AllServices {
     Remove-Item $SwiftMockPidFile -ErrorAction SilentlyContinue
     Remove-Item $MockBackendPidFile -ErrorAction SilentlyContinue
 
-    Write-Success "🎉 All TRMS services stopped successfully!"
+    Write-Success "All TRMS services stopped successfully!"
 }
 
 # Check service status
 function Show-Status {
-    Write-Host "🔍 TRMS AI Services Status:"
+    Write-Host "TRMS AI Services Status:"
     Write-Host "=================================="
 
     # Frontend status
     if (Test-PortInUse -Port $FrontendPort) {
-        Write-Host "📱 Frontend:      " -NoNewline
+        Write-Host "[Frontend]        " -NoNewline
         Write-Host "RUNNING" -ForegroundColor Green -NoNewline
         Write-Host " (http://localhost:$FrontendPort)"
     } else {
-        Write-Host "📱 Frontend:      " -NoNewline
+        Write-Host "[Frontend]        " -NoNewline
         Write-Host "STOPPED" -ForegroundColor Red
     }
 
@@ -401,21 +401,21 @@ function Show-Status {
         try {
             $response = Invoke-WebRequest -Uri "http://localhost:$AIBackendPort/api/chat/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
             if ($response.StatusCode -eq 200) {
-                Write-Host "🤖 AI Backend:    " -NoNewline
+                Write-Host "[AI Backend]      " -NoNewline
                 Write-Host "RUNNING" -ForegroundColor Green -NoNewline
                 Write-Host " (http://localhost:$AIBackendPort)"
             } else {
-                Write-Host "🤖 AI Backend:    " -NoNewline
+                Write-Host "[AI Backend]      " -NoNewline
                 Write-Host "STARTING" -ForegroundColor Yellow -NoNewline
                 Write-Host " (port open but not ready)"
             }
         } catch {
-            Write-Host "🤖 AI Backend:    " -NoNewline
+            Write-Host "[AI Backend]      " -NoNewline
             Write-Host "STARTING" -ForegroundColor Yellow -NoNewline
             Write-Host " (port open but not ready)"
         }
     } else {
-        Write-Host "🤖 AI Backend:    " -NoNewline
+        Write-Host "[AI Backend]      " -NoNewline
         Write-Host "STOPPED" -ForegroundColor Red
     }
 
@@ -424,21 +424,21 @@ function Show-Status {
         try {
             $response = Invoke-WebRequest -Uri "http://localhost:$MockBackendPort/actuator/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
             if ($response.StatusCode -eq 200) {
-                Write-Host "🏦 TRMS Mock:     " -NoNewline
+                Write-Host "[TRMS Mock]       " -NoNewline
                 Write-Host "RUNNING" -ForegroundColor Green -NoNewline
                 Write-Host " (http://localhost:$MockBackendPort)"
             } else {
-                Write-Host "🏦 TRMS Mock:     " -NoNewline
+                Write-Host "[TRMS Mock]       " -NoNewline
                 Write-Host "STARTING" -ForegroundColor Yellow -NoNewline
                 Write-Host " (port open but not ready)"
             }
         } catch {
-            Write-Host "🏦 TRMS Mock:     " -NoNewline
+            Write-Host "[TRMS Mock]       " -NoNewline
             Write-Host "STARTING" -ForegroundColor Yellow -NoNewline
             Write-Host " (port open but not ready)"
         }
     } else {
-        Write-Host "🏦 TRMS Mock:     " -NoNewline
+        Write-Host "[TRMS Mock]       " -NoNewline
         Write-Host "STOPPED" -ForegroundColor Red
     }
 
@@ -447,28 +447,28 @@ function Show-Status {
         try {
             $response = Invoke-WebRequest -Uri "http://localhost:$SwiftMockPort/actuator/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
             if ($response.StatusCode -eq 200) {
-                Write-Host "💳 SWIFT Mock:    " -NoNewline
+                Write-Host "[SWIFT Mock]      " -NoNewline
                 Write-Host "RUNNING" -ForegroundColor Green -NoNewline
                 Write-Host " (http://localhost:$SwiftMockPort)"
             } else {
-                Write-Host "💳 SWIFT Mock:    " -NoNewline
+                Write-Host "[SWIFT Mock]      " -NoNewline
                 Write-Host "STARTING" -ForegroundColor Yellow -NoNewline
                 Write-Host " (port open but not ready)"
             }
         } catch {
-            Write-Host "💳 SWIFT Mock:    " -NoNewline
+            Write-Host "[SWIFT Mock]      " -NoNewline
             Write-Host "STARTING" -ForegroundColor Yellow -NoNewline
             Write-Host " (port open but not ready)"
         }
     } else {
-        Write-Host "💳 SWIFT Mock:    " -NoNewline
+        Write-Host "[SWIFT Mock]      " -NoNewline
         Write-Host "STOPPED" -ForegroundColor Red
     }
 
     Write-Host ""
 
     # System resource usage
-    Write-Host "💻 System Resources:"
+    Write-Host "System Resources:"
     Write-Host "=================================="
     $javaProcesses = @(Get-Process -Name java -ErrorAction SilentlyContinue)
     $nodeProcesses = @(Get-Process -Name node -ErrorAction SilentlyContinue)
@@ -478,7 +478,7 @@ function Show-Status {
     # Log file sizes
     if (Test-Path $LogsDir) {
         Write-Host ""
-        Write-Host "📄 Log Files:"
+        Write-Host "Log Files:"
         Write-Host "=================================="
         Get-ChildItem $LogsDir | Format-Table Name, Length, LastWriteTime -AutoSize
     }
@@ -489,37 +489,37 @@ function Show-Logs {
     param([string]$ServiceName = "all")
 
     switch ($ServiceName.ToLower()) {
-        { $_ -in "frontend", "front" } {
+        { $_ -in @("frontend", "front") } {
             $logFile = Join-Path $LogsDir "frontend.log"
             if (Test-Path $logFile) {
-                Write-Info "📱 Frontend Logs (last 50 lines):"
+                Write-Info "[Frontend] Logs (last 50 lines):"
                 Get-Content $logFile -Tail 50
             } else {
                 Write-Warning2 "Frontend log file not found"
             }
         }
-        { $_ -in "ai", "ai-backend" } {
+        { $_ -in @("ai", "ai-backend") } {
             $logFile = Join-Path $LogsDir "ai-backend.log"
             if (Test-Path $logFile) {
-                Write-Info "🤖 AI Backend Logs (last 50 lines):"
+                Write-Info "[AI Backend] Logs (last 50 lines):"
                 Get-Content $logFile -Tail 50
             } else {
                 Write-Warning2 "AI Backend log file not found"
             }
         }
-        { $_ -in "mock", "mock-backend", "trms" } {
+        { $_ -in @("mock", "mock-backend", "trms") } {
             $logFile = Join-Path $LogsDir "mock-backend.log"
             if (Test-Path $logFile) {
-                Write-Info "🏦 TRMS Mock Logs (last 50 lines):"
+                Write-Info "[TRMS Mock] Logs (last 50 lines):"
                 Get-Content $logFile -Tail 50
             } else {
                 Write-Warning2 "TRMS Mock log file not found"
             }
         }
-        { $_ -in "swift", "swift-mock" } {
+        { $_ -in @("swift", "swift-mock") } {
             $logFile = Join-Path $LogsDir "swift-mock.log"
             if (Test-Path $logFile) {
-                Write-Info "💳 SWIFT Mock Logs (last 50 lines):"
+                Write-Info "[SWIFT Mock] Logs (last 50 lines):"
                 Get-Content $logFile -Tail 50
             } else {
                 Write-Warning2 "SWIFT Mock log file not found"
@@ -539,7 +539,7 @@ function Show-Logs {
 
 # Restart services
 function Restart-AllServices {
-    Write-Info "🔄 Restarting TRMS AI Services..."
+    Write-Info "Restarting TRMS AI Services..."
     Stop-AllServices
     Start-Sleep -Seconds 3
     Start-AllServices
@@ -547,16 +547,16 @@ function Restart-AllServices {
 
 # Health check
 function Invoke-HealthCheck {
-    Write-Info "🏥 Running Health Checks..."
+    Write-Info "Running Health Checks..."
     Write-Host "=================================="
 
     # Frontend health
     try {
         $response = Invoke-WebRequest -Uri "http://localhost:$FrontendPort" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
-        Write-Host "📱 Frontend:      " -NoNewline
+        Write-Host "[Frontend]        " -NoNewline
         Write-Host "HEALTHY" -ForegroundColor Green
     } catch {
-        Write-Host "📱 Frontend:      " -NoNewline
+        Write-Host "[Frontend]        " -NoNewline
         Write-Host "UNHEALTHY" -ForegroundColor Red
     }
 
@@ -564,15 +564,15 @@ function Invoke-HealthCheck {
     try {
         $response = Invoke-WebRequest -Uri "http://localhost:$AIBackendPort/api/chat/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
         if ($response.Content -like "*TRMS AI Chat Service is running*") {
-            Write-Host "🤖 AI Backend:    " -NoNewline
+            Write-Host "[AI Backend]      " -NoNewline
             Write-Host "HEALTHY" -ForegroundColor Green
         } else {
-            Write-Host "🤖 AI Backend:    " -NoNewline
+            Write-Host "[AI Backend]      " -NoNewline
             Write-Host "UNHEALTHY" -ForegroundColor Red -NoNewline
             Write-Host " ($($response.Content))"
         }
     } catch {
-        Write-Host "🤖 AI Backend:    " -NoNewline
+        Write-Host "[AI Backend]      " -NoNewline
         Write-Host "UNHEALTHY" -ForegroundColor Red
     }
 
@@ -581,14 +581,14 @@ function Invoke-HealthCheck {
         $response = Invoke-WebRequest -Uri "http://localhost:$MockBackendPort/actuator/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
         $json = $response.Content | ConvertFrom-Json
         if ($json.status -eq "UP") {
-            Write-Host "🏦 TRMS Mock:     " -NoNewline
+            Write-Host "[TRMS Mock]       " -NoNewline
             Write-Host "HEALTHY" -ForegroundColor Green
         } else {
-            Write-Host "🏦 TRMS Mock:     " -NoNewline
+            Write-Host "[TRMS Mock]       " -NoNewline
             Write-Host "UNHEALTHY" -ForegroundColor Red
         }
     } catch {
-        Write-Host "🏦 TRMS Mock:     " -NoNewline
+        Write-Host "[TRMS Mock]       " -NoNewline
         Write-Host "UNHEALTHY" -ForegroundColor Red
     }
 
@@ -597,14 +597,14 @@ function Invoke-HealthCheck {
         $response = Invoke-WebRequest -Uri "http://localhost:$SwiftMockPort/actuator/health" -UseBasicParsing -TimeoutSec 2 -ErrorAction SilentlyContinue
         $json = $response.Content | ConvertFrom-Json
         if ($json.status -eq "UP") {
-            Write-Host "💳 SWIFT Mock:    " -NoNewline
+            Write-Host "[SWIFT Mock]      " -NoNewline
             Write-Host "HEALTHY" -ForegroundColor Green
         } else {
-            Write-Host "💳 SWIFT Mock:    " -NoNewline
+            Write-Host "[SWIFT Mock]      " -NoNewline
             Write-Host "UNHEALTHY" -ForegroundColor Red
         }
     } catch {
-        Write-Host "💳 SWIFT Mock:    " -NoNewline
+        Write-Host "[SWIFT Mock]      " -NoNewline
         Write-Host "UNHEALTHY" -ForegroundColor Red
     }
 }
@@ -644,10 +644,10 @@ function Show-Usage {
     Write-Host '  $env:AI_PROVIDER="openai"; $env:OPENAI_BASE_URL="https://custom.ai"; $env:OPENAI_API_KEY="xxx"; .\trms-services.ps1 start'
     Write-Host ""
     Write-Host "Services:"
-    Write-Host "  📱 Frontend (React):     http://localhost:$FrontendPort"
-    Write-Host "  🤖 AI Backend (Spring):  http://localhost:$AIBackendPort"
-    Write-Host "  🏦 TRMS Mock:            http://localhost:$MockBackendPort"
-    Write-Host "  💳 SWIFT Mock:           http://localhost:$SwiftMockPort"
+    Write-Host "  [Frontend] (React):     http://localhost:$FrontendPort"
+    Write-Host "  [AI Backend] (Spring):  http://localhost:$AIBackendPort"
+    Write-Host "  [TRMS Mock]:            http://localhost:$MockBackendPort"
+    Write-Host "  [SWIFT Mock]:           http://localhost:$SwiftMockPort"
 }
 
 # Main script logic
