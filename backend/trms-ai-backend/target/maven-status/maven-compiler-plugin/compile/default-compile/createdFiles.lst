@@ -39,6 +39,7 @@ com/trms/ai/service/SwiftFunctions$VerifyEODReportsRequest.class
 com/trms/ai/client/SwiftClient$1.class
 com/trms/ai/dto/EODStatus.class
 com/trms/ai/TrmsAiApplication.class
+com/trms/ai/config/ChatModelConfiguration.class
 com/trms/ai/dto/ChatRequest.class
 com/trms/ai/service/SwiftFunctions$GetSwiftMessagesByAccountRequest.class
 com/trms/ai/service/SwiftFunctions$SendSwiftPaymentRequest.class

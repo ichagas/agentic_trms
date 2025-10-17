@@ -152,4 +152,57 @@ public class TransactionController {
         
         return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
     }
+
+    @PostMapping("/{transactionId}/approve")
+    @Operation(summary = "Approve transaction", description = "Approve a pending transaction and change status to VALIDATED")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Transaction approved successfully"),
+        @ApiResponse(responseCode = "404", description = "Transaction not found"),
+        @ApiResponse(responseCode = "400", description = "Transaction not in PENDING status")
+    })
+    public ResponseEntity<?> approveTransaction(
+            @Parameter(description = "Transaction ID", example = "TXN-88AD6854")
+            @PathVariable String transactionId) {
+
+        log.info("Approving transaction: {}", transactionId);
+
+        // Get transaction
+        Optional<Transaction> existingTransaction = mockDataService.getTransactionById(transactionId);
+        if (existingTransaction.isEmpty()) {
+            log.warn("Transaction not found: {}", transactionId);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Transaction not found: " + transactionId);
+        }
+
+        Transaction transaction = existingTransaction.get();
+
+        // Check if transaction is PENDING
+        if (transaction.getStatus() != Transaction.TransactionStatus.PENDING) {
+            log.warn("Transaction {} is not in PENDING status: {}", transactionId, transaction.getStatus());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Transaction is not in PENDING status. Current status: " + transaction.getStatus());
+        }
+
+        // Update transaction status to VALIDATED
+        Transaction approvedTransaction = Transaction.builder()
+                .transactionId(transaction.getTransactionId())
+                .fromAccount(transaction.getFromAccount())
+                .toAccount(transaction.getToAccount())
+                .amount(transaction.getAmount())
+                .currency(transaction.getCurrency())
+                .status(Transaction.TransactionStatus.VALIDATED)
+                .type(transaction.getType())
+                .description(transaction.getDescription())
+                .reference(transaction.getReference())
+                .settlementMethod(transaction.getSettlementMethod())
+                .createdAt(transaction.getCreatedAt())
+                .valueDate(transaction.getValueDate())
+                .build();
+
+        mockDataService.updateTransaction(approvedTransaction);
+
+        log.info("Transaction approved successfully: {}", transactionId);
+
+        return ResponseEntity.ok(approvedTransaction);
+    }
 }

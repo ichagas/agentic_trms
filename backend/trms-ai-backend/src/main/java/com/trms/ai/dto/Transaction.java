@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Transaction DTO for TRMS legacy system integration
  */
 public record Transaction(
-    @JsonProperty("id") String id,
+    @JsonProperty("transactionId") String id,
     @JsonProperty("fromAccount") String fromAccount,
     @JsonProperty("toAccount") String toAccount,
     @JsonProperty("amount") Double amount,

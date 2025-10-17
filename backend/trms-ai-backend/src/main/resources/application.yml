@@ -1,6 +1,10 @@
 server:
   port: 8080
 
+# Application Configuration
+app:
+  ai-provider: ${AI_PROVIDER:ollama}  # Options: ollama, openai
+
 spring:
   application:
     name: trms-ai-backend

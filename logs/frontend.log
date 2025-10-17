@@ -4,8 +4,7 @@
 
 Port 5173 is in use, trying another one...
 
-  VITE v7.1.2  ready in 159 ms
+  VITE v7.1.2  ready in 153 ms
 
   ➜  Local:   http://localhost:5174/
   ➜  Network: use --host to expose
-12:23:18 p.m. [vite] (client) hmr update /src/components/topology/ServiceGraph.jsx, /src/index.css

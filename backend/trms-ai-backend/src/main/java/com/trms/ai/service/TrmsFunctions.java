@@ -22,7 +22,7 @@ public class TrmsFunctions {
 
     private static final Logger logger = LoggerFactory.getLogger(TrmsFunctions.class);
 
-    private final LegacyTrmsClient legacyTrmsClient;
+    public final LegacyTrmsClient legacyTrmsClient;
 
     public TrmsFunctions(LegacyTrmsClient legacyTrmsClient) {
         this.legacyTrmsClient = legacyTrmsClient;

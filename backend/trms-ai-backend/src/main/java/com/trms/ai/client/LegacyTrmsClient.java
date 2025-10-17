@@ -160,6 +160,49 @@ public class LegacyTrmsClient {
     }
 
     /**
+     * Get transaction by ID from legacy TRMS system
+     */
+    public Transaction getTransactionById(String transactionId) {
+        try {
+            String url = trmsProperties.baseUrl() + "/api/v1/transactions/" + transactionId;
+
+            logger.debug("Fetching transaction from TRMS: {}", url);
+
+            ResponseEntity<Transaction> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                createHttpEntity(),
+                Transaction.class
+            );
+
+            Transaction transaction = response.getBody();
+            logger.info("Successfully retrieved transaction: {}", transactionId);
+            return transaction;
+
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                logger.warn("Transaction not found: {}", transactionId);
+                throw new RuntimeException("Transaction not found: " + transactionId);
+            }
+            logger.error("HTTP error while fetching transaction {}: {} - {}",
+                        transactionId, e.getStatusCode(), e.getResponseBodyAsString());
+            throw new RuntimeException("Failed to fetch transaction: " + e.getMessage(), e);
+        } catch (HttpServerErrorException e) {
+            logger.error("Server error while fetching transaction {}: {} - {}",
+                        transactionId, e.getStatusCode(), e.getResponseBodyAsString());
+            throw new RuntimeException("TRMS system error: " + e.getMessage(), e);
+        } catch (ResourceAccessException e) {
+            logger.error("Connection error while fetching transaction {}: {}",
+                        transactionId, e.getMessage());
+            throw new RuntimeException("Unable to connect to TRMS system", e);
+        } catch (Exception e) {
+            logger.error("Unexpected error while fetching transaction {}: {}",
+                        transactionId, e.getMessage());
+            throw new RuntimeException("Unexpected error occurred", e);
+        }
+    }
+
+    /**
      * Check EOD readiness from legacy TRMS system
      */
     public EODStatus checkEODReadiness() {

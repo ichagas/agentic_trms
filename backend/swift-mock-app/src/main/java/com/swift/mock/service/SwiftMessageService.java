@@ -110,6 +110,14 @@ public class SwiftMessageService {
     }
 
     /**
+     * Get all SWIFT messages
+     */
+    public List<SwiftMessage> getAllMessages() {
+        logger.info("Retrieving all SWIFT messages");
+        return dataService.getAllMessages();
+    }
+
+    /**
      * Get all messages for an account
      */
     public List<SwiftMessage> getMessagesByAccount(String accountId) {

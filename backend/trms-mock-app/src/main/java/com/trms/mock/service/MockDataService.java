@@ -1,6 +1,8 @@
 package com.trms.mock.service;
 
 import com.trms.mock.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,6 +14,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class MockDataService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MockDataService.class);
     
     private final Map<String, Account> accounts = new ConcurrentHashMap<>();
     private final Map<String, AccountBalance> balances = new ConcurrentHashMap<>();
@@ -466,7 +470,79 @@ public class MockDataService {
     
     public String createTransaction(Transaction transaction) {
         transactions.put(transaction.getTransactionId(), transaction);
+
+        // Update account balances when transaction is created
+        updateAccountBalancesForTransaction(transaction);
+
         return transaction.getTransactionId();
+    }
+
+    public void updateTransaction(Transaction transaction) {
+        transactions.put(transaction.getTransactionId(), transaction);
+        logger.info("Transaction updated: {} - new status: {}",
+                   transaction.getTransactionId(), transaction.getStatus());
+    }
+
+    /**
+     * Update account balances based on a new transaction
+     * Debits from the fromAccount and credits to the toAccount
+     */
+    private void updateAccountBalancesForTransaction(Transaction transaction) {
+        // Get fromAccount balance
+        AccountBalance fromBalance = balances.get(transaction.getFromAccount());
+        if (fromBalance != null) {
+            // Debit from source account
+            BigDecimal newCurrentBalance = fromBalance.getCurrentBalance().subtract(transaction.getAmount());
+            BigDecimal newAvailableBalance = fromBalance.getAvailableBalance().subtract(transaction.getAmount());
+
+            AccountBalance updatedFromBalance = AccountBalance.builder()
+                    .accountId(fromBalance.getAccountId())
+                    .currentBalance(newCurrentBalance)
+                    .availableBalance(newAvailableBalance)
+                    .reservedBalance(fromBalance.getReservedBalance())
+                    .currency(fromBalance.getCurrency())
+                    .pendingCredits(fromBalance.getPendingCredits())
+                    .pendingDebits(fromBalance.getPendingDebits())
+                    .overdraftLimit(fromBalance.getOverdraftLimit())
+                    .valueDate(fromBalance.getValueDate())
+                    .lastUpdated(LocalDateTime.now())
+                    .build();
+
+            balances.put(transaction.getFromAccount(), updatedFromBalance);
+
+            logger.info("Updated balance for {}: {} -> {}",
+                    transaction.getFromAccount(),
+                    fromBalance.getCurrentBalance(),
+                    newCurrentBalance);
+        }
+
+        // Get toAccount balance
+        AccountBalance toBalance = balances.get(transaction.getToAccount());
+        if (toBalance != null) {
+            // Credit to destination account
+            BigDecimal newCurrentBalance = toBalance.getCurrentBalance().add(transaction.getAmount());
+            BigDecimal newAvailableBalance = toBalance.getAvailableBalance().add(transaction.getAmount());
+
+            AccountBalance updatedToBalance = AccountBalance.builder()
+                    .accountId(toBalance.getAccountId())
+                    .currentBalance(newCurrentBalance)
+                    .availableBalance(newAvailableBalance)
+                    .reservedBalance(toBalance.getReservedBalance())
+                    .currency(toBalance.getCurrency())
+                    .pendingCredits(toBalance.getPendingCredits())
+                    .pendingDebits(toBalance.getPendingDebits())
+                    .overdraftLimit(toBalance.getOverdraftLimit())
+                    .valueDate(toBalance.getValueDate())
+                    .lastUpdated(LocalDateTime.now())
+                    .build();
+
+            balances.put(transaction.getToAccount(), updatedToBalance);
+
+            logger.info("Updated balance for {}: {} -> {}",
+                    transaction.getToAccount(),
+                    toBalance.getCurrentBalance(),
+                    newCurrentBalance);
+        }
     }
     
     public Optional<Report> getReportById(String reportId) {
