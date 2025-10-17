@@ -150,26 +150,39 @@ start_mock_backend() {
 # Start Spring AI Backend
 start_ai_backend() {
     log_info "Starting Spring AI Backend..."
-    
+
     if [ ! -d "$AI_BACKEND_DIR" ]; then
         log_error "AI backend directory not found: $AI_BACKEND_DIR"
         return 1
     fi
-    
+
     cd "$AI_BACKEND_DIR"
-    
-    # Set AI configuration
-    export OLLAMA_ENABLED="${OLLAMA_ENABLED:-true}"
+
+    # Set AI Provider (ollama or openai)
+    export AI_PROVIDER="${AI_PROVIDER:-ollama}"
+
+    # Ollama configuration
     export OLLAMA_BASE_URL="${OLLAMA_BASE_URL:-http://localhost:11434}"
     export OLLAMA_MODEL="${OLLAMA_MODEL:-qwen3:1.7b}"
-    export AI_MODEL="${AI_MODEL:-$OLLAMA_MODEL}"
+
+    # OpenAI configuration
     export OPENAI_API_KEY="${OPENAI_API_KEY:-sk-demo-key}"
+    export OPENAI_BASE_URL="${OPENAI_BASE_URL:-https://api.openai.com}"
+    export AI_MODEL="${AI_MODEL:-gpt-4o-mini}"
+
     export SPRING_PROFILES_ACTIVE="dev"
-    
+
+    log_info "AI Provider: $AI_PROVIDER"
+    if [ "$AI_PROVIDER" = "openai" ]; then
+        log_info "OpenAI Model: $AI_MODEL"
+    else
+        log_info "Ollama Model: $OLLAMA_MODEL"
+    fi
+
     # Start AI backend in background
     nohup mvn spring-boot:run > "$SCRIPT_DIR/logs/ai-backend.log" 2>&1 &
     echo $! > "$AI_BACKEND_PID_FILE"
-    
+
     # Wait for backend to start
     log_info "Waiting for Spring AI Backend to start..."
     for i in {1..30}; do
@@ -431,12 +444,22 @@ show_usage() {
     echo "  help           Show this help message"
     echo ""
     echo "Examples:"
-    echo "  $0 start                # Start all services"
+    echo "  $0 start                # Start all services (default: Ollama)"
     echo "  $0 stop                 # Stop all services"
     echo "  $0 status               # Check status"
     echo "  $0 logs frontend        # Show frontend logs"
     echo "  $0 logs swift           # Show SWIFT mock logs"
     echo "  $0 health               # Run health checks"
+    echo ""
+    echo "AI Provider Configuration:"
+    echo "  # Use Ollama (default)"
+    echo "  $0 start"
+    echo ""
+    echo "  # Use OpenAI"
+    echo "  AI_PROVIDER=openai OPENAI_API_KEY=sk-xxx $0 start"
+    echo ""
+    echo "  # Use custom OpenAI endpoint"
+    echo "  AI_PROVIDER=openai OPENAI_BASE_URL=https://custom.ai OPENAI_API_KEY=xxx $0 start"
     echo ""
     echo "Services:"
     echo "  📱 Frontend (React):     http://localhost:$FRONTEND_PORT"

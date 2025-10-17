@@ -89,7 +89,7 @@ public class TrmsAiService {
         """;
 
     @Autowired
-    public TrmsAiService(@Qualifier("ollamaChatModel") ChatModel chatModel,
+    public TrmsAiService(ChatModel chatModel,
                         TrmsFunctions trmsFunctions,
                         SwiftFunctions swiftFunctions,
                         ConversationMemory conversationMemory) {
@@ -100,7 +100,7 @@ public class TrmsAiService {
             .defaultSystem(SYSTEM_PROMPT)
             .build();
 
-        logger.info("TrmsAiService initialized with Ollama ChatModel, conversation memory, TRMS and SWIFT function calling");
+        logger.info("TrmsAiService initialized with ChatModel provider, conversation memory, TRMS and SWIFT function calling");
     }
 
     /**
