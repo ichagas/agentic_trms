@@ -34,6 +34,7 @@ spring:
       openai:
         api-key: ${AZURE_OPENAI_API_KEY:your-azure-key}
         endpoint: ${AZURE_OPENAI_ENDPOINT:https://your-resource.openai.azure.com/}
+        api-version: ${AZURE_OPENAI_API_VERSION:2024-02-15-preview}
         chat:
           options:
             deployment-name: ${AZURE_OPENAI_DEPLOYMENT_NAME:gpt-4}

@@ -173,6 +173,7 @@ start_ai_backend() {
     # Azure OpenAI configuration
     export AZURE_OPENAI_API_KEY="${AZURE_OPENAI_API_KEY:-your-azure-key}"
     export AZURE_OPENAI_ENDPOINT="${AZURE_OPENAI_ENDPOINT:-https://your-resource.openai.azure.com/}"
+    export AZURE_OPENAI_API_VERSION="${AZURE_OPENAI_API_VERSION:-2024-02-15-preview}"
     export AZURE_OPENAI_DEPLOYMENT_NAME="${AZURE_OPENAI_DEPLOYMENT_NAME:-gpt-4}"
 
     export SPRING_PROFILES_ACTIVE="dev"

@@ -254,6 +254,7 @@ function Start-AIBackend {
     # Azure OpenAI configuration
     $env:AZURE_OPENAI_API_KEY = if ($env:AZURE_OPENAI_API_KEY) { $env:AZURE_OPENAI_API_KEY } else { "your-azure-key" }
     $env:AZURE_OPENAI_ENDPOINT = if ($env:AZURE_OPENAI_ENDPOINT) { $env:AZURE_OPENAI_ENDPOINT } else { "https://your-resource.openai.azure.com/" }
+    $env:AZURE_OPENAI_API_VERSION = if ($env:AZURE_OPENAI_API_VERSION) { $env:AZURE_OPENAI_API_VERSION } else { "2024-02-15-preview" }
     $env:AZURE_OPENAI_DEPLOYMENT_NAME = if ($env:AZURE_OPENAI_DEPLOYMENT_NAME) { $env:AZURE_OPENAI_DEPLOYMENT_NAME } else { "gpt-4" }
 
     $env:SPRING_PROFILES_ACTIVE = "dev"

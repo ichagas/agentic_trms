@@ -134,6 +134,7 @@ npm test
 - `OPENAI_API_KEY`: For OpenAI integration (optional, defaults to sk-demo-key)
 - `AZURE_OPENAI_API_KEY`: For Azure OpenAI integration (optional, defaults to your-azure-key)
 - `AZURE_OPENAI_ENDPOINT`: Azure OpenAI endpoint URL (e.g., https://myresource.openai.azure.com/)
+- `AZURE_OPENAI_API_VERSION`: Azure OpenAI API version (optional, defaults to 2024-02-15-preview)
 - `AZURE_OPENAI_DEPLOYMENT_NAME`: Azure deployment name (e.g., gpt-4)
 - `OLLAMA_BASE_URL`: Ollama server URL (defaults to http://localhost:11434)
 - `OLLAMA_MODEL`: Ollama model name (defaults to qwen3:1.7b)
