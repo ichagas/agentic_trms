@@ -1,0 +1,5 @@
+AccountID,AccountName,Currency,Balance,LastUpdated
+ACC-001-USD,Main USD Operating Account,USD,1250000.00,2025-10-09 18:00:00
+ACC-002-EUR,EUR Treasury Account,EUR,850000.00,2025-10-09 18:00:00
+ACC-003-GBP,GBP Reserve Account,GBP,450000.00,2025-10-09 18:00:00
+ACC-004-JPY,JPY Trading Account,JPY,125000000.00,2025-10-09 18:00:00

@@ -32,10 +32,11 @@ public class TrmsFunctions {
      * Function to get accounts by currency
      */
     @Bean
-    @Description("Get accounts filtered by currency from the TRMS system. " +
+    @Description("Get a list of accounts filtered by currency from the TRMS system. " +
                 "Pass a 3-letter currency code (e.g., USD, EUR, GBP) to filter accounts, " +
-                "or leave empty to get all accounts. Returns account details including " +
-                "account number, name, type, status, and current balance.")
+                "or leave empty to get all accounts. Returns account metadata (ID, name, type, status) " +
+                "but does NOT include balance information. " +
+                "Use checkAccountBalance function instead if you need balance details.")
     public Function<GetAccountsByCurrencyRequest, List<Account>> getAccountsByCurrency() {
         return request -> {
             logger.debug("AI function call: getAccountsByCurrency with currency: {}", request.currency());
@@ -54,17 +55,18 @@ public class TrmsFunctions {
      * Function to check account balance
      */
     @Bean
-    @Description("Check the balance and details for a specific account by account ID. " +
-                "Returns comprehensive balance information including available balance, " +
-                "pending transactions, and last update timestamp. Use this to verify " +
-                "account balances before transactions or for reporting purposes.")
+    @Description("Check the current balance for a specific account. " +
+                "REQUIRED: Pass the exact account ID (e.g., ACC-001-USD, ACC-002-EUR). " +
+                "Returns detailed balance information: current balance, available balance, " +
+                "pending transactions, and last update timestamp. " +
+                "ALWAYS use this function when user asks about account balance or available funds.")
     public Function<CheckAccountBalanceRequest, AccountBalance> checkAccountBalance() {
         return request -> {
             logger.debug("AI function call: checkAccountBalance for account: {}", request.accountId());
             try {
                 AccountBalance balance = legacyTrmsClient.checkAccountBalance(request.accountId());
-                logger.info("Retrieved balance for account {}: {} {}", 
-                           request.accountId(), balance.balance(), balance.currency());
+                logger.info("Retrieved balance for account {}: {} {}",
+                           request.accountId(), balance.currentBalance(), balance.currency());
                 return balance;
             } catch (Exception e) {
                 logger.error("Error in checkAccountBalance function: {}", e.getMessage());

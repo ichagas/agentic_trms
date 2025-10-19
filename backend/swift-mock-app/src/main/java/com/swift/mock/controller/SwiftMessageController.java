@@ -110,4 +110,19 @@ public class SwiftMessageController {
             throw new RuntimeException("Failed to reconcile messages: " + e.getMessage());
         }
     }
+
+    @PatchMapping("/{messageId}/transaction")
+    @Operation(summary = "Update SWIFT message transaction ID")
+    public ResponseEntity<SwiftMessage> updateMessageTransactionId(
+            @PathVariable String messageId,
+            @RequestParam String transactionId) {
+        logger.info("PATCH /api/v1/swift/messages/{}/transaction - updating transaction ID to: {}", messageId, transactionId);
+        try {
+            SwiftMessage updatedMessage = swiftMessageService.updateMessageTransactionId(messageId, transactionId);
+            return ResponseEntity.ok(updatedMessage);
+        } catch (Exception e) {
+            logger.error("Error updating message transaction ID: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }

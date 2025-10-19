@@ -7,9 +7,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public record AccountBalance(
     @JsonProperty("accountId") String accountId,
-    @JsonProperty("balance") Double balance,
-    @JsonProperty("currency") String currency,
+    @JsonProperty("currentBalance") Double currentBalance,
     @JsonProperty("availableBalance") Double availableBalance,
-    @JsonProperty("pendingTransactions") Double pendingTransactions,
-    @JsonProperty("lastUpdated") String lastUpdated
-) {}
+    @JsonProperty("reservedBalance") Double reservedBalance,
+    @JsonProperty("currency") String currency,
+    @JsonProperty("lastUpdated") String lastUpdated,
+    @JsonProperty("pendingCredits") Double pendingCredits,
+    @JsonProperty("pendingDebits") Double pendingDebits,
+    @JsonProperty("overdraftLimit") Double overdraftLimit,
+    @JsonProperty("valueDate") String valueDate
+) {
+    // Helper method for backward compatibility
+    public Double balance() {
+        return currentBalance;
+    }
+}

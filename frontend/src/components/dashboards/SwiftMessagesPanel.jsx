@@ -10,6 +10,8 @@ import React, { useState } from 'react';
  */
 const SwiftMessagesPanel = ({ messages = [], recentMessages = [] }) => {
   const [filterStatus, setFilterStatus] = useState('ALL');
+  const [updatingMessage, setUpdatingMessage] = useState(null);
+  const [transactionIdInput, setTransactionIdInput] = useState({});
 
   // Format currency value
   const formatCurrency = (amount, currency) => {
@@ -90,10 +92,10 @@ const SwiftMessagesPanel = ({ messages = [], recentMessages = [] }) => {
     ? messages
     : messages.filter(msg => msg.status === filterStatus);
 
-  // Sort by timestamp (newest first) and limit to 15
+  // Sort by timestamp (newest first) and limit to 8
   const sortedMessages = [...filteredMessages]
     .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-    .slice(0, 15);
+    .slice(0, 8);
 
   // Get status counts
   const statusCounts = {
@@ -105,10 +107,52 @@ const SwiftMessagesPanel = ({ messages = [], recentMessages = [] }) => {
     UNRECONCILED: messages.filter(m => m.status === 'UNRECONCILED').length
   };
 
+  // Update SWIFT message transaction ID
+  const handleUpdateTransactionId = async (messageId) => {
+    const transactionId = transactionIdInput[messageId];
+
+    if (!transactionId || !transactionId.trim()) {
+      alert('Please enter a transaction ID');
+      return;
+    }
+
+    setUpdatingMessage(messageId);
+
+    try {
+      const response = await fetch(
+        `http://localhost:8091/api/v1/swift/messages/${messageId}/transaction?transactionId=${encodeURIComponent(transactionId.trim())}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to update transaction ID');
+      }
+
+      // Clear input
+      setTransactionIdInput(prev => ({ ...prev, [messageId]: '' }));
+
+      // Show success
+      alert(`✅ SWIFT message ${messageId} linked to transaction ${transactionId.trim()}`);
+
+      // Refresh page after a short delay
+      setTimeout(() => window.location.reload(), 1000);
+    } catch (error) {
+      console.error('Error updating transaction ID:', error);
+      alert(`❌ Error: ${error.message}`);
+    } finally {
+      setUpdatingMessage(null);
+    }
+  };
+
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-base font-semibold text-gray-900 dark:text-white">
           SWIFT Messages
         </h2>
         <div className="flex items-center space-x-2">
@@ -129,45 +173,45 @@ const SwiftMessagesPanel = ({ messages = [], recentMessages = [] }) => {
       </div>
 
       {sortedMessages.length === 0 ? (
-        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+        <div className="text-center py-4 text-sm text-gray-500 dark:text-gray-400">
           No SWIFT messages {filterStatus !== 'ALL' && `with status "${filterStatus}"`}
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2 max-h-[600px] overflow-y-auto pr-1">
           {sortedMessages.map(msg => {
             const statusInfo = getStatusInfo(msg.status);
             return (
               <div
                 key={msg.id}
-                className={`border border-gray-200 dark:border-gray-700 rounded-lg p-4 transition-all duration-300 ${
+                className={`border border-gray-200 dark:border-gray-700 rounded-lg p-3 transition-all duration-300 ${
                   isRecent(msg.id)
                     ? 'bg-blue-50 dark:bg-blue-900/20 ring-2 ring-blue-400 animate-scale-in'
                     : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
                 }`}
               >
                 {/* Message Header */}
-                <div className="flex items-start justify-between mb-3">
+                <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2">
-                      <span className="font-mono text-sm font-semibold text-gray-900 dark:text-white">
+                      <span className="font-mono text-xs font-semibold text-gray-900 dark:text-white">
                         {msg.id}
                       </span>
-                      <span className="text-xs px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded">
+                      <span className="text-xs px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded">
                         {msg.type || 'MT103'}
                       </span>
                     </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                       {formatTimestamp(msg.timestamp)}
                     </div>
                   </div>
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusInfo.color}`}>
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${statusInfo.color}`}>
                     <span className="mr-1">{statusInfo.icon}</span>
                     {msg.status}
                   </span>
                 </div>
 
                 {/* Message Details */}
-                <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="grid grid-cols-2 gap-2 text-sm">
                   <div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">Account</div>
                     <div className="font-medium text-gray-900 dark:text-white">{msg.accountId || 'N/A'}</div>
@@ -178,6 +222,14 @@ const SwiftMessagesPanel = ({ messages = [], recentMessages = [] }) => {
                       {formatCurrency(msg.amount, msg.currency)}
                     </div>
                   </div>
+                  <div className="col-span-2">
+                    <div className="text-xs text-gray-500 dark:text-gray-400">Transaction ID</div>
+                    <div className="font-medium text-gray-900 dark:text-white">
+                      {msg.transactionId || (
+                        <span className="text-red-600 dark:text-red-400 font-semibold">Missing - Needs Manual Link</span>
+                      )}
+                    </div>
+                  </div>
                   {msg.beneficiaryName && (
                     <div className="col-span-2">
                       <div className="text-xs text-gray-500 dark:text-gray-400">Beneficiary</div>
@@ -186,8 +238,39 @@ const SwiftMessagesPanel = ({ messages = [], recentMessages = [] }) => {
                   )}
                 </div>
 
+                {/* Transaction ID Update Section - Only for unreconciled messages */}
+                {!msg.transactionId && msg.status !== 'RECONCILED' && (
+                  <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+                    <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded p-2">
+                      <div className="text-xs font-semibold text-yellow-800 dark:text-yellow-400 mb-1.5">
+                        ⚠️ Manual Reconciliation Required
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="text"
+                          placeholder="Enter Transaction ID (e.g., TXN-ABC123)"
+                          value={transactionIdInput[msg.id] || ''}
+                          onChange={(e) => setTransactionIdInput(prev => ({ ...prev, [msg.id]: e.target.value }))}
+                          disabled={updatingMessage === msg.id}
+                          className="flex-1 text-xs border border-gray-300 dark:border-gray-600 rounded px-2 py-1 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+                        />
+                        <button
+                          onClick={() => handleUpdateTransactionId(msg.id)}
+                          disabled={updatingMessage === msg.id || !transactionIdInput[msg.id]}
+                          className="px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                        >
+                          {updatingMessage === msg.id ? 'Linking...' : 'Link'}
+                        </button>
+                      </div>
+                      <div className="text-xs text-gray-600 dark:text-gray-400 mt-1.5">
+                        Creates audit trail linking SWIFT to internal transaction
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Status Progression */}
-                <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between text-xs">
                     <div className={`${statusInfo.step >= 1 ? 'text-blue-600 dark:text-blue-400 font-medium' : 'text-gray-400'}`}>
                       Pending

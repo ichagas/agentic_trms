@@ -50,7 +50,7 @@ public class SwiftMockClient {
      */
     public ReconciliationResult getReconciliationStatus() {
         try {
-            String url = swiftBaseUrl + "/reconciliation";
+            String url = swiftBaseUrl + "/messages/reconcile";
             logger.debug("Fetching reconciliation status from: {}", url);
 
             // Use POST to trigger reconciliation check without auto-reconcile

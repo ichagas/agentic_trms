@@ -252,6 +252,14 @@ public class SwiftMessageService {
     }
 
     /**
+     * Update SWIFT message transaction ID
+     */
+    public SwiftMessage updateMessageTransactionId(String messageId, String transactionId) {
+        logger.info("Updating SWIFT message {} with transaction ID: {}", messageId, transactionId);
+        return dataService.updateMessageTransactionId(messageId, transactionId);
+    }
+
+    /**
      * Get unreconciled messages
      */
     public List<SwiftMessage> getUnreconciledMessages() {

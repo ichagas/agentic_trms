@@ -471,16 +471,29 @@ public class MockDataService {
     public String createTransaction(Transaction transaction) {
         transactions.put(transaction.getTransactionId(), transaction);
 
-        // Update account balances when transaction is created
-        updateAccountBalancesForTransaction(transaction);
+        // Only update account balances if transaction is VALIDATED (not PENDING)
+        if (transaction.getStatus() == Transaction.TransactionStatus.VALIDATED) {
+            updateAccountBalancesForTransaction(transaction);
+        }
 
         return transaction.getTransactionId();
     }
 
     public void updateTransaction(Transaction transaction) {
+        Transaction oldTransaction = transactions.get(transaction.getTransactionId());
         transactions.put(transaction.getTransactionId(), transaction);
+
         logger.info("Transaction updated: {} - new status: {}",
                    transaction.getTransactionId(), transaction.getStatus());
+
+        // Update balances when transaction status changes from PENDING to VALIDATED
+        if (oldTransaction != null &&
+            oldTransaction.getStatus() == Transaction.TransactionStatus.PENDING &&
+            transaction.getStatus() == Transaction.TransactionStatus.VALIDATED) {
+            logger.info("Transaction approved - updating account balances for: {}",
+                       transaction.getTransactionId());
+            updateAccountBalancesForTransaction(transaction);
+        }
     }
 
     /**

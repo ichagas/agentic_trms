@@ -266,24 +266,24 @@ public class TrmsAiService {
             }
 
             // SINGLE FUNCTION CALLS
-            
-            // Check for account-related queries
-            if (message.contains("account") && (message.contains("usd") || message.contains("eur") || 
-                message.contains("gbp") || message.contains("jpy"))) {
-                
-                String currency = extractCurrency(message);
-                if (currency != null) {
-                    logger.info("Executing getAccountsByCurrency with currency: {}", currency);
-                    return executeGetAccountsByCurrency(currency);
-                }
-            }
-            
-            // Check for balance queries
+
+            // Check for balance queries (MORE SPECIFIC - check first)
             if (message.contains("balance") && message.contains("acc-")) {
                 String accountId = extractAccountId(message);
                 if (accountId != null) {
                     logger.info("Executing checkAccountBalance with account: {}", accountId);
                     return executeCheckAccountBalance(accountId);
+                }
+            }
+
+            // Check for account-related queries (LESS SPECIFIC - check after balance)
+            if (message.contains("account") && (message.contains("usd") || message.contains("eur") ||
+                message.contains("gbp") || message.contains("jpy"))) {
+
+                String currency = extractCurrency(message);
+                if (currency != null) {
+                    logger.info("Executing getAccountsByCurrency with currency: {}", currency);
+                    return executeGetAccountsByCurrency(currency);
                 }
             }
             
@@ -322,9 +322,17 @@ public class TrmsAiService {
                 }
             }
 
-            // Check for unreconciled messages
-            if (message.contains("unreconciled") ||
-                (message.contains("reconcil") && message.contains("swift"))) {
+            // Check for SWIFT reconciliation request (reconcile action)
+            if ((message.contains("reconcile") && message.contains("swift")) ||
+                (message.contains("reconcile") && message.contains("message"))) {
+                String accountId = extractAccountId(message);
+                boolean autoReconcile = message.contains("auto") || message.contains("automatic");
+                logger.info("Executing reconcileSwiftMessages for account: {}, auto: {}", accountId, autoReconcile);
+                return executeReconcileSwiftMessages(accountId, autoReconcile);
+            }
+
+            // Check for unreconciled messages (view only)
+            if (message.contains("unreconciled") || message.contains("show unreconciled")) {
                 logger.info("Executing getUnreconciledMessages");
                 return executeGetUnreconciledMessages();
             }
@@ -476,6 +484,17 @@ public class TrmsAiService {
         }
     }
 
+    private String executeReconcileSwiftMessages(String accountId, boolean autoReconcile) {
+        try {
+            executedFunctions.get().add("reconcileSwiftMessages");
+            var request = new com.trms.ai.service.SwiftFunctions.ReconcileSwiftMessagesRequest(accountId, autoReconcile);
+            var result = swiftFunctions.reconcileSwiftMessages().apply(request);
+            return formatReconciliationResultData(result);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to reconcile SWIFT messages: " + e.getMessage());
+        }
+    }
+
     private String executeGetUnreconciledMessages() {
         try {
             executedFunctions.get().add("getUnreconciledMessages");
@@ -515,6 +534,10 @@ public class TrmsAiService {
 
     private String formatSwiftMessagesData(java.util.List<?> messages) {
         return "SWIFT MESSAGES:\n" + messages.toString();
+    }
+
+    private String formatReconciliationResultData(Object result) {
+        return "SWIFT RECONCILIATION RESULT:\n" + result.toString();
     }
 
     private String formatRedemptionReportData(Object result) {
