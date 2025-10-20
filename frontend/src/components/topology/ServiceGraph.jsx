@@ -36,7 +36,7 @@ const ServiceGraph = ({ activeCalls = [], recentEvents = [] }) => {
     },
     {
       id: 'trms',
-      name: 'FINDUR Mock',
+      name: 'TRMS Mock',
       port: '8090',
       icon: Database,
       color: 'green',
@@ -44,7 +44,7 @@ const ServiceGraph = ({ activeCalls = [], recentEvents = [] }) => {
     },
     {
       id: 'swift',
-      name: 'HABS Mock',
+      name: 'SWIF Mock',
       port: '8091',
       icon: Send,
       color: 'orange',
