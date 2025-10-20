@@ -13,6 +13,8 @@ const SwiftMessagesPanel = ({ messages = [], recentMessages = [] }) => {
   const [updatingMessage, setUpdatingMessage] = useState(null);
   const [transactionIdInput, setTransactionIdInput] = useState({});
 
+  document.title = "SWIFT";
+
   // Format currency value
   const formatCurrency = (amount, currency) => {
     return new Intl.NumberFormat('en-US', {

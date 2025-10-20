@@ -13,6 +13,8 @@ import React, { useState } from 'react';
 const TransactionsPanel = ({ transactions = [], recentTransactions = [], onApprove }) => {
   const [approvingTx, setApprovingTx] = useState(null);
 
+    document.title = "TRMS";
+
   // Handle transaction approval
   const handleApprove = async (transaction) => {
     setApprovingTx(transaction.transactionId);
