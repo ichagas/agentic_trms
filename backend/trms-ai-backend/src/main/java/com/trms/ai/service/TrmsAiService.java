@@ -124,7 +124,7 @@ public class TrmsAiService {
         // Function names must match the @Bean method names in TrmsFunctions and SwiftFunctions
         this.chatClientWithFunctions = ChatClient.builder(chatModel)
             .defaultSystem(SYSTEM_PROMPT)
-            .defaultFunctions(
+            .defaultToolNames(
                 "getAccountsByCurrency",
                 "checkAccountBalance",
                 "bookTransaction",
