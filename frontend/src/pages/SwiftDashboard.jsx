@@ -97,21 +97,25 @@ const SwiftDashboard = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - SWIFT Messages */}
-            <div className="lg:col-span-2">
-              <SwiftMessagesPanel
-                messages={messages}
-                recentMessages={recentMessages}
-              />
+          <div className="space-y-6">
+            {/* Top Row - SWIFT Messages spanning full width */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <SwiftMessagesPanel
+                  messages={messages}
+                  recentMessages={recentMessages}
+                />
+              </div>
+
+              {/* Right Column - Reconciliation and Reports */}
+              <div className="lg:col-span-1 space-y-6">
+                <ReconciliationPanel reconciliationStatus={reconciliationStatus} />
+                <ReportsPanel eodReports={eodReports} />
+              </div>
             </div>
 
-            {/* Right Column - Status Panels */}
-            <div className="lg:col-span-1 space-y-6">
-              <ReconciliationPanel reconciliationStatus={reconciliationStatus} />
-              <ReportsPanel eodReports={eodReports} />
-              <RedemptionPanel redemptionStatus={redemptionStatus} />
-            </div>
+            {/* Bottom Row - Redemption Panel spanning full width */}
+            <RedemptionPanel redemptionStatus={redemptionStatus} />
           </div>
         )}
       </div>

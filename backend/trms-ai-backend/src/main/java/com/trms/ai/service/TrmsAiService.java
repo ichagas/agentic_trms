@@ -9,6 +9,7 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,12 +27,20 @@ public class TrmsAiService {
     private static final Logger logger = LoggerFactory.getLogger(TrmsAiService.class);
 
     private final ChatClient chatClient;
+    private final ChatClient chatClientWithFunctions; // For experimental LLM mode
     private final TrmsFunctions trmsFunctions;
     private final SwiftFunctions swiftFunctions;
     private final ConversationMemory conversationMemory;
+    private final FunctionCallTracker functionCallTracker;
+
+    @Value("${app.experimental-mode:false}")
+    private boolean defaultExperimentalMode;
 
     // Thread-local storage for tracking executed functions in the current request
     private final ThreadLocal<List<String>> executedFunctions = ThreadLocal.withInitial(ArrayList::new);
+
+    // Thread-local storage for unreconciled message count (used by validation workflows)
+    private final ThreadLocal<Integer> unreconciledMessageCount = ThreadLocal.withInitial(() -> 0);
 
     /**
      * Result of chat processing including response text and executed functions
@@ -55,8 +64,12 @@ public class TrmsAiService {
     }
 
     private final String SYSTEM_PROMPT = """
-        You are a helpful Treasury and Risk Management System (TRMS) AI assistant with integrated SWIFT messaging capabilities.
-
+        You are NextAgent Command Center (NACC), where legacy meets intelligence: AI Agents That Speak Banking Fluently.
+        
+        Your goal is to simplify banking operations as checking EOD readiness or validating transactions which requires extensive manual effort and knowledge.
+        You are an AI agent to bridge this gap by understanding natural language requests and orchestrating multi-step operations across legacy systems, 
+        turning hours of manual work into simple conversations.
+        
         You have access to the following TRMS functions:
         - getAccountsByCurrency: Get accounts filtered by currency (USD, EUR, GBP, JPY)
         - checkAccountBalance: Check balance for a specific account by account ID
@@ -90,39 +103,149 @@ public class TrmsAiService {
         - Redemption reports processing
         - Rate fixings or market data
 
-        Provide clear, professional responses about financial operations.
         When you retrieve data, format it clearly and explain what the information means.
         If a function call fails, explain the error and suggest alternatives.
+
+        IMPORT: Be concise, accurate, professional and be brief in all responses.
         """;
 
     @Autowired
     public TrmsAiService(ChatModel chatModel,
                         TrmsFunctions trmsFunctions,
                         SwiftFunctions swiftFunctions,
-                        ConversationMemory conversationMemory) {
+                        ConversationMemory conversationMemory,
+                        FunctionCallTracker functionCallTracker) {
         this.trmsFunctions = trmsFunctions;
         this.swiftFunctions = swiftFunctions;
         this.conversationMemory = conversationMemory;
+        this.functionCallTracker = functionCallTracker;
+
+        // Standard ChatClient without functions (for rule-based mode)
         this.chatClient = ChatClient.builder(chatModel)
             .defaultSystem(SYSTEM_PROMPT)
             .build();
 
+        // ChatClient with functions registered (for experimental LLM mode)
+        // Function names must match the @Bean method names in TrmsFunctions and SwiftFunctions
+        this.chatClientWithFunctions = ChatClient.builder(chatModel)
+            .defaultSystem(SYSTEM_PROMPT)
+            .defaultToolNames(
+                "getAccountsByCurrency",
+                "checkAccountBalance",
+                "bookTransaction",
+                "checkEODReadiness",
+                "proposeRateFixings",
+                "sendSwiftPayment",
+                "checkSwiftMessageStatus",
+                "getSwiftMessagesByAccount",
+                "getSwiftMessagesByTransaction",
+                "reconcileSwiftMessages",
+                "getUnreconciledMessages",
+                "processRedemptionReport",
+                "verifyEODReports"
+            )
+            .build();
+
         logger.info("TrmsAiService initialized with ChatModel provider, conversation memory, TRMS and SWIFT function calling");
+        logger.info("Experimental LLM mode available with {} TRMS functions and {} SWIFT functions", 5, 8);
     }
 
     /**
      * Process a chat message with conversation context
-     * NEW: Now accepts sessionId for context management
+     * NEW: Now accepts sessionId for context management and experimentalMode parameter
      *
      * @param sessionId Unique session identifier for conversation continuity
      * @param userMessage The user's message
+     * @param experimentalMode If true, use pure LLM function calling; if false, use rule-based approach
      * @return ChatResult containing response and executed functions
      */
-    public ChatResult chat(String sessionId, String userMessage) {
-        logger.debug("Processing chat message for session {}: {}", sessionId, userMessage);
+    public ChatResult chat(String sessionId, String userMessage, boolean experimentalMode) {
+        logger.debug("Processing chat message for session {} (experimental mode: {}): {}",
+                     sessionId, experimentalMode, userMessage);
+
+        // Route to appropriate implementation based on mode
+        if (experimentalMode) {
+            return chatWithLLM(sessionId, userMessage);
+        } else {
+            return chatWithRuleBased(sessionId, userMessage);
+        }
+    }
+
+    /**
+     * EXPERIMENTAL: Pure LLM-based chat with function calling
+     * Let the LLM decide which functions to call based on the user's message
+     *
+     * @param sessionId Unique session identifier
+     * @param userMessage The user's message
+     * @return ChatResult containing response and executed functions
+     */
+    private ChatResult chatWithLLM(String sessionId, String userMessage) {
+        logger.debug("Using EXPERIMENTAL LLM mode for session {}: {}", sessionId, userMessage);
 
         // Clear previous function tracking
         executedFunctions.get().clear();
+        unreconciledMessageCount.set(0);
+        functionCallTracker.clear();
+
+        try {
+            // Add user message to conversation history
+            conversationMemory.addUserMessage(sessionId, userMessage);
+
+            // Build contextual prompt with conversation history
+            String contextualPrompt = conversationMemory.buildContextualPrompt(
+                sessionId,
+                userMessage,
+                8 // Include last 8 messages for context
+            );
+
+            // Let the LLM decide which functions to call automatically
+            logger.info("EXPERIMENTAL MODE: LLM will autonomously decide function calls");
+            String response = chatClientWithFunctions
+                .prompt()
+                .user(contextualPrompt)
+                .call()
+                .content();
+
+            logger.info("LLM-based response generated for session: {}", sessionId);
+
+            // Get actual functions called by the LLM from the tracker
+            List<String> functions = functionCallTracker.getFunctionCalls();
+            if (functions.isEmpty()) {
+                // No functions were called - just conversational response
+                // Don't add any placeholder - return empty list
+                logger.info("LLM response was conversational (no functions called)");
+            } else {
+                logger.info("LLM called {} function(s): {}", functions.size(), functions);
+            }
+
+            // Save assistant response to conversation history
+            String functionCallsStr = functions.isEmpty() ? "conversational" : String.join(", ", functions);
+            conversationMemory.addAssistantMessage(sessionId, response, functionCallsStr);
+
+            executedFunctions.remove(); // Clean up thread-local
+            unreconciledMessageCount.remove(); // Clean up thread-local
+            functionCallTracker.cleanup(); // Clean up tracker
+            return new ChatResult(response, functions);
+
+        } catch (Exception e) {
+            logger.error("Error in LLM mode for session {}: {}", sessionId, e.getMessage(), e);
+            executedFunctions.remove(); // Clean up thread-local
+            unreconciledMessageCount.remove(); // Clean up thread-local
+            functionCallTracker.cleanup(); // Clean up tracker
+            return new ChatResult(generateFallbackResponse(userMessage), List.of());
+        }
+    }
+
+    /**
+     * Rule-based chat with programmatic function calling
+     * Uses pattern matching to decide which functions to call
+     *
+     * @param sessionId Unique session identifier
+     * @param userMessage The user's message
+     * @return ChatResult containing response and executed functions
+     */
+    private ChatResult chatWithRuleBased(String sessionId, String userMessage) {
+        logger.debug("Using RULE-BASED mode for session {}: {}", sessionId, userMessage);
 
         try {
             // Add user message to conversation history
@@ -178,11 +301,13 @@ public class TrmsAiService {
             conversationMemory.addAssistantMessage(sessionId, response, functionCallsStr);
 
             executedFunctions.remove(); // Clean up thread-local
+            unreconciledMessageCount.remove(); // Clean up thread-local
             return new ChatResult(response, functions);
 
         } catch (Exception e) {
             logger.error("Error processing chat for session {}: {}", sessionId, e.getMessage(), e);
             executedFunctions.remove(); // Clean up thread-local
+            unreconciledMessageCount.remove(); // Clean up thread-local
             return new ChatResult(generateFallbackResponse(userMessage), List.of());
         }
     }
@@ -206,7 +331,8 @@ public class TrmsAiService {
             }
 
             // Scenario 2: Comprehensive EOD Check (market data + transactions + SWIFT)
-            if ((message.contains("comprehensive") || message.contains("full") || message.contains("complete")) &&
+            // IMPORTANT: Must check BEFORE SWIFT-only validation to avoid false matches
+            if ((message.contains("comprehensive") || message.contains("full") || message.contains("complete") || message.contains("both")) &&
                 (message.contains("eod") || message.contains("check") || message.contains("readiness"))) {
                 logger.info("Executing Comprehensive EOD Check Workflow");
                 return executeComprehensiveEODCheckWorkflow();
@@ -241,10 +367,12 @@ public class TrmsAiService {
                 return executeEODIssueResolutionWorkflow();
             }
 
-            // Scenario 7: SWIFT EOD Validation Workflow
-            if ((message.contains("swift") && (message.contains("eod") || message.contains("end of day"))) ||
-                (message.contains("swift") && (message.contains("ready") || message.contains("readiness"))) ||
-                (message.contains("validate") && message.contains("swift"))) {
+            // Scenario 7: SWIFT EOD Validation Workflow (SWIFT-only, not comprehensive)
+            // Only trigger if asking specifically about SWIFT, not both systems
+            if (((message.contains("swift") && (message.contains("eod") || message.contains("end of day"))) ||
+                 (message.contains("swift") && (message.contains("ready") || message.contains("readiness"))) ||
+                 (message.contains("validate") && message.contains("swift"))) &&
+                !message.contains("both") && !message.contains("trms") && !message.contains("comprehensive")) {
                 logger.info("Executing SWIFT EOD Validation Workflow");
                 return executeSwiftEODValidationWorkflow();
             }
@@ -265,25 +393,35 @@ public class TrmsAiService {
                 }
             }
 
-            // SINGLE FUNCTION CALLS
-            
-            // Check for account-related queries
-            if (message.contains("account") && (message.contains("usd") || message.contains("eur") || 
-                message.contains("gbp") || message.contains("jpy"))) {
-                
-                String currency = extractCurrency(message);
-                if (currency != null) {
-                    logger.info("Executing getAccountsByCurrency with currency: {}", currency);
-                    return executeGetAccountsByCurrency(currency);
-                }
+            // Scenario 10: Book Transaction (simple transfer without SWIFT)
+            if (message.contains("transfer") &&
+                (message.contains("$") || message.contains("usd") || message.contains("eur") ||
+                 message.contains("gbp") || message.contains("jpy")) &&
+                (message.contains("from") && message.contains("to")) &&
+                !message.contains("swift")) {
+                logger.info("Executing Book Transaction");
+                return executeBookTransactionWorkflow(message);
             }
-            
-            // Check for balance queries
+
+            // SINGLE FUNCTION CALLS
+
+            // Check for balance queries (MORE SPECIFIC - check first)
             if (message.contains("balance") && message.contains("acc-")) {
                 String accountId = extractAccountId(message);
                 if (accountId != null) {
                     logger.info("Executing checkAccountBalance with account: {}", accountId);
                     return executeCheckAccountBalance(accountId);
+                }
+            }
+
+            // Check for account-related queries (LESS SPECIFIC - check after balance)
+            if (message.contains("account") && (message.contains("usd") || message.contains("eur") ||
+                message.contains("gbp") || message.contains("jpy"))) {
+
+                String currency = extractCurrency(message);
+                if (currency != null) {
+                    logger.info("Executing getAccountsByCurrency with currency: {}", currency);
+                    return executeGetAccountsByCurrency(currency);
                 }
             }
             
@@ -322,9 +460,17 @@ public class TrmsAiService {
                 }
             }
 
-            // Check for unreconciled messages
-            if (message.contains("unreconciled") ||
-                (message.contains("reconcil") && message.contains("swift"))) {
+            // Check for SWIFT reconciliation request (reconcile action)
+            if ((message.contains("reconcile") && message.contains("swift")) ||
+                (message.contains("reconcile") && message.contains("message"))) {
+                String accountId = extractAccountId(message);
+                boolean autoReconcile = message.contains("auto") || message.contains("automatic");
+                logger.info("Executing reconcileSwiftMessages for account: {}, auto: {}", accountId, autoReconcile);
+                return executeReconcileSwiftMessages(accountId, autoReconcile);
+            }
+
+            // Check for unreconciled messages (view only)
+            if (message.contains("unreconciled") || message.contains("show unreconciled")) {
                 logger.info("Executing getUnreconciledMessages");
                 return executeGetUnreconciledMessages();
             }
@@ -476,11 +622,24 @@ public class TrmsAiService {
         }
     }
 
+    private String executeReconcileSwiftMessages(String accountId, boolean autoReconcile) {
+        try {
+            executedFunctions.get().add("reconcileSwiftMessages");
+            var request = new com.trms.ai.service.SwiftFunctions.ReconcileSwiftMessagesRequest(accountId, autoReconcile);
+            var result = swiftFunctions.reconcileSwiftMessages().apply(request);
+            return formatReconciliationResultData(result);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to reconcile SWIFT messages: " + e.getMessage());
+        }
+    }
+
     private String executeGetUnreconciledMessages() {
         try {
             executedFunctions.get().add("getUnreconciledMessages");
             var request = new com.trms.ai.service.SwiftFunctions.GetUnreconciledMessagesRequest();
             var messages = swiftFunctions.getUnreconciledMessages().apply(request);
+            // Store message count in thread-local for validation workflow
+            unreconciledMessageCount.set(messages.size());
             return formatSwiftMessagesData(messages);
         } catch (Exception e) {
             throw new RuntimeException("Failed to get unreconciled messages: " + e.getMessage());
@@ -515,6 +674,10 @@ public class TrmsAiService {
 
     private String formatSwiftMessagesData(java.util.List<?> messages) {
         return "SWIFT MESSAGES:\n" + messages.toString();
+    }
+
+    private String formatReconciliationResultData(Object result) {
+        return "SWIFT RECONCILIATION RESULT:\n" + result.toString();
     }
 
     private String formatRedemptionReportData(Object result) {
@@ -735,28 +898,31 @@ public class TrmsAiService {
             // Step 2: Check for unreconciled SWIFT messages
             result.append("🔄 Step 2/3: Checking for Unreconciled SWIFT Messages...\n");
             String unreconciledMessages = executeGetUnreconciledMessages();
+            int messageCount = unreconciledMessageCount.get();
             result.append(unreconciledMessages).append("\n");
+            result.append(String.format("   Found: %d unreconciled message(s)\n", messageCount));
 
-            // Check if there are unreconciled messages
-            if (unreconciledMessages.contains("[]") || unreconciledMessages.contains("0") ||
-                unreconciledMessages.toLowerCase().contains("no unreconciled")) {
+            // Check if there are unreconciled messages using actual count
+            if (messageCount == 0) {
                 result.append("   ✅ Reconciliation check: PASSED - All SWIFT messages reconciled\n\n");
                 passedChecks++;
             } else {
-                result.append("   ⚠️  Reconciliation check: WARNING - Unreconciled messages found\n\n");
-                issues.append("• Unreconciled SWIFT messages require attention\n");
+                result.append("   ❌ Reconciliation check: FAILED - Unreconciled messages found\n\n");
+                hasBlockers = true;
+                issues.append(String.format("• %d unreconciled SWIFT message(s) must be reconciled before EOD\n", messageCount));
             }
 
             // Step 3: Check SWIFT message statuses (verify no pending settlements)
             result.append("⏳ Step 3/3: Verifying No Pending Settlements...\n");
             // In a real system, we'd check for messages with PENDING status
             // For this demo, we'll simulate by checking unreconciled count
-            if (unreconciledMessages.contains("[]") || unreconciledMessages.contains("0")) {
+            if (messageCount == 0) {
                 result.append("   ✅ Settlement check: PASSED - No pending settlements\n\n");
                 passedChecks++;
             } else {
-                result.append("   ⚠️  Settlement check: WARNING - Some settlements may be pending\n\n");
-                issues.append("• Pending settlements detected, review required\n");
+                result.append("   ❌ Settlement check: FAILED - Pending settlements detected\n\n");
+                hasBlockers = true;
+                issues.append("• Pending settlements must be resolved before EOD\n");
             }
 
             // Summary and Overall Assessment
@@ -895,6 +1061,84 @@ public class TrmsAiService {
         } catch (Exception e) {
             result.append("❌ Error in Transfer + SWIFT Workflow: ").append(e.getMessage());
             logger.error("Error in executeTransferAndSwiftWorkflow", e);
+        }
+
+        return result.toString();
+    }
+
+    /**
+     * Book Transaction Workflow (without SWIFT)
+     * Steps: 1) Extract transfer details, 2) Book transaction, 3) Inform about approval process
+     */
+    private String executeBookTransactionWorkflow(String message) {
+        StringBuilder result = new StringBuilder();
+        result.append("💸 BOOKING TRANSACTION\n\n");
+
+        try {
+            // Extract transfer details from message
+            String[] accounts = extractBothAccountIds(message);
+            String fromAccount = accounts[0];
+            String toAccount = accounts[1];
+            String amountStr = extractAmount(message);
+            String currency = extractCurrency(message);
+
+            // Validate extracted data
+            if (fromAccount == null || toAccount == null) {
+                result.append("❌ ERROR: Could not extract both source and destination accounts.\n");
+                result.append("   Please specify transfer in format: 'Transfer $AMOUNT from ACC-XXX-CUR to ACC-YYY-CUR'\n");
+                return result.toString();
+            }
+
+            if (amountStr == null) {
+                result.append("❌ ERROR: Could not extract amount from message.\n");
+                return result.toString();
+            }
+
+            // Remove commas and parse amount
+            Double amount = Double.parseDouble(amountStr.replace(",", ""));
+
+            // Default currency if not specified
+            if (currency == null) {
+                currency = "USD";
+            }
+
+            result.append("📝 Transfer Details:\n");
+            result.append(String.format("   From Account: %s\n", fromAccount));
+            result.append(String.format("   To Account: %s\n", toAccount));
+            result.append(String.format("   Amount: %s\n", amountStr));
+            result.append(String.format("   Currency: %s\n\n", currency));
+
+            // Book the transaction
+            result.append("💰 Booking transaction in TRMS...\n");
+            executedFunctions.get().add("bookTransaction");
+
+            var bookRequest = new TrmsFunctions.BookTransactionRequest(fromAccount, toAccount, amount, currency);
+            var transaction = trmsFunctions.bookTransaction().apply(bookRequest);
+
+            result.append(String.format("   ✅ Transaction booked successfully!\n\n"));
+            result.append(String.format("📋 Transaction Details:\n"));
+            result.append(String.format("   Transaction ID: %s\n", transaction.id()));
+            result.append(String.format("   Status: %s\n", transaction.status()));
+            result.append(String.format("   Amount: %s %s\n", transaction.amount(), transaction.currency()));
+            result.append(String.format("   From: %s → To: %s\n\n", transaction.fromAccount(), transaction.toAccount()));
+
+            // Provide guidance based on status
+            if ("PENDING".equalsIgnoreCase(transaction.status())) {
+                result.append("⏳ NEXT STEPS:\n");
+                result.append("   The transaction has been created with PENDING status.\n");
+                result.append("   To complete the transaction:\n");
+                result.append("   1. Go to the TRMS Dashboard (http://localhost:8090)\n");
+                result.append("   2. Find transaction '").append(transaction.id()).append("' in Recent Transactions\n");
+                result.append("   3. Click 'Approve' to change status to VALIDATED\n");
+                result.append("   4. Once validated, you can send it via SWIFT if needed\n\n");
+                result.append("💡 TIP: Ask me to 'send transaction ").append(transaction.id()).append(" via SWIFT' after approval\n");
+            } else if ("VALIDATED".equalsIgnoreCase(transaction.status())) {
+                result.append("✅ Transaction is already VALIDATED and ready for SWIFT if needed.\n");
+            }
+
+        } catch (Exception e) {
+            result.append("❌ Error booking transaction: ").append(e.getMessage());
+            logger.error("Error in executeBookTransactionWorkflow", e);
         }
 
         return result.toString();

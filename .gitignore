@@ -6,6 +6,7 @@
 # Compiled class files
 *.class
 target/
+/target/**
 *.jar
 *.war
 *.ear

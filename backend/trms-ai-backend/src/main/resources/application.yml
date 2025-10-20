@@ -3,7 +3,8 @@ server:
 
 # Application Configuration
 app:
-  ai-provider: ${AI_PROVIDER:ollama}  # Options: ollama, openai
+  ai-provider: ${AI_PROVIDER:ollama}  # Options: ollama, openai, azure
+  experimental-mode: ${EXPERIMENTAL_MODE:false}  # Enable true LLM function calling (experimental)
 
 spring:
   application:
@@ -28,7 +29,19 @@ spring:
           model: ${AI_MODEL:gpt-4o-mini}
           temperature: 0.3
           max-tokens: 2000
-      
+
+    # Azure OpenAI Configuration
+    azure:
+      openai:
+        api-key: ${AZURE_OPENAI_API_KEY:your-azure-key}
+        endpoint: ${AZURE_OPENAI_ENDPOINT:https://your-resource.openai.azure.com/}
+        api-version: ${AZURE_OPENAI_API_VERSION:2025-04-01-preview}
+        chat:
+          options:
+            deployment-name: ${AZURE_OPENAI_DEPLOYMENT_NAME:gpt-5-mini}
+            temperature: 1.0
+            max_completion_tokens: 2000
+
     # Function calling configuration
     chat:
       client:

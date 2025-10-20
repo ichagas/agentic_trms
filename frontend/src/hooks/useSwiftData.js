@@ -52,20 +52,48 @@ export function useSwiftData() {
         lastReconciliation: new Date().toISOString()
       };
 
-      // Fetch EOD reports verification (mock data for now)
-      const eodReportsData = {
-        verified: true,
-        totalReports: 4,
-        passedReports: 4,
-        failedReports: 0,
-        reports: [
-          { name: 'balance_report.csv', status: 'PASSED', timestamp: new Date().toISOString(), size: '2.5 MB' },
-          { name: 'transaction_log.csv', status: 'PASSED', timestamp: new Date().toISOString(), size: '5.2 MB' },
-          { name: 'swift_reconciliation.csv', status: 'PASSED', timestamp: new Date().toISOString(), size: '1.8 MB' },
-          { name: 'settlement_report.csv', status: 'PASSED', timestamp: new Date().toISOString(), size: '3.1 MB' }
-        ],
-        lastVerification: new Date().toISOString()
-      };
+      // Fetch EOD reports verification from backend
+      // Use local date, not UTC to avoid timezone issues
+      const now = new Date();
+      const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+      let eodReportsData = null;
+
+      try {
+        const eodResponse = await fetch(`${SWIFT_BASE_URL}/reports/eod/verify?reportDate=${today}`);
+        if (eodResponse.ok) {
+          const eodResult = await eodResponse.json();
+
+          // Transform backend response to frontend format
+          eodReportsData = {
+            verified: eodResult.complete || false,
+            totalReports: eodResult.totalChecks || 0,
+            passedReports: eodResult.passedChecks || 0,
+            failedReports: eodResult.failedChecks || 0,
+            reports: (eodResult.checks || []).map(check => ({
+              name: check.reportName,
+              status: check.status,
+              timestamp: new Date().toISOString(),
+              exists: check.exists,
+              details: check.details
+            })),
+            lastVerification: new Date().toISOString(),
+            summary: eodResult.summary
+          };
+        } else {
+          throw new Error('EOD verification endpoint not available');
+        }
+      } catch (eodError) {
+        console.warn('EOD verification failed, using empty state:', eodError.message);
+        // Provide empty state if verification fails
+        eodReportsData = {
+          verified: false,
+          totalReports: 0,
+          passedReports: 0,
+          failedReports: 0,
+          reports: [],
+          lastVerification: new Date().toISOString()
+        };
+      }
 
       // Fetch redemption status (mock data for now)
       const redemptionData = {

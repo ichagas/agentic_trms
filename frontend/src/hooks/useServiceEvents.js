@@ -46,8 +46,8 @@ const useServiceEvents = (messages = []) => {
       // First, try to use metadata from backend (preferred approach)
       let functionCalls = [];
 
-      if (lastMessage.metadata && lastMessage.metadata.functionCalls && lastMessage.metadata.functionCalls.length > 0) {
-        // Backend provided function metadata - use it directly
+      if (lastMessage.metadata && lastMessage.metadata.functionCalls) {
+        // Backend provided function metadata - use it directly (even if empty array)
         // Define SWIFT functions (all others are TRMS functions)
         const swiftFunctions = [
           'sendSwiftPayment',
@@ -60,6 +60,8 @@ const useServiceEvents = (messages = []) => {
           'verifyEODReports'
         ];
 
+        // If backend says no functions were called (empty array), respect that
+        // Don't fall back to pattern detection
         functionCalls = lastMessage.metadata.functionCalls.map(fnName => ({
           name: fnName,
           params: {},
@@ -67,7 +69,7 @@ const useServiceEvents = (messages = []) => {
           response: 'Data retrieved'
         }));
       } else {
-        // Fallback to pattern detection if no metadata
+        // Fallback to pattern detection ONLY if no metadata at all
         functionCalls = detectFunctionCalls(lastMessage.text);
       }
 

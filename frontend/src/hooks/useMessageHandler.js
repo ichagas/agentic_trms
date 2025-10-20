@@ -3,18 +3,19 @@ import TrmsApiService from '../services/api';
 
 /**
  * useMessageHandler Hook - Manages message sending and WebSocket communication
- * 
+ *
  * This hook handles:
  * - Message sending via REST API or WebSocket
  * - WebSocket setup and cleanup
  * - Loading states during message processing
  * - Error handling for failed messages
  * - Message state management
- * 
+ *
  * @param {boolean} useWebSocket - Whether to use WebSocket for communication
+ * @param {boolean} experimentalMode - Whether to use experimental LLM mode
  * @returns {Object} - Object containing message functions and state
  */
-const useMessageHandler = (useWebSocket = false) => {
+const useMessageHandler = (useWebSocket = false, experimentalMode = false) => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -86,15 +87,16 @@ const useMessageHandler = (useWebSocket = false) => {
         // Send via WebSocket
         TrmsApiService.sendWebSocketMessage(messageText);
       } else {
-        // Send via REST API
-        const response = await TrmsApiService.sendMessage(messageText);
+        // Send via REST API with experimental mode flag
+        const response = await TrmsApiService.sendMessage(messageText, experimentalMode);
         const aiMessage = {
           id: (Date.now() + 1).toString(),
           text: response.message,
           sender: 'ai',
           timestamp: new Date(),
           isMock: response.isMock,
-          metadata: response.metadata
+          metadata: response.metadata,
+          experimentalMode: experimentalMode // Track which mode was used
         };
         setMessages(prev => [...prev, aiMessage]);
         setIsLoading(false);

@@ -98,6 +98,25 @@ public class MockSwiftDataService {
         return Optional.ofNullable(messages.get(messageId));
     }
 
+    public SwiftMessage updateMessageTransactionId(String messageId, String transactionId) {
+        SwiftMessage message = messages.get(messageId);
+        if (message == null) {
+            throw new RuntimeException("SWIFT message not found: " + messageId);
+        }
+
+        // Update the transaction ID
+        message.setTransactionId(transactionId);
+
+        // If transaction ID is provided, mark as RECONCILED
+        if (transactionId != null && !transactionId.isEmpty()) {
+            message.setStatus(MessageStatus.RECONCILED);
+        }
+
+        messages.put(messageId, message);
+        logger.info("Updated SWIFT message {} with transaction ID: {}", messageId, transactionId);
+        return message;
+    }
+
     public List<SwiftMessage> getAllMessages() {
         return new ArrayList<>(messages.values());
     }

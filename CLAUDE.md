@@ -1,23 +1,21 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
-This is a TRMS (Treasury and Risk Management System) AI Agent POC that demonstrates AI-powered natural language interactions with financial systems. The project consists of four main components designed to work together:
+This is Hackathon project called NACC NextAgent Command Control. There are two mock Systems TRMS (Treasury and Risk Management System) and SWIFT Message. The AI Agent POC should demonstrates AI-powered natural language interactions with financial systems. The project consists of four main components designed to work together:
 
 1. **trms-mock-app** (Port 8090) - Mock legacy TRMS system with REST endpoints and EOD processing
 2. **swift-mock-app** (Port 8091) - Mock SWIFT messaging system for payment processing and reconciliation
 3. **trms-ai-backend** (Port 8080) - Spring AI backend with ChatClient and function calling
-4. **trms-frontend** (Port 5174) - React frontend with Google-like search interface
+4. **trms-frontend** (Port 5173) - React frontend with Google-like search interface
 
 ## Technology Stack
 - **Backend Framework**: Spring Boot 3.2+ with Spring AI 0.8.0
-- **LLM Integration**: Ollama (Llama 3) via Spring AI ChatClient with OpenAI fallback
+- **LLM Integration**: Ollama (for test) and Azure OpenAI (prod) via Spring AI ChatClient with OpenAI fallback
 - **Function Calling**: `@Function` annotations for AI tool calling
 - **Frontend**: React with TypeScript, Framer Motion animations
 - **Build Tools**: Maven (backend), npm (frontend)
-- **Development**: Docker Compose for full stack deployment
-- **AI Provider Options**: Mock (development), OpenAI, or Ollama
+- **Development**: Java, Spring Boot, Spring AI and Reactjs (frontend)
+- **AI Provider Options**: Mock and Ollama (development), OpenAI and Azure OpenAI
 
 ## Core Architecture Patterns
 
@@ -52,7 +50,7 @@ this.chatClient = chatClientBuilder
 - **Clients**:
   - LegacyTrmsClient for REST communication with TRMS mock
   - SwiftClient for REST communication with SWIFT mock
-- **Configuration**: AI provider selection (mock/openai/ollama) via properties
+- **Configuration**: AI provider selection (mock/openai/azure/ollama) via properties
 
 ## Development Commands
 
@@ -113,24 +111,29 @@ npm test
 ## Key Configuration
 
 ### Spring AI Configuration
-- **Ollama**: `http://localhost:11434`, model: `llama3`, temperature: `0.7`
-- **OpenAI**: API key via `OPENAI_API_KEY`, model: `gpt-3.5-turbo`
+- **Ollama**: `http://localhost:11434`, model: `qwen3:1.7b`, temperature: `0.3`
+- **OpenAI**: API key via `OPENAI_API_KEY`, model: `gpt-4o-mini`, temperature: `0.3`
+- **Azure OpenAI**: Endpoint via `AZURE_OPENAI_ENDPOINT`, deployment via `AZURE_OPENAI_DEPLOYMENT_NAME`, temperature: `0.3`
 - **Mock Mode**: `app.mock-ai=true` for development without LLM
-- **AI Provider**: `app.ai-provider` (mock/openai/ollama)
+- **AI Provider**: `app.ai-provider` (mock/openai/azure/ollama)
 - **Legacy TRMS**: `legacy-trms.base-url=http://localhost:8090/api/v1`
 
 ### API Endpoints
 - TRMS Mock: `http://localhost:8090/api/v1`
 - SWIFT Mock: `http://localhost:8091/api/v1/swift`
 - AI Backend: `http://localhost:8080/api/chat`
-- Frontend: `http://localhost:5174`
+- Frontend: `http://localhost:5173`
 
 ### API Documentation
 - TRMS Swagger: `http://localhost:8090/swagger-ui.html`
 - SWIFT Swagger: `http://localhost:8091/swagger-ui.html`
 
 ### Environment Variables
-- `OPENAI_API_KEY`: For OpenAI integration (optional, defaults to mock-key-for-development)
+- `OPENAI_API_KEY`: For OpenAI integration (optional, defaults to sk-demo-key)
+- `AZURE_OPENAI_API_KEY`: For Azure OpenAI integration (optional, defaults to your-azure-key)
+- `AZURE_OPENAI_ENDPOINT`: Azure OpenAI endpoint URL (e.g., https://myresource.openai.azure.com/)
+- `AZURE_OPENAI_API_VERSION`: Azure OpenAI API version (optional, defaults to 2024-02-15-preview)
+- `AZURE_OPENAI_DEPLOYMENT_NAME`: Azure deployment name (e.g., gpt-4)
 - `OLLAMA_BASE_URL`: Ollama server URL (defaults to http://localhost:11434)
 - `OLLAMA_MODEL`: Ollama model name (defaults to qwen3:1.7b)
 - `SWIFT_MOCK_BASE_URL`: SWIFT mock base URL (defaults to http://localhost:8091)
@@ -254,7 +257,7 @@ The frontend follows a Google-like interaction pattern:
 5. Suggested queries:
    - "Show me all USD accounts"
    - "Check balance for ACC-001-USD"
-   - "Transfer $50,000 from ACC-001-USD to ACC-010-USD"
+   - "Transfer $50,000 from ACC-001-USD to ACC-002-USD"
    - "Send via SWIFT"
    - "Process the redemption report"
    - "Verify today's EOD reports"

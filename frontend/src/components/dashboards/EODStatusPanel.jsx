@@ -79,11 +79,27 @@ const EODStatusPanel = ({ eodStatus }) => {
             </h3>
             <div className="space-y-2">
               {blockingIssues.map((issue, index) => (
-                <div key={index} className="flex items-start text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-2 rounded">
-                  <svg className="w-5 h-5 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  {issue}
+                <div key={index} className="p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                  <div className="flex items-start">
+                    <svg className="w-5 h-5 text-red-600 dark:text-red-400 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-red-800 dark:text-red-300">
+                        {typeof issue === 'string' ? issue : `${issue.type}: ${issue.description}`}
+                      </div>
+                      {typeof issue === 'object' && issue.resolution && (
+                        <div className="text-xs text-red-700 dark:text-red-400 mt-1">
+                          {issue.resolution}
+                        </div>
+                      )}
+                      {typeof issue === 'object' && issue.severity && (
+                        <div className="text-xs text-red-600 dark:text-red-500 mt-1">
+                          Severity: {issue.severity}
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>

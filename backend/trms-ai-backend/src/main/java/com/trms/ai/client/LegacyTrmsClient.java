@@ -237,38 +237,71 @@ public class LegacyTrmsClient {
     }
 
     /**
-     * Get proposed rate fixings from legacy TRMS system
+     * Get proposed rate fixings from legacy TRMS system and auto-approve them
      */
     public List<RateReset> proposeRateFixings() {
         try {
-            String url = trmsProperties.baseUrl() + "/api/v1/eod/missing-resets";
-            
-            logger.debug("Fetching proposed rate fixings from TRMS: {}", url);
+            // Step 1: Get missing rate resets
+            String missingResetsUrl = trmsProperties.baseUrl() + "/api/v1/eod/missing-resets";
 
-            ResponseEntity<List<RateReset>> response = restTemplate.exchange(
-                url,
+            logger.debug("Fetching missing rate resets from TRMS: {}", missingResetsUrl);
+
+            ResponseEntity<List<RateReset>> missingResponse = restTemplate.exchange(
+                missingResetsUrl,
                 HttpMethod.GET,
                 createHttpEntity(),
                 new ParameterizedTypeReference<List<RateReset>>() {}
             );
 
-            List<RateReset> rateResets = response.getBody();
-            logger.info("Successfully retrieved {} rate fixing proposals", 
-                       rateResets != null ? rateResets.size() : 0);
-            return rateResets != null ? rateResets : Collections.emptyList();
+            List<RateReset> missingResets = missingResponse.getBody();
+            if (missingResets == null || missingResets.isEmpty()) {
+                logger.info("No missing rate resets found");
+                return Collections.emptyList();
+            }
+
+            // Step 2: Extract instrument IDs
+            List<String> instrumentIds = missingResets.stream()
+                .map(RateReset::instrumentId)
+                .toList();
+
+            logger.info("Found {} missing rate resets, proposing and auto-approving fixings", instrumentIds.size());
+
+            // Step 3: Propose rate fixings with auto-approve
+            String proposeUrl = trmsProperties.baseUrl() + "/api/v1/eod/propose-fixings";
+
+            ProposeFixingsRequest request = new ProposeFixingsRequest(instrumentIds, true); // autoApprove = true
+
+            HttpEntity<ProposeFixingsRequest> entity = new HttpEntity<>(request, createHeaders());
+
+            ResponseEntity<List<RateReset>> proposeResponse = restTemplate.exchange(
+                proposeUrl,
+                HttpMethod.POST,
+                entity,
+                new ParameterizedTypeReference<List<RateReset>>() {}
+            );
+
+            List<RateReset> proposedFixings = proposeResponse.getBody();
+            logger.info("Successfully proposed and approved {} rate fixings",
+                       proposedFixings != null ? proposedFixings.size() : 0);
+            return proposedFixings != null ? proposedFixings : Collections.emptyList();
 
         } catch (HttpClientErrorException | HttpServerErrorException e) {
-            logger.error("HTTP error while fetching rate fixings: {} - {}", 
+            logger.error("HTTP error while proposing rate fixings: {} - {}",
                         e.getStatusCode(), e.getResponseBodyAsString());
-            throw new RuntimeException("Failed to fetch rate fixings: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to propose rate fixings: " + e.getMessage(), e);
         } catch (ResourceAccessException e) {
-            logger.error("Connection error while fetching rate fixings: {}", e.getMessage());
+            logger.error("Connection error while proposing rate fixings: {}", e.getMessage());
             throw new RuntimeException("Unable to connect to TRMS system", e);
         } catch (Exception e) {
-            logger.error("Unexpected error while fetching rate fixings: {}", e.getMessage());
+            logger.error("Unexpected error while proposing rate fixings: {}", e.getMessage());
             throw new RuntimeException("Unexpected error occurred", e);
         }
     }
+
+    /**
+     * Request DTO for propose fixings API
+     */
+    private record ProposeFixingsRequest(List<String> instrumentIds, Boolean autoApprove) {}
 
     /**
      * Create HTTP entity with headers

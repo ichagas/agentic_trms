@@ -13,20 +13,22 @@ import useServiceEvents from '../../hooks/useServiceEvents';
 
 /**
  * ChatView Component - Main chat interface
- * 
+ *
  * This component displays the chat interface including:
  * - Header with AI avatar and connection status
  * - Message history with enhanced formatting
  * - Loading indicators and welcome message
  * - Footer with input form and connection warnings
  * - Contextual suggestions based on conversation
- * 
+ *
  * @param {Array} messages - Array of message objects
  * @param {Function} onNewMessage - Callback for sending new messages
  * @param {boolean} isLoading - Whether AI is currently responding
  * @param {string} connectionStatus - Backend connection status
+ * @param {boolean} experimentalMode - Whether experimental LLM mode is enabled
+ * @param {Function} setExperimentalMode - Function to toggle experimental mode
  */
-const ChatView = ({ messages, onNewMessage, isLoading, connectionStatus }) => {
+const ChatView = ({ messages, onNewMessage, isLoading, connectionStatus, experimentalMode, setExperimentalMode }) => {
   const [input, setInput] = useState('');
   const [showTopology, setShowTopology] = useState(false);
   const messagesEndRef = useRef(null);
@@ -57,7 +59,11 @@ const ChatView = ({ messages, onNewMessage, isLoading, connectionStatus }) => {
     >
       {/* Main Chat Area */}
       <div className="flex flex-col flex-1 min-w-0 bg-white dark:bg-gray-800">
-        <Header connectionStatus={connectionStatus}>
+        <Header
+          connectionStatus={connectionStatus}
+          experimentalMode={experimentalMode}
+          setExperimentalMode={setExperimentalMode}
+        >
           {/* Topology Toggle Button */}
           <button
             onClick={() => setShowTopology(!showTopology)}

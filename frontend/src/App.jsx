@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import SearchView from './components/views/SearchView';
@@ -27,14 +27,34 @@ import useMessageHandler from './hooks/useMessageHandler';
  * - Integrated message processing and display
  */
 const App = () => {
+  // LocalStorage key for experimental mode preference
+  const EXPERIMENTAL_MODE_KEY = 'trms-experimental-mode';
+
   // Application state
   const [view, setView] = useState('search');
   const [useWebSocket] = useState(false); // Disabled by default since backend doesn't support socket.io
   const [error, setError] = useState(null);
 
+  // Initialize experimental mode from localStorage
+  const [experimentalMode, setExperimentalModeState] = useState(() => {
+    const stored = localStorage.getItem(EXPERIMENTAL_MODE_KEY);
+    return stored ? JSON.parse(stored) : false;
+  });
+
   // Custom hooks for connection and messaging
   const connectionStatus = useConnectionStatus();
-  const { messages, isLoading, sendMessage } = useMessageHandler(useWebSocket);
+  const { messages, isLoading, sendMessage } = useMessageHandler(useWebSocket, experimentalMode);
+
+  // Persist experimental mode preference to localStorage
+  useEffect(() => {
+    localStorage.setItem(EXPERIMENTAL_MODE_KEY, JSON.stringify(experimentalMode));
+    console.log('[App] Experimental mode preference saved:', experimentalMode);
+  }, [experimentalMode]);
+
+  // Wrapper function to update experimental mode and persist to localStorage
+  const setExperimentalMode = (value) => {
+    setExperimentalModeState(value);
+  };
 
   /**
    * Handle message submission from either search or chat view
@@ -84,6 +104,8 @@ const App = () => {
                     onNewMessage={handleSendMessage}
                     isLoading={isLoading}
                     connectionStatus={connectionStatus}
+                    experimentalMode={experimentalMode}
+                    setExperimentalMode={setExperimentalMode}
                   />
                 )}
               </AnimatePresence>

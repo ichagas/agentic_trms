@@ -8,5 +8,16 @@ import jakarta.validation.constraints.NotBlank;
  */
 public record ChatRequest(
     @JsonProperty("message") @NotBlank String message,
-    @JsonProperty("sessionId") String sessionId
-) {}
+    @JsonProperty("sessionId") String sessionId,
+    @JsonProperty("experimentalMode") Boolean experimentalMode
+) {
+    /**
+     * Constructor with default experimentalMode
+     */
+    public ChatRequest {
+        // Default experimentalMode to false if not provided
+        if (experimentalMode == null) {
+            experimentalMode = false;
+        }
+    }
+}

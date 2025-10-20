@@ -31,14 +31,14 @@ This directory contains a comprehensive service management script for the TRMS A
 
 ```mermaid
 graph TD
-    A[React Frontend :5174] --> B[Spring AI Backend :8080]
+    A[React Frontend :5173] --> B[Spring AI Backend :8080]
     B --> C[TRMS Mock Backend :8090]
     B --> D[Ollama :11434]
 ```
 
 ### 📱 **Frontend (React + TypeScript)**
-- **Port:** 5174 (Vite dev server)
-- **URL:** http://localhost:5174
+- **Port:** 5173 (Vite dev server)
+- **URL:** http://localhost:5173
 - **Purpose:** Modern Google-like search interface for TRMS operations
 - **Features:** Chat interface, animations, real-time updates
 
@@ -79,7 +79,7 @@ SPRING_PROFILES_ACTIVE=dev
 
 | Service | Port | Configurable |
 |---------|------|--------------|
-| Frontend | 5174 | Yes (Vite config) |
+| Frontend | 5173 | Yes (Vite config) |
 | AI Backend | 8080 | Yes (application.yml) |
 | Mock Backend | 8090 | Yes (application.yml) |
 | Ollama | 11434 | Yes (Ollama config) |
@@ -260,7 +260,7 @@ When all services are running correctly, you should see:
 
 ✅ **Status Check:**
 ```
-📱 Frontend:      RUNNING (http://localhost:5174)
+📱 Frontend:      RUNNING (http://localhost:5173)
 🤖 AI Backend:    RUNNING (http://localhost:8080)
 🏦 Mock Backend:  RUNNING (http://localhost:8090)
 ```
@@ -273,7 +273,7 @@ When all services are running correctly, you should see:
 ```
 
 ✅ **Access Points:**
-- Frontend UI: http://localhost:5174
+- Frontend UI: http://localhost:5173
 - Chat API: http://localhost:8080/api/chat
 - TRMS API: http://localhost:8090/api/v1/accounts
 

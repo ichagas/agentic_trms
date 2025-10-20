@@ -14,7 +14,7 @@ MOCK_BACKEND_DIR="$SCRIPT_DIR/backend/trms-mock-app"
 SWIFT_MOCK_DIR="$SCRIPT_DIR/backend/swift-mock-app"
 
 # Port Configuration
-FRONTEND_PORT=5174
+FRONTEND_PORT=5173
 AI_BACKEND_PORT=8080
 MOCK_BACKEND_PORT=8090
 SWIFT_MOCK_PORT=8091
@@ -158,7 +158,7 @@ start_ai_backend() {
 
     cd "$AI_BACKEND_DIR"
 
-    # Set AI Provider (ollama or openai)
+    # Set AI Provider (ollama, openai, or azure)
     export AI_PROVIDER="${AI_PROVIDER:-ollama}"
 
     # Ollama configuration
@@ -170,11 +170,19 @@ start_ai_backend() {
     export OPENAI_BASE_URL="${OPENAI_BASE_URL:-https://api.openai.com}"
     export AI_MODEL="${AI_MODEL:-gpt-4o-mini}"
 
+    # Azure OpenAI configuration
+    export AZURE_OPENAI_API_KEY="${AZURE_OPENAI_API_KEY:-your-azure-key}"
+    export AZURE_OPENAI_ENDPOINT="${AZURE_OPENAI_ENDPOINT:-https://your-resource.openai.azure.com/}"
+    export AZURE_OPENAI_API_VERSION="${AZURE_OPENAI_API_VERSION:-2024-02-15-preview}"
+    export AZURE_OPENAI_DEPLOYMENT_NAME="${AZURE_OPENAI_DEPLOYMENT_NAME:-gpt-4}"
+
     export SPRING_PROFILES_ACTIVE="dev"
 
     log_info "AI Provider: $AI_PROVIDER"
     if [ "$AI_PROVIDER" = "openai" ]; then
         log_info "OpenAI Model: $AI_MODEL"
+    elif [ "$AI_PROVIDER" = "azure" ]; then
+        log_info "Azure Deployment: $AZURE_OPENAI_DEPLOYMENT_NAME"
     else
         log_info "Ollama Model: $OLLAMA_MODEL"
     fi
@@ -460,6 +468,11 @@ show_usage() {
     echo ""
     echo "  # Use custom OpenAI endpoint"
     echo "  AI_PROVIDER=openai OPENAI_BASE_URL=https://custom.ai OPENAI_API_KEY=xxx $0 start"
+    echo ""
+    echo "  # Use Azure OpenAI"
+    echo "  AI_PROVIDER=azure AZURE_OPENAI_API_KEY=xxx \\"
+    echo "    AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com/ \\"
+    echo "    AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4 $0 start"
     echo ""
     echo "Services:"
     echo "  📱 Frontend (React):     http://localhost:$FRONTEND_PORT"
