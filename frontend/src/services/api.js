@@ -8,7 +8,7 @@ const WS_URL = import.meta.env.VITE_WS_URL || 'http://localhost:8080';
 // Axios instance configuration
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 30000,
+  timeout: 60000,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -115,13 +115,15 @@ class TrmsApiService {
   /**
    * Send a chat message to the AI backend
    * @param {string} message - The user message
+   * @param {boolean} experimentalMode - Whether to use experimental LLM mode
    * @returns {Promise<Object>} Response from AI
    */
-  static async sendMessage(message) {
+  static async sendMessage(message, experimentalMode = false) {
     try {
       const response = await apiClient.post('/api/chat', {
         message: message.trim(),
         sessionId: currentSessionId, // Include sessionId in request
+        experimentalMode: experimentalMode, // Include experimental mode flag
         timestamp: new Date().toISOString(),
       });
 

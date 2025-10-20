@@ -4,6 +4,7 @@ server:
 # Application Configuration
 app:
   ai-provider: ${AI_PROVIDER:ollama}  # Options: ollama, openai, azure
+  experimental-mode: ${EXPERIMENTAL_MODE:false}  # Enable true LLM function calling (experimental)
 
 spring:
   application:

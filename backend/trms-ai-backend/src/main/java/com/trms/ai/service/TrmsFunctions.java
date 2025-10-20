@@ -23,9 +23,11 @@ public class TrmsFunctions {
     private static final Logger logger = LoggerFactory.getLogger(TrmsFunctions.class);
 
     public final LegacyTrmsClient legacyTrmsClient;
+    private final FunctionCallTracker functionCallTracker;
 
-    public TrmsFunctions(LegacyTrmsClient legacyTrmsClient) {
+    public TrmsFunctions(LegacyTrmsClient legacyTrmsClient, FunctionCallTracker functionCallTracker) {
         this.legacyTrmsClient = legacyTrmsClient;
+        this.functionCallTracker = functionCallTracker;
     }
 
     /**
@@ -39,6 +41,7 @@ public class TrmsFunctions {
                 "Use checkAccountBalance function instead if you need balance details.")
     public Function<GetAccountsByCurrencyRequest, List<Account>> getAccountsByCurrency() {
         return request -> {
+            functionCallTracker.trackFunctionCall("getAccountsByCurrency");
             logger.debug("AI function call: getAccountsByCurrency with currency: {}", request.currency());
             try {
                 List<Account> accounts = legacyTrmsClient.getAccountsByCurrency(request.currency());
@@ -62,6 +65,7 @@ public class TrmsFunctions {
                 "ALWAYS use this function when user asks about account balance or available funds.")
     public Function<CheckAccountBalanceRequest, AccountBalance> checkAccountBalance() {
         return request -> {
+            functionCallTracker.trackFunctionCall("checkAccountBalance");
             logger.debug("AI function call: checkAccountBalance for account: {}", request.accountId());
             try {
                 AccountBalance balance = legacyTrmsClient.checkAccountBalance(request.accountId());
@@ -86,16 +90,17 @@ public class TrmsFunctions {
                 "existence and sufficient balance before processing.")
     public Function<BookTransactionRequest, Transaction> bookTransaction() {
         return request -> {
-            logger.debug("AI function call: bookTransaction - {} {} from {} to {}", 
+            functionCallTracker.trackFunctionCall("bookTransaction");
+            logger.debug("AI function call: bookTransaction - {} {} from {} to {}",
                         request.amount(), request.currency(), request.fromAccount(), request.toAccount());
             try {
                 Transaction transaction = legacyTrmsClient.bookTransaction(
-                    request.fromAccount(), 
-                    request.toAccount(), 
-                    request.amount(), 
+                    request.fromAccount(),
+                    request.toAccount(),
+                    request.amount(),
                     request.currency()
                 );
-                logger.info("Successfully booked transaction: {} for {} {}", 
+                logger.info("Successfully booked transaction: {} for {} {}",
                            transaction.id(), request.amount(), request.currency());
                 return transaction;
             } catch (Exception e) {
@@ -115,10 +120,11 @@ public class TrmsFunctions {
                 "Use this to determine if the system is ready for daily closing procedures.")
     public Function<CheckEODReadinessRequest, EODStatus> checkEODReadiness() {
         return request -> {
+            functionCallTracker.trackFunctionCall("checkEODReadiness");
             logger.debug("AI function call: checkEODReadiness");
             try {
                 EODStatus status = legacyTrmsClient.checkEODReadiness();
-                logger.info("EOD readiness status: ready={}, status={}", 
+                logger.info("EOD readiness status: ready={}, status={}",
                            status.isReady(), status.status());
                 return status;
             } catch (Exception e) {
@@ -138,6 +144,7 @@ public class TrmsFunctions {
                 "Use this to identify and resolve missing market data before running EOD procedures.")
     public Function<ProposeRateFixingsRequest, List<RateReset>> proposeRateFixings() {
         return request -> {
+            functionCallTracker.trackFunctionCall("proposeRateFixings");
             logger.debug("AI function call: proposeRateFixings");
             try {
                 List<RateReset> rateResets = legacyTrmsClient.proposeRateFixings();

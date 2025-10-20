@@ -64,12 +64,13 @@ public class ChatController {
 
             // Try to use Spring AI with function calling first, then fallback
             try {
-                logger.debug("Using Spring AI with function calling for response generation");
-                TrmsAiService.ChatResult result = trmsAiService.chat(sessionId, request.message());
+                boolean experimentalMode = request.experimentalMode() != null ? request.experimentalMode() : false;
+                logger.debug("Using Spring AI with function calling for response generation (experimental mode: {})", experimentalMode);
+                TrmsAiService.ChatResult result = trmsAiService.chat(sessionId, request.message(), experimentalMode);
                 response = result.getResponse();
                 executedFunctions = result.getExecutedFunctions();
-                logger.info("Spring AI response generated successfully for session: {}, executed {} functions",
-                           sessionId, executedFunctions.size());
+                logger.info("Spring AI response generated successfully for session: {}, mode: {}, executed {} functions",
+                           sessionId, experimentalMode ? "EXPERIMENTAL-LLM" : "RULE-BASED", executedFunctions.size());
             } catch (Exception e) {
                 logger.warn("Spring AI failed, falling back to Ollama: {}", e.getMessage());
 
@@ -130,21 +131,27 @@ public class ChatController {
      * Health check endpoint for the chat service
      */
     @GetMapping("/chat/health")
-    public ResponseEntity<String> health() {
-        String status = "TRMS AI Chat Service is running";
+    public ResponseEntity<Map<String, Object>> health() {
+        Map<String, Object> healthStatus = new HashMap<>();
+        healthStatus.put("service", "TRMS AI Chat Service");
+        healthStatus.put("status", "RUNNING");
 
         // Add Ollama status if available
         if (ollamaClient != null) {
             if (ollamaClient.isAvailable()) {
-                status += " (Ollama: AVAILABLE at " + ollamaClient.getBaseUrl() + ")";
+                healthStatus.put("ollama", "AVAILABLE at " + ollamaClient.getBaseUrl());
             } else {
-                status += " (Ollama: UNAVAILABLE - using fallback mode)";
+                healthStatus.put("ollama", "UNAVAILABLE - using fallback mode");
             }
         } else {
-            status += " (Ollama: NOT CONFIGURED - using pattern matching)";
+            healthStatus.put("ollama", "NOT CONFIGURED - using pattern matching");
         }
 
-        return ResponseEntity.ok(status);
+        // Add experimental mode info
+        healthStatus.put("experimentalMode", "Available - set experimentalMode: true in request to enable pure LLM function calling");
+        healthStatus.put("defaultMode", "Rule-based (programmatic function calling)");
+
+        return ResponseEntity.ok(healthStatus);
     }
 
     /**

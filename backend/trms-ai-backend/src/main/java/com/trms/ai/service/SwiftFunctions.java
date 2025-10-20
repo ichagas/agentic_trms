@@ -24,9 +24,11 @@ public class SwiftFunctions {
     private static final Logger logger = LoggerFactory.getLogger(SwiftFunctions.class);
 
     private final SwiftClient swiftClient;
+    private final FunctionCallTracker functionCallTracker;
 
-    public SwiftFunctions(SwiftClient swiftClient) {
+    public SwiftFunctions(SwiftClient swiftClient, FunctionCallTracker functionCallTracker) {
         this.swiftClient = swiftClient;
+        this.functionCallTracker = functionCallTracker;
     }
 
     /**
@@ -40,6 +42,7 @@ public class SwiftFunctions {
                 "Use this after booking a transaction in TRMS to send the payment confirmation.")
     public Function<SendSwiftPaymentRequest, SwiftMessage> sendSwiftPayment() {
         return request -> {
+            functionCallTracker.trackFunctionCall("sendSwiftPayment");
             logger.debug("AI function call: sendSwiftPayment for account: {}", request.accountId());
             try {
                 SwiftMessage message = swiftClient.sendSwiftPayment(
@@ -71,6 +74,7 @@ public class SwiftFunctions {
                 "was successfully transmitted and acknowledged.")
     public Function<CheckSwiftStatusRequest, MessageStatusResponse> checkSwiftMessageStatus() {
         return request -> {
+            functionCallTracker.trackFunctionCall("checkSwiftMessageStatus");
             logger.debug("AI function call: checkSwiftMessageStatus for message: {}", request.messageId());
             try {
                 MessageStatusResponse status = swiftClient.getMessageStatus(request.messageId());
@@ -93,6 +97,7 @@ public class SwiftFunctions {
                 "status, and timestamps. Useful for tracking payment history and reconciliation.")
     public Function<GetSwiftMessagesByAccountRequest, List<SwiftMessage>> getSwiftMessagesByAccount() {
         return request -> {
+            functionCallTracker.trackFunctionCall("getSwiftMessagesByAccount");
             logger.debug("AI function call: getSwiftMessagesByAccount for account: {}", request.accountId());
             try {
                 List<SwiftMessage> messages = swiftClient.getMessagesByAccount(request.accountId());
@@ -115,6 +120,7 @@ public class SwiftFunctions {
                 "of the payment instruction.")
     public Function<GetSwiftMessagesByTransactionRequest, List<SwiftMessage>> getSwiftMessagesByTransaction() {
         return request -> {
+            functionCallTracker.trackFunctionCall("getSwiftMessagesByTransaction");
             logger.debug("AI function call: getSwiftMessagesByTransaction for transaction: {}", request.transactionId());
             try {
                 List<SwiftMessage> messages = swiftClient.getMessagesByTransaction(request.transactionId());
@@ -138,6 +144,7 @@ public class SwiftFunctions {
                 "messages that have clear matches. Use this for EOD processing or to identify discrepancies.")
     public Function<ReconcileSwiftMessagesRequest, ReconciliationResult> reconcileSwiftMessages() {
         return request -> {
+            functionCallTracker.trackFunctionCall("reconcileSwiftMessages");
             logger.debug("AI function call: reconcileSwiftMessages");
             try {
                 ReconciliationResult result = swiftClient.reconcileMessages(
@@ -163,6 +170,7 @@ public class SwiftFunctions {
                 "or issues that need manual review. Important for EOD reconciliation checks.")
     public Function<GetUnreconciledMessagesRequest, List<SwiftMessage>> getUnreconciledMessages() {
         return request -> {
+            functionCallTracker.trackFunctionCall("getUnreconciledMessages");
             logger.debug("AI function call: getUnreconciledMessages");
             try {
                 List<SwiftMessage> messages = swiftClient.getUnreconciledMessages();
@@ -187,6 +195,7 @@ public class SwiftFunctions {
                 "Returns count of successful/failed items and total amount. This automates manual data entry.")
     public Function<ProcessRedemptionReportRequest, RedemptionReportResult> processRedemptionReport() {
         return request -> {
+            functionCallTracker.trackFunctionCall("processRedemptionReport");
             logger.debug("AI function call: processRedemptionReport for file: {}", request.fileName());
             try {
                 RedemptionReportResult result = swiftClient.processRedemptionReport(request.fileName());
@@ -211,6 +220,7 @@ public class SwiftFunctions {
                 "Specify the date in YYYY-MM-DD format. Use this to automate manual EOD report verification.")
     public Function<VerifyEODReportsRequest, EODReportVerificationResult> verifyEODReports() {
         return request -> {
+            functionCallTracker.trackFunctionCall("verifyEODReports");
             logger.debug("AI function call: verifyEODReports for date: {}", request.reportDate());
             try {
                 EODReportVerificationResult result = swiftClient.verifyEODReports(request.reportDate());

@@ -9,6 +9,7 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.chat.prompt.SystemPromptTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,9 +27,14 @@ public class TrmsAiService {
     private static final Logger logger = LoggerFactory.getLogger(TrmsAiService.class);
 
     private final ChatClient chatClient;
+    private final ChatClient chatClientWithFunctions; // For experimental LLM mode
     private final TrmsFunctions trmsFunctions;
     private final SwiftFunctions swiftFunctions;
     private final ConversationMemory conversationMemory;
+    private final FunctionCallTracker functionCallTracker;
+
+    @Value("${app.experimental-mode:false}")
+    private boolean defaultExperimentalMode;
 
     // Thread-local storage for tracking executed functions in the current request
     private final ThreadLocal<List<String>> executedFunctions = ThreadLocal.withInitial(ArrayList::new);
@@ -102,31 +108,139 @@ public class TrmsAiService {
     public TrmsAiService(ChatModel chatModel,
                         TrmsFunctions trmsFunctions,
                         SwiftFunctions swiftFunctions,
-                        ConversationMemory conversationMemory) {
+                        ConversationMemory conversationMemory,
+                        FunctionCallTracker functionCallTracker) {
         this.trmsFunctions = trmsFunctions;
         this.swiftFunctions = swiftFunctions;
         this.conversationMemory = conversationMemory;
+        this.functionCallTracker = functionCallTracker;
+
+        // Standard ChatClient without functions (for rule-based mode)
         this.chatClient = ChatClient.builder(chatModel)
             .defaultSystem(SYSTEM_PROMPT)
             .build();
 
+        // ChatClient with functions registered (for experimental LLM mode)
+        // Function names must match the @Bean method names in TrmsFunctions and SwiftFunctions
+        this.chatClientWithFunctions = ChatClient.builder(chatModel)
+            .defaultSystem(SYSTEM_PROMPT)
+            .defaultFunctions(
+                "getAccountsByCurrency",
+                "checkAccountBalance",
+                "bookTransaction",
+                "checkEODReadiness",
+                "proposeRateFixings",
+                "sendSwiftPayment",
+                "checkSwiftMessageStatus",
+                "getSwiftMessagesByAccount",
+                "getSwiftMessagesByTransaction",
+                "reconcileSwiftMessages",
+                "getUnreconciledMessages",
+                "processRedemptionReport",
+                "verifyEODReports"
+            )
+            .build();
+
         logger.info("TrmsAiService initialized with ChatModel provider, conversation memory, TRMS and SWIFT function calling");
+        logger.info("Experimental LLM mode available with {} TRMS functions and {} SWIFT functions", 5, 8);
     }
 
     /**
      * Process a chat message with conversation context
-     * NEW: Now accepts sessionId for context management
+     * NEW: Now accepts sessionId for context management and experimentalMode parameter
      *
      * @param sessionId Unique session identifier for conversation continuity
      * @param userMessage The user's message
+     * @param experimentalMode If true, use pure LLM function calling; if false, use rule-based approach
      * @return ChatResult containing response and executed functions
      */
-    public ChatResult chat(String sessionId, String userMessage) {
-        logger.debug("Processing chat message for session {}: {}", sessionId, userMessage);
+    public ChatResult chat(String sessionId, String userMessage, boolean experimentalMode) {
+        logger.debug("Processing chat message for session {} (experimental mode: {}): {}",
+                     sessionId, experimentalMode, userMessage);
+
+        // Route to appropriate implementation based on mode
+        if (experimentalMode) {
+            return chatWithLLM(sessionId, userMessage);
+        } else {
+            return chatWithRuleBased(sessionId, userMessage);
+        }
+    }
+
+    /**
+     * EXPERIMENTAL: Pure LLM-based chat with function calling
+     * Let the LLM decide which functions to call based on the user's message
+     *
+     * @param sessionId Unique session identifier
+     * @param userMessage The user's message
+     * @return ChatResult containing response and executed functions
+     */
+    private ChatResult chatWithLLM(String sessionId, String userMessage) {
+        logger.debug("Using EXPERIMENTAL LLM mode for session {}: {}", sessionId, userMessage);
 
         // Clear previous function tracking
         executedFunctions.get().clear();
         unreconciledMessageCount.set(0);
+        functionCallTracker.clear();
+
+        try {
+            // Add user message to conversation history
+            conversationMemory.addUserMessage(sessionId, userMessage);
+
+            // Build contextual prompt with conversation history
+            String contextualPrompt = conversationMemory.buildContextualPrompt(
+                sessionId,
+                userMessage,
+                8 // Include last 8 messages for context
+            );
+
+            // Let the LLM decide which functions to call automatically
+            logger.info("EXPERIMENTAL MODE: LLM will autonomously decide function calls");
+            String response = chatClientWithFunctions
+                .prompt()
+                .user(contextualPrompt)
+                .call()
+                .content();
+
+            logger.info("LLM-based response generated for session: {}", sessionId);
+
+            // Get actual functions called by the LLM from the tracker
+            List<String> functions = functionCallTracker.getFunctionCalls();
+            if (functions.isEmpty()) {
+                // No functions were called - just conversational response
+                // Don't add any placeholder - return empty list
+                logger.info("LLM response was conversational (no functions called)");
+            } else {
+                logger.info("LLM called {} function(s): {}", functions.size(), functions);
+            }
+
+            // Save assistant response to conversation history
+            String functionCallsStr = functions.isEmpty() ? "conversational" : String.join(", ", functions);
+            conversationMemory.addAssistantMessage(sessionId, response, functionCallsStr);
+
+            executedFunctions.remove(); // Clean up thread-local
+            unreconciledMessageCount.remove(); // Clean up thread-local
+            functionCallTracker.cleanup(); // Clean up tracker
+            return new ChatResult(response, functions);
+
+        } catch (Exception e) {
+            logger.error("Error in LLM mode for session {}: {}", sessionId, e.getMessage(), e);
+            executedFunctions.remove(); // Clean up thread-local
+            unreconciledMessageCount.remove(); // Clean up thread-local
+            functionCallTracker.cleanup(); // Clean up tracker
+            return new ChatResult(generateFallbackResponse(userMessage), List.of());
+        }
+    }
+
+    /**
+     * Rule-based chat with programmatic function calling
+     * Uses pattern matching to decide which functions to call
+     *
+     * @param sessionId Unique session identifier
+     * @param userMessage The user's message
+     * @return ChatResult containing response and executed functions
+     */
+    private ChatResult chatWithRuleBased(String sessionId, String userMessage) {
+        logger.debug("Using RULE-BASED mode for session {}: {}", sessionId, userMessage);
 
         try {
             // Add user message to conversation history
