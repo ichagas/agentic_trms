@@ -19,7 +19,7 @@ $MockBackendDir = Join-Path $ScriptDir "backend\trms-mock-app"
 $SwiftMockDir = Join-Path $ScriptDir "backend\swift-mock-app"
 
 # Port Configuration
-$FrontendPort = 5174
+$FrontendPort = 5173
 $AIBackendPort = 8080
 $MockBackendPort = 8090
 $SwiftMockPort = 8091

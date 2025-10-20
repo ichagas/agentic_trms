@@ -91,8 +91,8 @@ Book a financial transaction between two accounts in the TRMS system. Requires s
 
 **Example Use Case:**
 ```
-User: "Transfer $50,000 from ACC-001-USD to ACC-010-USD"
-AI: Calls bookTransaction("ACC-001-USD", "ACC-010-USD", 50000.0, "USD")
+User: "Transfer $50,000 from ACC-001-USD to ACC-002-USD"
+AI: Calls bookTransaction("ACC-001-USD", "ACC-002-USD", 50000.0, "USD")
 ```
 
 ---
@@ -391,7 +391,7 @@ AI: Calls verifyEODReports("2025-10-09")
 1. User: "Show me USD accounts"
    → getAccountsByCurrency("USD")
 
-2. User: "Transfer $50,000 from ACC-001-USD to ACC-010-USD"
+2. User: "Transfer $50,000 from ACC-001-USD to ACC-002-USD"
    → bookTransaction("ACC-001-USD", "ACC-010-USD", 50000.0, "USD")
    → Returns transaction ID: TRX-88912
 

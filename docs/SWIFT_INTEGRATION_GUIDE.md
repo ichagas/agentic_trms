@@ -8,7 +8,7 @@ This guide describes the SWIFT mock system integration with the TRMS AI Agent PO
 ### System Components
 ```
 ┌─────────────────┐
-│   Frontend      │  Port 5174 - React UI with Google-like interface
+│   Frontend      │  Port 5173 - React UI with Google-like interface
 │   (React)       │
 └────────┬────────┘
          │

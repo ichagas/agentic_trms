@@ -31,16 +31,20 @@ public class OllamaConfiguration {
     @Value("${spring.ai.ollama.chat.options.model:qwen3:1.7b}")
     private String ollamaModel;
 
+    @Value("${app.ai-provider:ollama}")
+    private String aiProvider;
+
     /**
      * Configure Ollama HTTP Client for direct API communication
      */
     @Bean(name = "ollamaHttpClient")
     public OllamaClient ollamaHttpClient() {
         logger.info("Configuring Ollama HTTP Client for TRMS operations");
+        logger.info("AI Provider: {}", aiProvider);
         logger.info("Ollama Base URL: {}", ollamaBaseUrl);
         logger.info("Ollama Model: {}", ollamaModel);
-        
-        return new OllamaClient(ollamaBaseUrl, ollamaModel);
+
+        return new OllamaClient(ollamaBaseUrl, ollamaModel, aiProvider);
     }
     
     /**
@@ -48,14 +52,16 @@ public class OllamaConfiguration {
      */
     public static class OllamaClient {
         private static final Logger clientLogger = LoggerFactory.getLogger(OllamaClient.class);
-        
+
         private final String baseUrl;
         private final String model;
+        private final String aiProvider;
         private final HttpClient httpClient;
-        
-        public OllamaClient(String baseUrl, String model) {
+
+        public OllamaClient(String baseUrl, String model, String aiProvider) {
             this.baseUrl = baseUrl;
             this.model = model;
+            this.aiProvider = aiProvider;
             this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(10))
                 .build();
@@ -76,10 +82,12 @@ public class OllamaConfiguration {
                     HttpResponse.BodyHandlers.ofString());
                 
                 boolean available = response.statusCode() == 200;
-                clientLogger.debug("Ollama availability check: {}", available ? "AVAILABLE" : "UNAVAILABLE");
+
+                clientLogger.debug(aiProvider.toUpperCase() + " availability check: {}", available ? "AVAILABLE" : "UNAVAILABLE");
+                
                 return available;
             } catch (Exception e) {
-                clientLogger.debug("Ollama availability check failed: {}", e.getMessage());
+                clientLogger.debug(aiProvider.toUpperCase() + " availability check failed: {}", e.getMessage());
                 return false;
             }
         }

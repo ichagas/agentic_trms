@@ -6,7 +6,7 @@ import { Server, Cpu, Database, Send } from 'lucide-react';
  * ServiceGraph - Visual representation of service topology
  *
  * Displays the 4-service architecture:
- * - Frontend (React) @ port 5174
+ * - Frontend (React) @ port 5173
  * - AI Backend (Spring Boot) @ port 8080
  * - TRMS Mock (Legacy) @ port 8090
  * - SWIFT Mock @ port 8091
@@ -21,7 +21,7 @@ const ServiceGraph = ({ activeCalls = [], recentEvents = [] }) => {
     {
       id: 'frontend',
       name: 'Frontend',
-      port: '5174',
+      port: '5173',
       icon: Server,
       color: 'blue',
       position: { x: 50, y: 20 }

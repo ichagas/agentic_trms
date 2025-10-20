@@ -50,14 +50,14 @@ export const SuggestedActions = ({ suggestions = [], onSuggestionClick }) => {
  */
 export const QuickActions = ({ onActionClick }) => {
   const actions = [
-    { id: 'accounts', label: '📊 View Accounts', query: 'Show me all USD accounts with their current balances' },
-    { id: 'eod', label: '🕐 EOD Readiness', query: 'Can we run End-of-Day? Include SWIFT reconciliation status' },
-    { id: 'swift', label: '🔄 SWIFT Status', query: 'Check unreconciled SWIFT messages and reconcile them automatically' },
-    { id: 'transfer', label: '💸 Payment Flow', query: 'Transfer $75,000 from ACC-001-USD to ACC-002-USD and send payment via SWIFT' },
-    { id: 'redemption', label: '📄 Process Report', query: 'Process the latest redemption report from the shared drive' },
+    { id: 'accounts', label: '💰 View Accounts', query: 'Show me all USD accounts with their current balances' },
+    { id: 'eod-both', label: '🎯 EOD Check', query: 'Can we run EOD? Check both TRMS and SWIFT readiness' },
+    { id: 'transfer', label: '💸 Book Transfer', query: 'Transfer $50,000 from ACC-001-USD to ACC-002-USD' },
+    { id: 'swift-validate', label: '🔐 SWIFT Only', query: 'Is SWIFT ready for EOD? Validate all systems' },
     { id: 'rates', label: '📈 Rate Fixings', query: 'Propose missing rate fixings for all instruments' },
     { id: 'verification', label: '✅ EOD Reports', query: 'Verify today\'s EOD reports in the shared drive' },
-    { id: 'reconcile', label: '🔍 Full Check', query: 'Run comprehensive EOD check including market data, transactions, and SWIFT reconciliation' },
+    { id: 'redemption', label: '📄 Redemption', query: 'Process the latest redemption report from the shared drive' },
+    { id: 'reconcile', label: '🔄 Reconcile', query: 'Check unreconciled SWIFT messages and reconcile them' },
   ];
   
   return (

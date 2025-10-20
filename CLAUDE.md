@@ -122,7 +122,7 @@ npm test
 - TRMS Mock: `http://localhost:8090/api/v1`
 - SWIFT Mock: `http://localhost:8091/api/v1/swift`
 - AI Backend: `http://localhost:8080/api/chat`
-- Frontend: `http://localhost:5174`
+- Frontend: `http://localhost:5173`
 
 ### API Documentation
 - TRMS Swagger: `http://localhost:8090/swagger-ui.html`
@@ -257,7 +257,7 @@ The frontend follows a Google-like interaction pattern:
 5. Suggested queries:
    - "Show me all USD accounts"
    - "Check balance for ACC-001-USD"
-   - "Transfer $50,000 from ACC-001-USD to ACC-010-USD"
+   - "Transfer $50,000 from ACC-001-USD to ACC-002-USD"
    - "Send via SWIFT"
    - "Process the redemption report"
    - "Verify today's EOD reports"

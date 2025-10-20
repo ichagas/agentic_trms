@@ -28,11 +28,9 @@ const SearchView = ({ onSubmit }) => {
   };
 
   const suggestions = [
-    "Transfer $100,000 from ACC-001-USD to ACC-002-USD and send via SWIFT",
-    "Can we run End-of-Day? Check SWIFT reconciliation status",
-    "Show me all unreconciled SWIFT messages and reconcile them",
-    "Check balance for ACC-001-USD, then transfer $50,000 to ACC-010-USD",
-    "Process the redemption report and verify today's EOD reports"
+    "Can we run EOD? Check both TRMS and SWIFT readiness",
+    "Transfer $50,000 from ACC-001-USD to ACC-002-USD",
+    "Propose missing rate fixings for all instruments"
   ];
 
   return (

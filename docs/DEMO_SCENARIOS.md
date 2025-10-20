@@ -1,3 +1,24 @@
+
+  🎬 Optimized Demo Script with Exact Queries
+
+  | Time | Step             | Exact Query                                                      | Expected Outcome                                 |
+  |------|------------------|------------------------------------------------------------------|--------------------------------------------------|
+  | 0:30 | Intro            | Show dashboards                                                  | Display TRMS and SWIFT dashboards                |
+  | 0:30 | Warm-up          | "Show me all USD accounts"                                       | Display account list, audience adaptation        |
+  | 0:30 | Main Check       | "Can we run EOD? Check both TRMS and SWIFT readiness"            | Shows TRMS EOD status + suggests checking SWIFT  |
+  | 0:30 | Book Transaction | "Transfer $50,000 from ACC-001-USD to ACC-002-USD"               | Creates PENDING transaction (note ID)            |
+  | 0:30 | Approve + SWIFT  | 1) Approve in dashboard2) "Send transaction TXN-XXXXX via SWIFT" | SWIFT MT103 sent, status CONFIRMED               |
+  | 0:30 | EOD Check Again  | "Can we run EOD now?"                                            | Shows TRMS issues (missing resets, unreconciled) |
+  | 0:30 | Resolve TRMS     | "Propose missing rate fixings"                                   | Shows rate proposals (GBP-3M, EUR-6M, etc.)      |
+  | 0:30 | Resolve SWIFT    | "Verify today's EOD reports"                                     | Checks shared drive reports                      |
+  | 0:30 | Final EOD        | "Check EOD readiness now"                                        | All clear! ✅                                     |
+  | 0:30 | Bonus Demo       | "Process the redemption report"                                  | Shows 96-page automation                         |
+  | 0:30 | TBD Option 1     | "Reconcile SWIFT messages automatically"                         | Shows reconciliation workflow                    |
+  | 0:30 | TBD Option 2     | "Is SWIFT ready for EOD?"                                        | Shows comprehensive SWIFT validation             |
+
+
+
+
 # 🎯 TRMS AI Assistant - Demo Scenarios
 
 This document provides comprehensive demo scenarios to showcase the TRMS AI Assistant's capabilities for stakeholder presentations.
@@ -20,7 +41,7 @@ The TRMS AI Assistant is a proof-of-concept system that demonstrates AI-powered 
 # Verify system health
 ./trms-services.sh health
 
-# Access the demo at http://localhost:5174
+# Access the demo at http://localhost:5173
 ```
 
 ## AI Functions Provided by trms-ai-backend
@@ -76,7 +97,7 @@ SWIFT System Functions (SwiftFunctions.java) - 8 Functions
 **Demo Goal**: Show AI assistant can help with account inquiries and balance checks
 
 **Steps**:
-1. Open http://localhost:5174
+1. Open http://localhost:5173
 2. Ask: "Show me all USD accounts"
 3. Follow up: "What's the balance of ACC-001-USD?"
 4. Ask: "Can you help me understand account ACC-002-EUR?"
@@ -197,7 +218,7 @@ curl http://localhost:8090/actuator/health
 
 Explain the three-tier architecture:
 
-1. **Frontend (Port 5174)**: Modern React interface
+1. **Frontend (Port 5173)**: Modern React interface
 2. **AI Backend (Port 8080)**: Spring AI with Ollama
 3. **TRMS Mock (Port 8090)**: Legacy system simulation
 

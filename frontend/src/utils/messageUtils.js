@@ -75,36 +75,78 @@ export const processFinancialContent = (content) => {
  */
 export const getContextualSuggestions = (lastMessage) => {
   if (!lastMessage || lastMessage.sender === 'user') return [];
-  
+
   const content = lastMessage.text.toLowerCase();
-  
+
+  // After showing accounts
   if (content.includes('account') && content.includes('usd')) {
     return [
       'Check balance for ACC-001-USD',
-      'Transfer funds between accounts',
-      'Show account transaction history'
+      'Transfer $50,000 from ACC-001-USD to ACC-002-USD',
+      'Can we run EOD? Check both systems'
     ];
   }
-  
-  if (content.includes('eod') || content.includes('end-of-day')) {
+
+  // After EOD check showing blockers
+  if ((content.includes('eod') || content.includes('end-of-day')) &&
+      (content.includes('not ready') || content.includes('blocking') || content.includes('missing'))) {
     return [
       'Propose missing rate fixings',
-      'Validate new transactions',
-      'Check market data status'
+      'Verify today\'s EOD reports',
+      'Check unreconciled SWIFT messages'
     ];
   }
-  
-  if (content.includes('transaction') || content.includes('transfer')) {
+
+  // After EOD check showing ready status
+  if ((content.includes('eod') || content.includes('end-of-day')) &&
+      (content.includes('ready') || content.includes('passed'))) {
     return [
-      'Show recent transactions',
-      'Check account balances',
-      'Run transaction validation report'
+      'Process the redemption report',
+      'Show transaction history',
+      'View all account balances'
     ];
   }
-  
+
+  // After SWIFT-specific responses
+  if (content.includes('swift') && (content.includes('ready') || content.includes('validation'))) {
+    return [
+      'Check unreconciled SWIFT messages',
+      'Verify today\'s EOD reports',
+      'Reconcile SWIFT messages automatically'
+    ];
+  }
+
+  // After booking transaction
+  if ((content.includes('transaction') || content.includes('transfer')) && content.includes('pending')) {
+    return [
+      'Go to TRMS Dashboard to approve',
+      'Check transaction status',
+      'Show recent transactions'
+    ];
+  }
+
+  // After VALIDATED transaction or SWIFT sent
+  if (content.includes('validated') || content.includes('swift') && content.includes('sent')) {
+    return [
+      'Can we run EOD now?',
+      'Check SWIFT message status',
+      'Reconcile SWIFT messages'
+    ];
+  }
+
+  // After rate fixings proposed
+  if (content.includes('rate') && (content.includes('fixing') || content.includes('reset'))) {
+    return [
+      'Verify today\'s EOD reports',
+      'Check EOD readiness now',
+      'Show market data status'
+    ];
+  }
+
+  // Default suggestions
   return [
+    'Can we run EOD? Check both systems',
     'Show me all USD accounts',
-    'Can we run End-of-Day?',
-    'What\'s the current system status?'
+    'Transfer $50,000 from ACC-001-USD to ACC-002-USD'
   ];
 };
