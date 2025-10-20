@@ -161,6 +161,7 @@ public class TrmsFunctions {
     public record GetAccountsByCurrencyRequest(String currency) {}
     public record CheckAccountBalanceRequest(String accountId) {}
     public record BookTransactionRequest(String fromAccount, String toAccount, Double amount, String currency) {}
-    public record CheckEODReadinessRequest() {}
-    public record ProposeRateFixingsRequest() {}
+    // Azure OpenAI requires at least one property in request schema
+    public record CheckEODReadinessRequest(Boolean verbose) {}
+    public record ProposeRateFixingsRequest(Boolean verbose) {}
 }

@@ -563,7 +563,7 @@ public class TrmsAiService {
     private String executeCheckEODReadiness() {
         try {
             executedFunctions.get().add("checkEODReadiness");
-            var request = new com.trms.ai.service.TrmsFunctions.CheckEODReadinessRequest();
+            var request = new com.trms.ai.service.TrmsFunctions.CheckEODReadinessRequest(null);
             var status = trmsFunctions.checkEODReadiness().apply(request);
             return formatEODData(status);
         } catch (Exception e) {
@@ -574,7 +574,7 @@ public class TrmsAiService {
     private String executeProposeRateFixings() {
         try {
             executedFunctions.get().add("proposeRateFixings");
-            var request = new com.trms.ai.service.TrmsFunctions.ProposeRateFixingsRequest();
+            var request = new com.trms.ai.service.TrmsFunctions.ProposeRateFixingsRequest(null);
             var rateResets = trmsFunctions.proposeRateFixings().apply(request);
             return formatRateFixingsData(rateResets);
         } catch (Exception e) {
@@ -636,7 +636,7 @@ public class TrmsAiService {
     private String executeGetUnreconciledMessages() {
         try {
             executedFunctions.get().add("getUnreconciledMessages");
-            var request = new com.trms.ai.service.SwiftFunctions.GetUnreconciledMessagesRequest();
+            var request = new com.trms.ai.service.SwiftFunctions.GetUnreconciledMessagesRequest(null);
             var messages = swiftFunctions.getUnreconciledMessages().apply(request);
             // Store message count in thread-local for validation workflow
             unreconciledMessageCount.set(messages.size());

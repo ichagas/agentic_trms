@@ -246,7 +246,8 @@ public class SwiftFunctions {
 
     public record ReconcileSwiftMessagesRequest(String accountId, boolean autoReconcile) {}
 
-    public record GetUnreconciledMessagesRequest() {}
+    // Azure OpenAI requires at least one property in request schema
+    public record GetUnreconciledMessagesRequest(Boolean verbose) {}
 
     public record ProcessRedemptionReportRequest(String fileName) {}
 
