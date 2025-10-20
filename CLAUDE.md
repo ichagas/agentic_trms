@@ -1,23 +1,21 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
-This is a TRMS (Treasury and Risk Management System) AI Agent POC that demonstrates AI-powered natural language interactions with financial systems. The project consists of four main components designed to work together:
+This is Hackathon project called NACC NextAgent Command Control. There are two mock Systems TRMS (Treasury and Risk Management System) and SWIFT Message. The AI Agent POC should demonstrates AI-powered natural language interactions with financial systems. The project consists of four main components designed to work together:
 
 1. **trms-mock-app** (Port 8090) - Mock legacy TRMS system with REST endpoints and EOD processing
 2. **swift-mock-app** (Port 8091) - Mock SWIFT messaging system for payment processing and reconciliation
 3. **trms-ai-backend** (Port 8080) - Spring AI backend with ChatClient and function calling
-4. **trms-frontend** (Port 5174) - React frontend with Google-like search interface
+4. **trms-frontend** (Port 5173) - React frontend with Google-like search interface
 
 ## Technology Stack
 - **Backend Framework**: Spring Boot 3.2+ with Spring AI 0.8.0
-- **LLM Integration**: Ollama (Llama 3) via Spring AI ChatClient with OpenAI fallback
+- **LLM Integration**: Ollama (for test) and Azure OpenAI (prod) via Spring AI ChatClient with OpenAI fallback
 - **Function Calling**: `@Function` annotations for AI tool calling
 - **Frontend**: React with TypeScript, Framer Motion animations
 - **Build Tools**: Maven (backend), npm (frontend)
-- **Development**: Docker Compose for full stack deployment
-- **AI Provider Options**: Mock (development), OpenAI, Azure OpenAI, or Ollama
+- **Development**: Java, Spring Boot, Spring AI and Reactjs (frontend)
+- **AI Provider Options**: Mock and Ollama (development), OpenAI and Azure OpenAI
 
 ## Core Architecture Patterns
 
