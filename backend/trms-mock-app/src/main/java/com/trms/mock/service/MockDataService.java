@@ -264,7 +264,7 @@ public class MockDataService {
                     .settlementMethod("RTGS")
                     .build());
         }
-        
+        /*
         // 23 NEW transactions (need validation)
         for (int i = 1190; i <= 1212; i++) {
             String txnId = String.format("TXN-%04d", i);
@@ -293,7 +293,7 @@ public class MockDataService {
                     .toAccount("ACC-007-GBP")
                     .amount(new BigDecimal(String.valueOf(150000 + (i * 750))))
                     .currency("GBP")
-                    .status(Transaction.TransactionStatus.PROPOSAL)
+                    .status(Transaction.TransactionStatus.VALIDATED)
                     .type(Transaction.TransactionType.COLLATERAL_MOVEMENT)
                     .description("Proposal transaction awaiting review - " + (i - 1212))
                     .reference("REF-PROP-" + (i - 1212))
@@ -302,6 +302,7 @@ public class MockDataService {
                     .settlementMethod("CHAPS")
                     .build());
         }
+                    */
     }
     
     private void createMockReports() {
@@ -416,27 +417,29 @@ public class MockDataService {
         marketDataFeeds.put("EQUITY_PRICES", MarketDataStatus.builder()
                 .feedType("EQUITY_PRICES")
                 .expected(205)
-                .received(197)
-                .missing(8)
-                .complete(false)
+                .received(205)
+                .missing(0)
+                .complete(true)
                 .lastUpdate(now.minusMinutes(2))
                 .cutoffTime(now.minusHours(1))
                 .provider("Reuters")
-                .status(MarketDataStatus.FeedStatus.INCOMPLETE)
-                .missingItems(Arrays.asList("AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "NVDA", "META", "BRK.B"))
+                .status(MarketDataStatus.FeedStatus.HEALTHY)
+                //.missingItems(Arrays.asList("AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "NVDA", "META", "BRK.B"))
+                .missingItems(Collections.emptyList())
                 .build());
                 
         marketDataFeeds.put("INTEREST_RATES", MarketDataStatus.builder()
                 .feedType("INTEREST_RATES")
                 .expected(89)
-                .received(86)
-                .missing(3)
-                .complete(false)
+                .received(89)
+                .missing(0)
+                .complete(true)
                 .lastUpdate(now.minusMinutes(10))
                 .cutoffTime(now.minusHours(1))
                 .provider("ICE")
-                .status(MarketDataStatus.FeedStatus.DELAYED)
-                .missingItems(Arrays.asList("USD-LIBOR-1M", "EUR-EURIBOR-12M", "GBP-SONIA"))
+                .status(MarketDataStatus.FeedStatus.HEALTHY)
+                //.missingItems(Arrays.asList("USD-LIBOR-1M", "EUR-EURIBOR-12M", "GBP-SONIA"))
+                .missingItems(Collections.emptyList())
                 .build());
     }
     

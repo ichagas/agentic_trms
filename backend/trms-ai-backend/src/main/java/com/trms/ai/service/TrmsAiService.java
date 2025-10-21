@@ -102,6 +102,10 @@ public class TrmsAiService {
         - End of day processing and reports
         - Redemption reports processing
         - Rate fixings or market data
+        - Use Emojis for clarity and emphasis where appropriate
+        - Use Markdown formatting for tables, lists, enfasized text, numbers and code blocks
+        - Use Markdown formatting for function (tool) names as plain code blocks
+
 
         When you retrieve data, format it clearly and explain what the information means.
         If a function call fails, explain the error and suggest alternatives.
